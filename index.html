@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IBR Group | Premium Subscriber Dashboard</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --color-primary: #1a3a5c;
+      --color-accent:  #c9a84c;
+      --color-bg:      #f7f8fa;
+      --color-card:    #ffffff;
+      --color-text:    #222831;
+      --color-muted:   #5c6b7a;
+      --color-border:  #dde3ea;
+      --radius:        8px;
+      --shadow:        0 2px 12px rgba(26, 58, 92, 0.10);
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    header {
+      background: var(--color-primary);
+      color: #fff;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--color-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      font-weight: 400;
+      opacity: 0.75;
+      margin-top: 1px;
+      display: block;
+    }
+
+    .badge-premium {
+      background: var(--color-accent);
+      color: var(--color-primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, #255a8e 100%);
+      color: #fff;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--color-accent);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: var(--color-primary);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.55);
+    }
+
+    .btn-outline:hover {
+      border-color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── Content area ────────────────────────────────── */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      margin-left: 0.5rem;
+    }
+
+    /* ── Cards grid ──────────────────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 24px rgba(26, 58, 92, 0.13);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius);
+      background: #edf2f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .card-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--color-primary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding-top: 0.5rem;
+    }
+
+    .card-link:hover {
+      color: var(--color-accent);
+    }
+
+    /* ── Highlights strip ────────────────────────────── */
+    .highlights {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-around;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .highlight-item strong {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .highlight-item span {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      background: var(--color-primary);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 1.4rem 2rem;
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 480px) {
+      header { height: 56px; }
+      .hero { padding: 2.5rem 1.2rem 2rem; }
+      main { padding: 2rem 1.2rem; }
+      .highlights { gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <a class="logo" href="/">
+      <div class="logo-mark">IBR</div>
+      <div>
+        <div class="logo-text">IBR Group International</div>
+        <span class="logo-sub">ibrecruitment.com</span>
+      </div>
+    </a>
+    <span class="badge-premium">Premium</span>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <h1>Welcome to your <span>Premium</span> Dashboard</h1>
+    <p>
+      Exclusive intelligence for media &amp; communications professionals — curated People Moves,
+      strategic Insights, and industry analysis, all in one place.
+    </p>
+    <div class="hero-actions">
+      <a href="#content" class="btn btn-primary">Explore Content</a>
+      <a href="https://ibrecruitment.com" class="btn btn-outline" target="_blank" rel="noopener">IBR Main Site</a>
+    </div>
+  </section>
+
+  <!-- ── Main ── -->
+  <main id="content">
+
+    <!-- Stats -->
+    <div class="highlights">
+      <div class="highlight-item">
+        <strong>People Moves</strong>
+        <span>Latest executive appointments &amp; departures</span>
+      </div>
+      <div class="highlight-item">
+        <strong>Insights</strong>
+        <span>In-depth market analysis &amp; opinion</span>
+      </div>
+      <div class="highlight-item">
+        <strong>Exclusive</strong>
+        <span>Premium subscriber–only content</span>
+      </div>
+    </div>
+
+    <!-- Content sections -->
+    <h2 class="section-title">📰 People Moves</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>Executive Appointments</h3>
+        <p>Track the latest senior hires across media, PR, and communications sectors globally.</p>
+        <a class="card-link" href="#">View Appointments →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h3>Role Changes</h3>
+        <p>Stay informed about promotions, lateral moves, and departures shaping the industry.</p>
+        <a class="card-link" href="#">View Changes →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>Global Moves</h3>
+        <p>International talent movements across EMEA, APAC, and the Americas, curated weekly.</p>
+        <a class="card-link" href="#">View Global →</a>
+      </div>
+    </div>
+
+    <h2 class="section-title">💡 Insights</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Market Analysis</h3>
+        <p>Data-driven analysis of hiring trends, salary benchmarks, and market dynamics.</p>
+        <a class="card-link" href="#">Read Analysis →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗣️</div>
+        <h3>Industry Opinion</h3>
+        <p>Expert commentary and opinion pieces from leading voices in media recruitment.</p>
+        <a class="card-link" href="#">Read Opinion →</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔮</div>
+        <h3>Trends &amp; Forecasts</h3>
+        <p>Forward-looking reports on where the media and communications industry is heading.</p>
+        <a class="card-link" href="#">Read Trends →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>
+      &copy; <span id="yr"></span> IBR Group International &mdash;
+      Premium subscriber content. Powered by
+      <a href="https://substack.com" target="_blank" rel="noopener">Substack</a>.
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
