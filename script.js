@@ -1,0 +1,79 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Reveal Animations on Scroll
+    const revealElements = document.querySelectorAll('.animate-reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // 2. Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // 3. Cookie Consent Banner Handling
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+
+    // Check if user has already accepted
+    if (!localStorage.getItem('cookies-accepted')) {
+        setTimeout(() => {
+            cookieBanner.classList.remove('hidden');
+        }, 1500);
+    }
+
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookies-accepted', 'true');
+        cookieBanner.classList.add('hidden');
+    });
+
+    // 4. Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                targetEl.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // 5. Chatbot Toggle logic
+    const chatbotPopup = document.getElementById('chatbot-popup');
+    const toggleChatbotBtn = document.getElementById('toggle-chatbot');
+    const closeChatbotBtn = document.getElementById('close-chatbot');
+
+    toggleChatbotBtn.addEventListener('click', () => {
+        chatbotPopup.classList.toggle('hidden');
+    });
+
+    closeChatbotBtn.addEventListener('click', () => {
+        chatbotPopup.classList.add('hidden');
+    });
+
+    // Close chatbot if clicking outside
+    document.addEventListener('mousedown', (e) => {
+        if (!chatbotPopup.contains(e.target) && !toggleChatbotBtn.contains(e.target)) {
+            chatbotPopup.classList.add('hidden');
+        }
+    });
+
+    console.log('Premium Landing Page Script Initialized.');
+    console.log('Chatbot initialized.');
+});
