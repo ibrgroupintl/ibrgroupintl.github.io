@@ -1,4 +1,4 @@
-<!-- public/login.html -->
+﻿<!-- public/login.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -86,38 +86,15 @@
       }
     });
 
-    // Google Sign-in with diagnostics and redirect fallback
-    const googleBtn = document.getElementById('googleSignIn');
-    googleBtn.type = 'button';
-    googleBtn.addEventListener('click', async () => {
-      console.log('googleSignIn clicked');
+    // Google Sign-in
+    document.getElementById('googleSignIn').addEventListener('click', async () => {
       const provider = new firebase.auth.GoogleAuthProvider();
-      const el = document.getElementById('error');
-      el.style.display = 'none';
       try {
-        if (!auth || typeof auth.signInWithPopup !== 'function') {
-          throw new Error('Firebase Auth not available');
-        }
         await auth.signInWithPopup(provider);
         // onAuthStateChanged handles redirect
       } catch (err) {
-        // Log for debugging
-        console.error('Google sign-in failed', err);
-        // If popup blocked or not supported, use redirect flow as fallback
-        const code = err && (err.code || err.message || err.name) || '';
-        if (code.toString().toLowerCase().includes('popup') || code.toString().toLowerCase().includes('operation-not-supported') || code.toString().toLowerCase().includes('blocked')) {
-          console.warn('Popup blocked or not supported, falling back to redirect');
-          try {
-            await auth.signInWithRedirect(provider);
-            return;
-          } catch (redirectErr) {
-            console.error('Redirect fallback failed', redirectErr);
-            el.textContent = redirectErr.message || 'Redirect authentication failed';
-            el.style.display = 'block';
-            return;
-          }
-        }
-
+        console.error(err);
+        const el = document.getElementById('error');
         el.textContent = err.message || 'Authentication error';
         el.style.display = 'block';
       }
