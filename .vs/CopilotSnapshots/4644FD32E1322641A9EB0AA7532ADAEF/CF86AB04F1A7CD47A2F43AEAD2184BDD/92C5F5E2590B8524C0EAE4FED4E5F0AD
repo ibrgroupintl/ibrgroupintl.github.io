@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exclusive Premium Recruitment Services for high-growth companies.">
+    <title>IBR Recruitment - Premium Services</title>
+    <!-- Styles will be added here -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <header class="navbar">
+        <div class="container container-navbar">
+            <div class="logo">
+                <a href="/index.html"><img src="/logo.png" alt="IBR Recruitment" class="logo-img"></a>
+            </div>
+            <nav class="nav-links">
+                <ul class="nav-list">
+                    <li><a href="#hero">Overview</a></li>
+                    <li><a href="#benefits">Premium Features</a></li>
+                    <li><a href="#testimony">Success Stories</a></li>
+                    <li class="cta-nav"><a href="#join" class="btn btn-primary">Join Premium</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="hero" class="hero-section">
+        <div class="container container-hero">
+            <div class="hero-content">
+                <h1 class="hero-title animate-reveal">Unlock Your Next <span class="text-accent">Premium Career</span></h1>
+                <p class="hero-text animate-reveal delay-1">Exclusive recruitment opportunities for visionary talent and high-growth companies. Join the elite network today.</p>
+                <div class="hero-actions animate-reveal delay-2">
+                    <a href="#join" class="btn btn-primary btn-large">Join the Elite</a>
+                    <a href="#benefits" class="btn btn-secondary btn-large">Explore Premium Features</a>
+                </div>
+            </div>
+            <div class="hero-visual animate-reveal delay-3">
+                <div class="visual-placeholder">
+                    <!-- Image or interactive visual here -->
+                    <div class="circle-blob"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title text-center">Why Go Premium?</h2>
+            <div class="features-grid">
+                <div class="feature-card animate-reveal">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Early Access</h3>
+                    <p>Be the first to see high-value roles before they hit the open market. Gain an unfair advantage.</p>
+                </div>
+                <div class="feature-card animate-reveal delay-1">
+                    <div class="feature-icon">✨</div>
+                    <h3>AI Resume Enhancement</h3>
+                    <p>Our AI-powered tools tailor your resume for maximum impact with recruiters and ATS systems.</p>
+                </div>
+                <div class="feature-card animate-reveal delay-2">
+                    <div class="feature-icon">🎖️</div>
+                    <h3>Priority Support</h3>
+                    <p>Dedicated career consultants ready to assist you at every step of your hiring journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with cookie consent as per instructions -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-bottom">
+                <p>&copy; 2024 IBR Recruitment. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
+                    <a href="/contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <div class="container cookie-container">
+            <div class="cookie-text">
+                <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="cookie-actions">
+                <button id="accept-cookies" class="btn btn-primary btn-small">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="firebase-config.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
