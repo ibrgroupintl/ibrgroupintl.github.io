@@ -17,6 +17,18 @@
       .nav-login { margin-right:12px; }
       .resource-nav .user-menu { display:flex; gap:8px; align-items:center; }
     </style>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="/firebase-config.js"></script>
+<script>
+  firebase.initializeApp(window.firebaseConfig);
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) location.replace('/login.html');
+    // else optionally show user info
+  });
+</script>
+
 </head>
 <body class="light-theme">
     <nav class="resource-nav">

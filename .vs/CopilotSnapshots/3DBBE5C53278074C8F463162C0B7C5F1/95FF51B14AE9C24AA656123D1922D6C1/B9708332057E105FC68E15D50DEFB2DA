@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -136,8 +136,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     // Optionally persist user to DB here and set minimal session values
     req.session.user_id = req.user.id || req.user.sub || null;
     req.session.username = req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value) || 'google-user';
-    // normalize session timestamp name used by authCheck
-    req.session.logged_in_at = Math.floor(Date.now() / 1000);
+    req.session.logged_at = Math.floor(Date.now() / 1000);
     res.redirect('/resource-centre');
 });
 
@@ -173,8 +172,7 @@ app.post('/login', async (req, res) => {
                 if (err) throw err;
                 req.session.user_id = user.id;
                 req.session.username = user.username;
-                // normalize session timestamp property name used by authCheck
-                req.session.logged_in_at = Math.floor(Date.now() / 1000);
+                req.session.logged_at = Math.floor(Date.now() / 1000);
                 res.redirect('/resource-centre');
             });
             await dbPool.execute('UPDATE admin_users SET last_login = NOW() WHERE id = ?', [user.id]);

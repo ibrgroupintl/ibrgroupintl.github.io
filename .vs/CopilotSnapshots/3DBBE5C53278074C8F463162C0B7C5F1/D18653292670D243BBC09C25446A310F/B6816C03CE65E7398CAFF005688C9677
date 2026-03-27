@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -16,40 +16,14 @@ app.use(express.urlencoded({ extended: false })); // Replaces PHP $_POST
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Ensures the 'views' folder is found
 
-// --- Serve static site from repository root ---
-// This makes /resource-centre.html, CSS and JS files available from the same origin
-app.use(express.static(path.join(__dirname, '..')));
-
-// Redirect root to the resource centre page for convenience
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'resource-centre.html'));
-});
-
 // --- 2. Database Connection (Using .env variables) ---
-// Ensure common env names are supported and add sensible pool defaults
 const dbPool = mysql.createPool({
     host: process.env.DB_HOST || '127.0.0.1',
-    user: process.env.DB_USER || process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || process.env.DB_PASS || '',
-    database: process.env.DB_NAME || process.env.DB_DATABASE || '',
-    charset: 'utf8mb4',
-    waitForConnections: true,
-    connectionLimit: parseInt(process.env.DB_CONN_LIMIT || '10', 10),
-    queueLimit: 0
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    charset: 'utf8mb4'
 });
-
-// Basic connectivity test (non-blocking). Logs a warning if DB is unreachable.
-(async () => {
-    try {
-        const conn = await dbPool.getConnection();
-        // mysql2/promise exposes ping via connection.ping() or simple query
-        await conn.ping();
-        conn.release();
-        console.log('DB pool: connection OK');
-    } catch (err) {
-        console.warn('DB pool: cannot establish connection - continuing without DB. Error:', err && err.message);
-    }
-})();
 
 // --- 3. Session Configuration ---
 app.use(session({
@@ -136,8 +110,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     // Optionally persist user to DB here and set minimal session values
     req.session.user_id = req.user.id || req.user.sub || null;
     req.session.username = req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value) || 'google-user';
-    // normalize session timestamp name used by authCheck
-    req.session.logged_in_at = Math.floor(Date.now() / 1000);
+    req.session.logged_at = Math.floor(Date.now() / 1000);
     res.redirect('/resource-centre');
 });
 
@@ -173,8 +146,7 @@ app.post('/login', async (req, res) => {
                 if (err) throw err;
                 req.session.user_id = user.id;
                 req.session.username = user.username;
-                // normalize session timestamp property name used by authCheck
-                req.session.logged_in_at = Math.floor(Date.now() / 1000);
+                req.session.logged_at = Math.floor(Date.now() / 1000);
                 res.redirect('/resource-centre');
             });
             await dbPool.execute('UPDATE admin_users SET last_login = NOW() WHERE id = ?', [user.id]);
