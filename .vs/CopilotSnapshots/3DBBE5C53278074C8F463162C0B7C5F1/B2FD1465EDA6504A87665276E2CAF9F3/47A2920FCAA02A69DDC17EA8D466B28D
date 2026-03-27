@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,13 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-      /* Minimal button styling to match login.ejs primary button */
-      .btn { display:inline-block; text-decoration:none; font-weight:600; border-radius:8px; padding:8px 12px; }
-      .btn-primary { background:#0f62fe; color:#fff; border:none; }
-      .nav-login { margin-right:12px; }
-      .resource-nav .user-menu { display:flex; gap:8px; align-items:center; }
-    </style>
 </head>
 <body class="light-theme">
     <nav class="resource-nav">
@@ -25,7 +18,6 @@
                 <span class="site-title">Human Resources Centre</span>
             </div>
             <div class="user-menu">
-                <a href="/login" class="btn btn-primary nav-login" title="Sign in">Sign in</a>
                 <a href="mailto:uk-hr-enquiries@ibrecruitment.com" class="btn btn-outline nav-email">
                     <i class="fas fa-envelope"></i> uk-hr-enquiries@ibrecruitment.com
                 </a>

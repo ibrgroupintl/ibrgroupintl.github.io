@@ -28,7 +28,7 @@ const dbPool = mysql.createPool({
 // --- 3. Session Configuration ---
 app.use(session({
     name: 'ibr_resource_session',
-    secret: process.env.SESSION_SECRET || 'CHANGE_THIS_TO_A_LONG_RANDOM_STRING',
+    secret: process.env.SESSION_SECRET || '59c81a27a88a41f51677925579b821be37323c37ec21c73bf865c3f053a1698df3ac7d6e739149652c476897156dce7e',
     resave: false,
     saveUninitialized: false,
     cookie: {
