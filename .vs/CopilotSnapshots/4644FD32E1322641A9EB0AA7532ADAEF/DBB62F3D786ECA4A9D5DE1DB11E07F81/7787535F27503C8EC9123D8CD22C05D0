@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -12,31 +12,55 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:#0f1724;display:flex;align-items:center;justify-content:center;padding:32px}
-    .login-wrapper{max-width:420px;width:100%}
-    .login-card{background:var(--card);padding:32px;border-radius:12px;border:1px solid var(--border);box-shadow:0 8px 30px rgba(2,6,23,0.06);text-align:center}
-    .brand-logo{height:48px;width:auto;margin-bottom:14px}
+    .container{max-width:980px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .brand-panel{background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);padding:48px;border-radius:12px;border:1px solid var(--border);box-shadow:0 6px 30px rgba(15,23,36,0.04)}
+    .brand-top{display:flex;align-items:center;gap:16px}
+    .brand-logo{height:56px;width:auto;border-radius:6px}
+    .brand-title{font-size:1.25rem;font-weight:700;color:var(--accent)}
+    .brand-lead{margin-top:18px;color:var(--muted);line-height:1.45}
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
+    .feature{background:transparent;padding:10px;border-radius:8px;border:1px dashed var(--border);color:var(--muted);font-size:0.95rem}
+
+    .login-card{background:var(--card);padding:32px;border-radius:12px;border:1px solid var(--border);box-shadow:0 8px 30px rgba(2,6,23,0.06)}
     h1{margin:0;font-size:1.5rem}
     p.lead{color:var(--muted);margin-top:8px;margin-bottom:20px}
     form{display:flex;flex-direction:column;gap:12px}
-    label{display:block;text-align:left}
+    label{display:block}
     input[type="text"],input[type="password"]{width:100%;padding:12px 14px;border:1px solid #dbe7ff;border-radius:8px;font-size:0.98rem;background:#fcfeff}
     .form-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
     .remember{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
     .actions{display:flex;flex-direction:column;gap:10px;margin-top:6px}
     .btn-primary{background:var(--accent);color:#fff;padding:12px;border-radius:8px;border:none;font-weight:600;cursor:pointer}
-    .btn-secondary{background:transparent;border:1px solid var(--border);padding:10px;border-radius:8px;color:var(--muted);cursor:pointer;text-decoration:none;display:inline-block}
+    .btn-secondary{background:transparent;border:1px solid var(--border);padding:10px;border-radius:8px;color:var(--muted);cursor:pointer}
     .footer-note{margin-top:18px;font-size:0.88rem;color:var(--muted)}
-    .error{color:#b00020;font-size:0.95rem;margin-bottom:6px;text-align:left}
+    .error{color:#b00020;font-size:0.95rem;margin-bottom:6px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
-    @media (max-width:480px){body{padding:18px}.login-card{padding:20px}}
+
+    @media (max-width:920px){.container{grid-template-columns:1fr}.brand-panel{order:2}}
   </style>
 </head>
 <body>
-  <main class="login-wrapper" role="main">
-    <section class="login-card" aria-labelledby="login-heading">
-      <div class="brand-text" aria-hidden="true" style="font-weight:700;color:var(--accent);margin-bottom:10px">Impact in Business Recruitment</div>
+  <main class="container" role="main">
+    <section class="brand-panel" aria-labelledby="brand-title">
+      <div class="brand-top">
+        <img src="/160.jpg" alt="Impact in Business Recruitment" class="brand-logo">
+        <div>
+          <div class="brand-title">Impact in Business Recruitment</div>
+          <div style="font-size:.95rem;color:var(--muted);">Resource Centre — Secure Access</div>
+        </div>
+      </div>
+      <p class="brand-lead">Welcome to the secure Resource Centre for HR and enterprise users. Access market reports, executive moves and exclusive insights tailored for senior professionals in real estate and infrastructure finance.</p>
+      <div class="features" aria-hidden="true">
+        <div class="feature">Verified Reporting</div>
+        <div class="feature">Executive Alerts</div>
+        <div class="feature">Secure Downloads</div>
+        <div class="feature">Priority Support</div>
+      </div>
+    </section>
+
+    <aside class="login-card" aria-labelledby="login-heading">
       <h1 id="login-heading">Enterprise Login</h1>
-      <p class="lead">Secure access to the Human Resource Centre</p>
+      <p class="lead">Sign in with your site credentials to continue.</p>
 
       <% if (typeof error !== 'undefined' && error) { %>
         <div class="error" role="alert"><%= error %></div>
@@ -65,7 +89,7 @@
 
         <div class="footer-note">By signing in you agree to our terms and privacy policy.</div>
       </form>
-    </section>
+    </aside>
   </main>
 </body>
 </html>

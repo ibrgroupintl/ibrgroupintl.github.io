@@ -32,7 +32,7 @@ app.use(session({
     cookie: {
         domain: process.env.COOKIE_DOMAIN || 'premium.ibrecruitment.com',
         path: '/',
-        secure: false,    // Set to 'true' in production with HTTPS
+        secure: true,    // Set to 'true' in production with HTTPS
         httpOnly: true,  // Prevents XSS cookie theft
         sameSite: 'strict' // Prevents CSRF
     }

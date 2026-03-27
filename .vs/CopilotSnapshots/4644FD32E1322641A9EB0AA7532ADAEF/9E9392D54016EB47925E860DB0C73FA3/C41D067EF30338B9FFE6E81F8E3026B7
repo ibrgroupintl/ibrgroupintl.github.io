@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -34,9 +34,9 @@
 <body>
   <main class="login-wrapper" role="main">
     <section class="login-card" aria-labelledby="login-heading">
-      <div class="brand-text" aria-hidden="true" style="font-weight:700;color:var(--accent);margin-bottom:10px">Impact in Business Recruitment</div>
+      <img src="/160.jpg" alt="Impact in Business Recruitment" class="brand-logo">
       <h1 id="login-heading">Enterprise Login</h1>
-      <p class="lead">Secure access to the Human Resource Centre</p>
+      <p class="lead">Secure access to the Resource Centre</p>
 
       <% if (typeof error !== 'undefined' && error) { %>
         <div class="error" role="alert"><%= error %></div>
