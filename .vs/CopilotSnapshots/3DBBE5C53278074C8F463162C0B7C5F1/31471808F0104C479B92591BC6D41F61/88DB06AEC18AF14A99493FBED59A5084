@@ -1,4 +1,4 @@
-<!-- public/login.html -->
+﻿<!-- public/login.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,9 +16,6 @@
     .login-card { max-width:420px; width:100%; }
     .brand { color: var(--rc-accent); font-weight:700; margin-bottom:8px; }
     .btn-google { /* use primary accent for portal consistency */ }
-    /* Make the Google sign-in button green to match request */
-    #googleSignIn { background: #0f9d58; color: #fff; }
-    #googleSignIn:hover { filter: brightness(0.95); }
     #error { color: #b00020; }
   </style>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
