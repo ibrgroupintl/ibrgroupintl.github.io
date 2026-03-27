@@ -1,0 +1,18 @@
+﻿<!-- public/login.html -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="/firebase-config.js"></script>
+
+<button id="googleSignIn">Sign in with Google</button>
+
+<script>
+  firebase.initializeApp(window.firebaseConfig);
+  const auth = firebase.auth();
+
+  document.getElementById('googleSignIn').addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(() => {
+      location.href = '/resource-centre.html';
+    }).catch(err => console.error(err));
+  });
+</script>
