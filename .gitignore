@@ -1,2 +1,17 @@
 .vs/ibrgroupintl.github.io.slnx/v18/.wsuo
 *.vsidx
+
+# Dependency directories
+node_modules/
+
+# Environment variables (Secrets)
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db

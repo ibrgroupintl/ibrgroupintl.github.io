@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Light Theme Palette */
     --rc-bg: #f8fafc;
     --rc-bg-secondary: #ffffff;

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login — Human Resource Centre</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#f6f7fb; color:#111; display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .box{background:#fff;padding:24px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.06);width:320px}
+    input{display:block;width:100%;padding:10px;margin:8px 0;border:1px solid #d7dbe3;border-radius:6px}
+    button{width:100%;padding:10px;border-radius:6px;background:#0277bd;color:#fff;border:none;font-weight:600;cursor:pointer}
+    .error{color:#b00020;font-size:.95rem;margin-bottom:10px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  </style>
+</head>
+<body>
+  <div class="box" role="main" aria-labelledby="login-title">
+    <h2 id="login-title">Human Resource Centre Login</h2>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error" role="alert"><%= error %></div>
+    <% } %>
+
+    <form method="post" action="/login" autocomplete="off" novalidate>
+      <label>
+        <span class="sr-only">Username</span>
+        <input name="username" type="text" required placeholder="Username" maxlength="100" autofocus>
+      </label>
+      <label>
+        <span class="sr-only">Password</span>
+        <input name="password" type="password" required placeholder="Password" autocomplete="current-password">
+      </label>
+      <button type="submit">Sign in</button>
+    </form>
+  </div>
+</body>
+</html>

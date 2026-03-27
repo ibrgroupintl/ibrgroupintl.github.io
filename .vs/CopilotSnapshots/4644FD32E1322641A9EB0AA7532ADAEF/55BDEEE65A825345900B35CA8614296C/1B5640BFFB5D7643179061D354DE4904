@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="light-theme">
     <nav class="resource-nav">
@@ -17,11 +16,6 @@
             <div class="logo">
                 <img src="160.jpg" alt="Impact in Business Recruitment Logo" class="resource-logo">
                 <span class="site-title">Human Resources Centre</span>
-            </div>
-            <div class="user-menu">
-                <a href="mailto:uk-hr-enquiries@ibrecruitment.com" class="btn btn-outline nav-email">
-                    <i class="fas fa-envelope"></i> uk-hr-enquiries@ibrecruitment.com
-                </a>
             </div>
           </div>
     </nav>

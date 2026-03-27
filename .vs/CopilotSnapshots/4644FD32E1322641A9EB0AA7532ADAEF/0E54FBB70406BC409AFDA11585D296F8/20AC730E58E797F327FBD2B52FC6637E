@@ -1,3 +1,4 @@
+﻿
 {
   "name": "ibrgroupintl-website",
   "version": "0.1.0",
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibrgroupintl/ibrgroupintl.github.io.git"
+    "url": "https://github.com/ibrgroupintl/ibrgroupintl.github.io.git"
   },
   "keywords": [
     "ibr",
@@ -25,20 +26,8 @@
   "engines": {
     "node": ">=14"
   },
-  "dependencies": {
-    "argon2": "^0.40.0",
-    "dotenv": "^17.3.1",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "helmet": "^7.0.0",
-    "mysql2": "^3.6.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "nodemon": "^2.0.22"
-  },
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/ibrgroupintl/ibrgroupintl.github.io/issues"
   }
 }

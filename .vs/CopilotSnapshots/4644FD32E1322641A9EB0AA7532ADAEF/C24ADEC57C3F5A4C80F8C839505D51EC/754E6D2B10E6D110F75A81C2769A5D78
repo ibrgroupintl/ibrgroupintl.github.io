@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Light Theme Palette */
     --rc-bg: #f8fafc;
     --rc-bg-secondary: #ffffff;
@@ -133,13 +133,6 @@ a {
     color: var(--rc-accent);
     border-color: var(--rc-accent);
     padding: var(--spacing-2) var(--spacing-4);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2);
-}
-
-.nav-email i {
-    font-size: 0.9rem;
 }
 
 .nav-email:hover {
