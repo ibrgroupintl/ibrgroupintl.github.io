@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout.html
+
+# Secure Hub Endpoints - Private Resource Centre
+Disallow: /resource-centre.html
+Disallow: /resource-centre.css
+Disallow: /resource-centre.js
+
+Sitemap: https://premium.ibrecruitment.com/sitemap.xml
