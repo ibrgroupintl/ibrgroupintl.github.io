@@ -1,4 +1,4 @@
-<!-- public/login.html -->
+﻿<!-- public/login.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,20 +13,7 @@
   <style>
     /* Minimal overrides to adapt shared styles to the login card */
     body { display:flex; align-items:center; justify-content:center; padding:24px; }
-    /* Borderless square container that centers the login card
-       The container keeps a square aspect ratio and is responsive. */
-    .square-container {
-      width: min(480px, 80vmin);
-      height: min(480px, 80vmin);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent; /* borderless */
-      box-shadow: none;
-      border: none;
-      margin: 0 auto;
-    }
-    .login-card { max-width:420px; width:90%; height:90%; overflow:auto; }
+    .login-card { max-width:420px; width:100%; }
     .brand { color: var(--rc-accent); font-weight:700; margin-bottom:8px; }
     .btn-google { /* use primary accent for portal consistency */ }
     #error { color: #b00020; }
@@ -37,8 +24,7 @@
 </head>
 <body>
   <main class="login-wrapper" role="main">
-    <div class="square-container" aria-hidden="false">
-      <section class="login-card" aria-labelledby="login-heading">
+    <section class="login-card" aria-labelledby="login-heading">
       <div class="brand" aria-hidden="true">Impact in Business Recruitment</div>
       <h1 id="login-heading">Enterprise Login</h1>
       <p class="lead">Secure portal gateway for the Human Resources Centre</p>
@@ -68,8 +54,7 @@
       </div>
 
       <div class="footer-note">By signing in you agree to our terms and privacy policy.</div>
-      </section>
-    </div>
+    </section>
   </main>
 
   <script>
