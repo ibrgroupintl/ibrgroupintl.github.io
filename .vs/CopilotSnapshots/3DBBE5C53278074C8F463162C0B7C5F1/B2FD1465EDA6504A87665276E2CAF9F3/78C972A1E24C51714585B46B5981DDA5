@@ -1,12 +1,10 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
 const argon2 = require('argon2');
 const helmet = require('helmet');
 const path = require('path');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const app = express();
 
@@ -34,37 +32,9 @@ app.use(session({
     cookie: {
         domain: process.env.COOKIE_DOMAIN || 'premium.ibrecruitment.com',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',    // true in production with HTTPS
+        secure: true,    // Set to 'true' in production with HTTPS
         httpOnly: true,  // Prevents XSS cookie theft
         sameSite: 'strict' // Prevents CSRF
-    }
-}));
-
-// --- Passport Configuration (Google OAuth) ---
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser((user, done) => {
-    // Serialize minimal info into session
-    done(null, { id: user.id, displayName: user.displayName, emails: user.emails });
-});
-
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
-});
-
-// Configure Google Strategy
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID || '',
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || '/auth/google/callback'
-}, async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Here you could find or create a corresponding local user record.
-        // For now we just pass the profile through.
-        return done(null, profile);
-    } catch (err) {
-        return done(err);
     }
 }));
 
@@ -80,12 +50,6 @@ const authCheck = (req, res, next) => {
         });
     }
 
-    // Allow authenticated via Passport (Google) or existing local session
-    if (req.isAuthenticated && req.isAuthenticated()) {
-        req.session.logged_in_at = now;
-        return next();
-    }
-
     if (!req.session.user_id || !req.session.username) {
         return res.redirect('/login');
     }
@@ -99,30 +63,6 @@ const authCheck = (req, res, next) => {
 // Login Page (GET)
 app.get('/login', (req, res) => {
     res.render('login', { error: null });
-});
-
-// Start Google OAuth flow
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// OAuth callback
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-    // Successful authentication
-    // Optionally persist user to DB here and set minimal session values
-    req.session.user_id = req.user.id || req.user.sub || null;
-    req.session.username = req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value) || 'google-user';
-    req.session.logged_at = Math.floor(Date.now() / 1000);
-    res.redirect('/resource-centre');
-});
-
-// Logout
-app.get('/logout', (req, res) => {
-    req.logout(function(err) {
-        // ignore errors from logout, destroy session anyway
-        req.session.destroy(() => {
-            res.clearCookie('ibr_resource_session');
-            res.redirect('/login');
-        });
-    });
 });
 
 // Login Logic (POST)
