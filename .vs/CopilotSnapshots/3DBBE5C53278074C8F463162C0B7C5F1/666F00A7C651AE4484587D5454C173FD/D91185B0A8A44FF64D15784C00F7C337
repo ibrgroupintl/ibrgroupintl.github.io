@@ -1,4 +1,4 @@
-// index.js - small site config and UI helpers (JSON-like structure)
+﻿// index.js - small site config and UI helpers (JSON-like structure)
 window.SITE_CONFIG = {
   title: 'Impact in Business Recruitment',
   contactEmail: 'uk-hr-enquiries@ibrecruitment.com'
@@ -37,6 +37,20 @@ document.addEventListener('DOMContentLoaded', function(){
       return v ? decodeURIComponent(v.pop()) : null;
     }
 
-    // cookie consent handled inlined in index.html; noop here
+    if (!getCookie(cookieName) && location.hostname === 'premium.ibrecruitment.com'){
+      var bar = document.createElement('div');
+      bar.className = 'cookie-consent';
+      bar.innerHTML = '<div class="container"><p>We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:#fff;text-decoration:underline;margin-left:6px">Learn more</a></p><div class="actions"><button class="btn btn-secondary" id="cookieDecline">Decline</button><button class="btn btn-primary" id="cookieAccept">Accept</button></div></div>';
+      document.body.appendChild(bar);
+
+      document.getElementById('cookieAccept').addEventListener('click', function(){
+        setCookie(cookieName, 'accepted', 365);
+        bar.remove();
+      });
+      document.getElementById('cookieDecline').addEventListener('click', function(){
+        setCookie(cookieName, 'declined', 365);
+        bar.remove();
+      });
+    }
   } catch (e) { console.error('Cookie consent init failed', e); }
 });

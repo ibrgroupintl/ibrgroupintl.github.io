@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -88,9 +88,9 @@
         function getCookie(name){var v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');return v?decodeURIComponent(v.pop()):null}
         var bar = document.getElementById('cookieConsentBar');
         if (!bar) return;
-        if (getCookie(cookieName)) { bar.style.display = 'none'; return; }
-        document.getElementById('cookieAcceptBtn').addEventListener('click', function(){ setCookie(cookieName,'accepted',365); bar.style.display = 'none'; });
-        document.getElementById('cookieDeclineBtn').addEventListener('click', function(){ setCookie(cookieName,'declined',365); bar.style.display = 'none'; });
+        if (getCookie(cookieName)) { bar.parentNode && bar.parentNode.removeChild(bar); return; }
+        document.getElementById('cookieAcceptBtn').addEventListener('click', function(){ setCookie(cookieName,'accepted',365); bar.remove(); });
+        document.getElementById('cookieDeclineBtn').addEventListener('click', function(){ setCookie(cookieName,'declined',365); bar.remove(); });
       } catch(e){ console.error('cookie bar init', e);}    
     })();
   </script>

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -111,43 +111,10 @@
     });
   </script>
   <footer class="resource-footer">
-    <div class="container" style="text-align:center">
-      <div style="margin-bottom:8px;">
-        <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px;margin-right:8px">Terms</a>
-        <a href="/privacy.html" class="btn btn-outline" style="padding:6px 10px">Privacy</a>
-      </div>
-
-      <!-- Inline cookie consent UI placed inside footer (non-fixed) -->
-      <div id="cookieConsentBar" style="width:100%;max-width:900px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
-        <div style="flex:1;min-width:180px;color:var(--muted)">We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
-          <button id="cookieAcceptBtn" style="background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;">Accept</button>
-        </div>
-      </div>
-
-      <div>
-        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment</p>
-      </div>
+    <div class="container" style="text-align:center
     </div>
   </footer>
 
   <script src="/index.js" defer></script>
-  <script>
-    (function(){
-      try {
-        var cookieName = 'ibr_cookie_consent_v1';
-        function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+(days*24*60*60*1000));document.cookie = name+'='+encodeURIComponent(value)+';path=/;SameSite=Lax';}
-        function getCookie(name){var v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');return v?decodeURIComponent(v.pop()):null}
-        var bar = document.getElementById('cookieConsentBar');
-        if (!bar) return;
-        if (getCookie(cookieName)) { bar.style.display = 'none'; return; }
-        var accept = document.getElementById('cookieAcceptBtn');
-        var decline = document.getElementById('cookieDeclineBtn');
-        if (accept) accept.addEventListener('click', function(){ setCookie(cookieName,'accepted',365); bar.style.display = 'none'; });
-        if (decline) decline.addEventListener('click', function(){ setCookie(cookieName,'declined',365); bar.style.display = 'none'; });
-      } catch(e){ console.error('cookie bar init', e);}    
-    })();
-  </script>
 </body>
 </html>
