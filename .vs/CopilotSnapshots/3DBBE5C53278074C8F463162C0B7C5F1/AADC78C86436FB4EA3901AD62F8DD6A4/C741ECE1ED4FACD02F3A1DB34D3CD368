@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,9 +10,6 @@
     body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:var(--rc-bg, var(--site-bg))}
     .card{width:380px;background:var(--rc-surface, var(--card-bg));border-radius:12px;padding:28px;box-shadow:var(--rc-shadow, var(--shadow));border:1px solid var(--rc-border, var(--border))}
     h1{font-size:1.25rem;margin:0 0 8px;color:var(--text)}
-    /* Center the sign-in heading and lead paragraph for better visual balance */
-    #signin-title { text-align: center; }
-    .lead { text-align: center; }
     p.lead{color:var(--rc-text-dim, var(--muted));margin:0 0 18px}
     .actions{display:flex;flex-direction:column;gap:12px}
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
