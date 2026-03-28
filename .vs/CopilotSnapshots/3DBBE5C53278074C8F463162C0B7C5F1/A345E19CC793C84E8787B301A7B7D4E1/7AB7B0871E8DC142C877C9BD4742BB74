@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -39,12 +39,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 }
 .btn-primary:active{transform:translateY(-1px);}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
-
-/* Ensure header login outline button contrasts against the nav background image */
-.resource-nav .btn-outline.nav-login{
-  color: var(--text);
-  font-weight:700;
-}
 
 /* Hero */
 .hub-main .container{padding:4.5rem 0}
