@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
                 <span class="site-title">Human Resources Centre</span>
             </div>
             <div class="user-menu">
-                <a href="/login.html" class="btn btn-primary nav-login" title="Sign in">Sign in</a>
+                <a href="/app/public/login.html" class="btn btn-primary nav-login" title="Sign in">Sign in</a>
                 <a href="mailto:uk-hr-enquiries@ibrecruitment.com" class="btn btn-outline nav-email">
                     <i class="fas fa-envelope"></i> uk-hr-enquiries@ibrecruitment.com
                 </a>

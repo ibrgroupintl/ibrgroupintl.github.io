@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\login.html||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\public\\login.html||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\404.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\public\\404.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:resource-centre.html||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\firebase-config.js||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\public\\firebase-config.js||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -13,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\server.js||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:app\\server.js||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:resource-centre.html||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\string-gen.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -85,8 +93,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "login.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\login.html",
+              "RelativeDocumentMoniker": "app\\public\\login.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\login.html",
+              "RelativeToolTip": "app\\public\\login.html",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACIAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-27T21:16:08.195Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -101,20 +122,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "404.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\404.html",
+              "RelativeDocumentMoniker": "app\\public\\404.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\404.html",
+              "RelativeToolTip": "app\\public\\404.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-27T19:23:31.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "firebase-config.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\firebase-config.js",
               "RelativeDocumentMoniker": "app\\public\\firebase-config.js",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\public\\firebase-config.js",
               "RelativeToolTip": "app\\public\\firebase-config.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2026-03-27T18:55:45.463Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": ".env.example",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\.env.example",
               "RelativeDocumentMoniker": "app\\.env.example",
@@ -127,7 +161,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 2,
+              "Title": "resource-centre.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html",
+              "RelativeDocumentMoniker": "resource-centre.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html",
+              "RelativeToolTip": "resource-centre.html",
+              "ViewState": "AgIAABkAAAAAAAAAAAAiwB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-26T23:51:42.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
               "Title": ".env",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\.env",
               "RelativeDocumentMoniker": "app\\.env",
@@ -140,7 +187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "string-gen.txt",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\string-gen.txt",
               "RelativeDocumentMoniker": "app\\string-gen.txt",
@@ -153,7 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "server.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\server.js",
               "RelativeDocumentMoniker": "app\\server.js",
@@ -166,20 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "resource-centre.html",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html",
-              "RelativeDocumentMoniker": "resource-centre.html",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.html",
-              "RelativeToolTip": "resource-centre.html",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAiwCUAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-26T23:51:42.961Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "hash.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\hash.js",
               "RelativeDocumentMoniker": "app\\hash.js",
@@ -191,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "hash-script.txt",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\views\\hash-script.txt",
               "RelativeDocumentMoniker": "app\\views\\hash-script.txt",
@@ -203,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -215,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": ".env",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\views\\.env",
               "RelativeDocumentMoniker": "app\\views\\.env",
@@ -227,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "package.json",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\package.json",
               "RelativeDocumentMoniker": "package.json",
@@ -240,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "plan-32fd4446-32e1-4126-a9eb-0aa7532adaef.md [Preview]",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Temp\\VisualStudio\\copilot-vs\\plan-32fd4446-32e1-4126-a9eb-0aa7532adaef.md",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Temp\\VisualStudio\\copilot-vs\\plan-32fd4446-32e1-4126-a9eb-0aa7532adaef.md",
@@ -252,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "robots.txt",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\robots.txt",
               "RelativeDocumentMoniker": "robots.txt",
@@ -264,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "resource-centre.css",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.css",
               "RelativeDocumentMoniker": "resource-centre.css",
@@ -276,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "resource-centre.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\resource-centre.js",
               "RelativeDocumentMoniker": "resource-centre.js",
@@ -288,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "media-centre.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\media-centre.html",
               "RelativeDocumentMoniker": "media-centre.html",
@@ -299,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\index.html",
               "RelativeDocumentMoniker": "index.html",
@@ -310,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "media-centre.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\media-centre.js",
               "RelativeDocumentMoniker": "media-centre.js",
@@ -321,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "styles.css",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\styles.css",
               "RelativeDocumentMoniker": "styles.css",
