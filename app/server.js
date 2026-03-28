@@ -60,7 +60,7 @@ app.use(session({
     cookie: {
         domain: process.env.COOKIE_DOMAIN || 'premium.ibrecruitment.com',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',    // true in production with HTTPS
+        secure: true, process.env.NODE_ENV === 'production',    // true in production with HTTPS
         httpOnly: true,  // Prevents XSS cookie theft
         sameSite: 'strict' // Prevents CSRF
     }
