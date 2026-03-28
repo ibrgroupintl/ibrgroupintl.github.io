@@ -1,0 +1,48 @@
+﻿:root{
+  --site-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1a1e29;
+  --muted: #64748b;
+  --accent: #0284c7;
+  --accent-strong: #0369a1;
+  --border: #e2e8f0;
+  --shadow: 0 6px 20px rgba(2,6,23,0.06);
+  --container-max: 1200px;
+}
+
+/* Page layout helpers */
+html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;background:var(--site-bg);color:var(--text)}
+.container{max-width:var(--container-max);margin:0 auto;padding:0 1.5rem}
+
+/* Header */
+.resource-nav{background:var(--card-bg);border-bottom:1px solid var(--border);padding:1rem 0}
+.container-nav{display:flex;align-items:center;justify-content:space-between}
+.site-title{font-weight:700;color:var(--accent);font-size:1.125rem}
+.user-menu{display:flex;align-items:center;gap:0.75rem}
+
+/* Buttons */
+.btn{display:inline-block;padding:0.5rem 0.9rem;border-radius:8px;font-weight:600;border:none;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff;transition:transform 150ms ease,box-shadow 150ms ease,background 150ms ease}
+.btn-primary:hover,.btn-primary:focus{
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(2,6,23,0.12);
+  background:var(--accent-strong);
+}
+.btn-primary:active{transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
+
+/* Hero */
+.hub-main .container{padding:4.5rem 0}
+.hub-main h1{font-size:2rem;margin:0 0 0.5rem}
+.hub-main p{color:var(--muted);max-width:68ch;margin:0 auto}
+
+/* Resource cards (tighter spacing for index) */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.resource-card{background:var(--card-bg);padding:1.25rem;border-radius:10px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.card-icon{font-size:2rem;margin-bottom:0.5rem}
+
+/* Footer */
+.resource-footer{padding:2rem 0;text-align:center;color:var(--muted)}
+
+/* small responsive tweaks */
+@media (max-width:600px){.hub-main .container{padding:2.5rem 0}.site-title{font-size:1rem}}

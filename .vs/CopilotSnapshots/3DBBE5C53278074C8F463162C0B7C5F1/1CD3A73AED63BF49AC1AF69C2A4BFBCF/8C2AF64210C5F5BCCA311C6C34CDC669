@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -17,16 +17,6 @@
     .btn-outline{background:transparent;border:1px solid var(--rc-border, var(--border));color:var(--rc-text-dim, var(--muted))}
     .note{font-size:0.85rem;color:var(--rc-text-dim, var(--muted));text-align:center}
     #error{color:#b00020;font-size:0.95rem;display:none;margin-top:8px}
-  </style>
-  <style>
-    /* Mobile responsiveness for login card */
-    @media (max-width:480px){
-      .card{width:92vw;padding:20px}
-      h1{font-size:1.05rem}
-      .btn{padding:10px;border-radius:10px}
-      .actions{gap:10px}
-      .note{font-size:0.82rem}
-    }
   </style>
   <!-- Firebase compat SDKs (loaded from CDN) -->
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
