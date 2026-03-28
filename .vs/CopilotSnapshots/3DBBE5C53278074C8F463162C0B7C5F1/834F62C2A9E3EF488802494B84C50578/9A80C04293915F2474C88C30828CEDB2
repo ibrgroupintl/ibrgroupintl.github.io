@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -55,13 +55,7 @@
 
   <footer class="resource-footer" role="contentinfo">
     <div class="container">
-      <p style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin:0">
-        <span>&copy; 2026 Impact in Business Recruitment. All rights reserved.</span>
-        <span style="display:inline-flex;gap:8px;align-items:center">
-          <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px">Terms</a>
-          <a href="/privacy.html" class="btn btn-outline" style="padding:6px 10px">Privacy</a>
-        </span>
-      </p>
+      <p>&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
     </div>
   </footer>
 
