@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -18,7 +18,7 @@
         <span class="site-title">Home</span>
       </div>
       <div class="user-menu">
-        <a class="btn btn-primary nav-login" href="/login.html">Request Early Access</a>
+        <a class="btn btn-primary nav-login" href="/login.html">Sign in</a>
       </div>
     </div>
   </header>
