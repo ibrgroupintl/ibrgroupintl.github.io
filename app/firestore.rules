@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /surveyResponses/{responseId} {
+      
+     allow create: if 
+  request.auth != null &&
+  request.resource.data.userId == request.auth.uid &&
+  get(/databases/$(database)/documents/userSubmissionCounts/$(request.auth.uid)).data.count < 1;
+      
+      allow read: if false;          // Keep responses private
+      allow update, delete: if false; // Prevent tampering
+    }
+    
+    match /{document=**} {
+      allow read, write: if false;
+      
+    }
+  }
+}

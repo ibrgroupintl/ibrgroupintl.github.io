@@ -88,13 +88,13 @@ app.use(session({
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-        domain: process.env.COOKIE_DOMAIN || 'supa-73a39.firebaseapp.com',
+        domain: process.env.COOKIE_DOMAIN || 'premo-491612.firebaseapp.com',
         path: '/',
         // Set secure cookies only in production when running over HTTPS
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,  // Prevents XSS cookie theft
-        sameSite: 'strict' // Prevents CSRF
-        ,maxAge: 24 * 60 * 60 * 1000 // 1 day
+        sameSite: 'strict', // Prevents CSRF
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
 }));
 
