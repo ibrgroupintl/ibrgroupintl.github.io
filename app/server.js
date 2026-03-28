@@ -87,7 +87,7 @@ app.use(session({
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-        domain: process.env.COOKIE_DOMAIN || 'premium.ibrecruitment.com',
+        domain: process.env.COOKIE_DOMAIN || 'supa-73a39.firebaseapp.com',
         path: '/',
         // Set secure cookies only in production when running over HTTPS
         secure: process.env.NODE_ENV === 'production',
