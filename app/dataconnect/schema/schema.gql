@@ -1,37 +1,40 @@
 type User @table {
   email: String!
+  passwordHash: String!
   createdAt: Timestamp!
-  displayName: String
-  photoUrl: String
-  isAdmin: Boolean
+  isActive: Boolean!
+  isEmailConfirmed: Boolean!
+  firstName: String
+  lastName: String
+  lastLoginAt: Timestamp
+  emailConfirmationToken: String
 }
 
-type Survey @table {
-  creator: User!
-  title: String!
-  status: String!
+type PasswordResetToken @table {
+  token: String!
+  user: User!
+  expiresAt: Timestamp!
   createdAt: Timestamp!
-  updatedAt: Timestamp!
+  usedAt: Timestamp
+}
+
+type Session @table {
+  sessionToken: String!
+  user: User!
+  expiresAt: Timestamp!
+  createdAt: Timestamp!
+  ipAddress: String
+  userAgent: String
+}
+
+type Role @table {
+  name: String!
+  createdAt: Timestamp!
   description: String
 }
 
-type Question @table {
-  survey: Survey!
-  text: String!
-  type: String!
-  order: Int!
-  createdAt: Timestamp!
-  options: [String]
-}
-
-type Response @table {
-  respondent: User!
-  survey: Survey!
-  submittedAt: Timestamp!
-}
-
-type Answer @table {
-  response: Response!
-  question: Question!
-  value: String!
+type UserRole @table(key: ["user", "role"]) {
+  user: User!
+  role: Role!
+  assignedAt: Timestamp!
 }

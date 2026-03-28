@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -88,7 +88,7 @@ app.use(session({
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-        domain: process.env.COOKIE_DOMAIN || 'supa-73a39.firebaseapp.com',
+        domain: process.env.COOKIE_DOMAIN || 'premo-491612.firebaseapp.com',
         path: '/',
         // Set secure cookies only in production when running over HTTPS
         secure: process.env.NODE_ENV === 'production',

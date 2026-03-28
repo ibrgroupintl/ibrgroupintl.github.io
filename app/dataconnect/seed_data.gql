@@ -1,0 +1,104 @@
+mutation CreateSeedData @transaction @auth(level: USER, insecureReason: "This mutation inserts seed data and is for development purposes only.") {
+  user_insertMany(
+    data: [
+      {
+        id: "550e8400-e29b-41d4-a716-446655440000",
+        email: "testuser1@example.com",
+        passwordHash: "hashedpassword1",
+        createdAt: "2023-10-27T10:00:00Z",
+        isActive: true,
+        isEmailConfirmed: true,
+        firstName: "John",
+        lastName: "Doe"
+      },
+      {
+        id: "550e8400-e29b-41d4-a716-446655440001",
+        email: "testuser2@example.com",
+        passwordHash: "hashedpassword2",
+        createdAt: "2023-10-27T10:05:00Z",
+        isActive: true,
+        isEmailConfirmed: false,
+        firstName: "Jane",
+        lastName: "Smith"
+      },
+      {
+        id: "550e8400-e29b-41d4-a716-446655440002",
+        email: "admin@example.com",
+        passwordHash: "adminhashedpassword",
+        createdAt: "2023-10-27T10:10:00Z",
+        isActive: true,
+        isEmailConfirmed: true,
+        firstName: "Admin",
+        lastName: "User"
+      }
+    ]
+  )
+  role_insertMany(
+    data: [
+      {
+        id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        name: "user",
+        description: "Standard user role",
+        createdAt: "2023-10-27T10:00:00Z"
+      },
+      {
+        id: "f6e5d4c3-b2a1-0987-6543-210fedcba987",
+        name: "admin",
+        description: "Administrator role with full privileges",
+        createdAt: "2023-10-27T10:00:00Z"
+      }
+    ]
+  )
+  userRole_insertMany(
+    data: [
+      {
+        userId: "550e8400-e29b-41d4-a716-446655440000",
+        roleId: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        assignedAt: "2023-10-27T10:15:00Z"
+      },
+      {
+        userId: "550e8400-e29b-41d4-a716-446655440001",
+        roleId: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        assignedAt: "2023-10-27T10:16:00Z"
+      },
+      {
+        userId: "550e8400-e29b-41d4-a716-446655440002",
+        roleId: "f6e5d4c3-b2a1-0987-6543-210fedcba987",
+        assignedAt: "2023-10-27T10:17:00Z"
+      }
+    ]
+  )
+  session_insertMany(
+    data: [
+      {
+        id: "cba98765-4321-fedc-ba98-76543210fedc",
+        userId: "550e8400-e29b-41d4-a716-446655440000",
+        sessionToken: "someSessionToken1",
+        expiresAt: "2023-11-27T10:00:00Z",
+        createdAt: "2023-10-27T10:00:00Z",
+        ipAddress: "192.168.1.1",
+        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+      },
+      {
+        id: "12345678-90ab-cdef-0123-456789abcdef",
+        userId: "550e8400-e29b-41d4-a716-446655440002",
+        sessionToken: "someSessionTokenAdmin",
+        expiresAt: "2023-11-27T10:10:00Z",
+        createdAt: "2023-10-27T10:10:00Z",
+        ipAddress: "192.168.1.10",
+        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+      }
+    ]
+  )
+  passwordResetToken_insertMany(
+    data: [
+      {
+        id: "abcdef01-2345-6789-abcd-ef0123456789",
+        userId: "550e8400-e29b-41d4-a716-446655440001",
+        token: "resettoken123",
+        expiresAt: "2023-10-28T10:00:00Z",
+        createdAt: "2023-10-27T10:00:00Z"
+      }
+    ]
+  )
+}

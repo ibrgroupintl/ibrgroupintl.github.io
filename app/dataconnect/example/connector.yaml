@@ -6,7 +6,3 @@ generate:
       packageJsonDir: ..\..
       react: false
       angular: false
-  adminNodeSdk:
-    - outputDir: ..\..\default1\src\dataconnect-admin-generated
-      package: "@dataconnect/admin-generated"
-      packageJsonDir: ..\..\default1
