@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, '..')));
 
 // Redirect root to the resource centre page for convenience
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'resource-centre.html'));
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // --- 2. Database Connection (Using .env variables) ---
@@ -138,7 +138,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     req.session.username = req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value) || 'google-user';
     // normalize session timestamp name used by authCheck
     req.session.logged_in_at = Math.floor(Date.now() / 1000);
-    res.redirect('/resource-centre');
+    res.redirect('/index');
 });
 
 // Logout
@@ -175,7 +175,7 @@ app.post('/login', async (req, res) => {
                 req.session.username = user.username;
                 // normalize session timestamp property name used by authCheck
                 req.session.logged_in_at = Math.floor(Date.now() / 1000);
-                res.redirect('/resource-centre');
+                res.redirect('/index');
             });
             await dbPool.execute('UPDATE admin_users SET last_login = NOW() WHERE id = ?', [user.id]);
         } else {
@@ -187,8 +187,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/resource-centre', authCheck, (req, res) => {
-    res.send('Welcome to the Protected Resource Centre, ' + req.session.username);
+app.get('/index', authCheck, (req, res) => {
+    res.send('Welcome to the Protected Resources Centre, ' + req.session.username);
 });
 
 const PORT = process.env.PORT || 3000;
