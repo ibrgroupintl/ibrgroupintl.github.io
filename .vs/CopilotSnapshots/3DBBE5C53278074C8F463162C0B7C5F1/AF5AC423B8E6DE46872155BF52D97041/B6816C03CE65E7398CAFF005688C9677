@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -7,7 +7,6 @@ const helmet = require('helmet');
 const path = require('path');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const MySQLStore = require('express-mysql-session')(session);
 
 const app = express();
 
@@ -27,33 +26,17 @@ app.get('/', (req, res) => {
 });
 
 // --- 2. Database Connection (Using .env variables) ---
-// Support Cloud SQL socketPath (CLOUD_SQL_CONNECTION_NAME) for Cloud Run and tune pool for concurrency
-const useSocket = !!process.env.CLOUD_SQL_CONNECTION_NAME;
-const defaultPoolSize = Math.max(2, parseInt(process.env.DB_CONN_LIMIT || process.env.DB_POOL_SIZE || '10', 10));
-const dbConfig = {
+// Ensure common env names are supported and add sensible pool defaults
+const dbPool = mysql.createPool({
+    host: process.env.DB_HOST || '127.0.0.1',
     user: process.env.DB_USER || process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || process.env.DB_PASS || '',
     database: process.env.DB_NAME || process.env.DB_DATABASE || '',
     charset: 'utf8mb4',
     waitForConnections: true,
-    connectionLimit: defaultPoolSize,
-    queueLimit: 0,
-    // mysql2 option: timeout for initial connection handshake
-    connectTimeout: parseInt(process.env.DB_CONNECT_TIMEOUT_MS || '10000', 10),
-    // mysql2 doesn't expose acquireTimeout directly on pool options, but we set a conservative value
-    acquireTimeout: parseInt(process.env.DB_ACQUIRE_TIMEOUT_MS || '10000', 10)
-};
-
-if (useSocket) {
-    // Use Cloud SQL Unix socket path when provided (Cloud Run / Cloud Functions)
-    dbConfig.socketPath = `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`;
-} else {
-    dbConfig.host = process.env.DB_HOST || '127.0.0.1';
-    if (process.env.DB_PORT) dbConfig.port = parseInt(process.env.DB_PORT, 10);
-}
-
-const dbPool = mysql.createPool(dbConfig);
-console.log(`DB pool configured. socketPath=${useSocket ? dbConfig.socketPath : 'none'}, connectionLimit=${dbConfig.connectionLimit}`);
+    connectionLimit: parseInt(process.env.DB_CONN_LIMIT || '10', 10),
+    queueLimit: 0
+});
 
 // Basic connectivity test (non-blocking). Logs a warning if DB is unreachable.
 (async () => {
@@ -69,23 +52,11 @@ console.log(`DB pool configured. socketPath=${useSocket ? dbConfig.socketPath : 
 })();
 
 // --- 3. Session Configuration ---
-// Configure a persistent MySQL-backed session store (safer for production than MemoryStore)
-const sessionStoreOptions = {
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 3306,
-    user: process.env.DB_USER || process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || process.env.DB_PASS || '',
-    database: process.env.DB_NAME || process.env.DB_DATABASE || '',
-    // default expiration handled by session cookie maxAge below
-    createDatabaseTable: true
-};
-const sessionStore = new MySQLStore(sessionStoreOptions);
 app.use(session({
     name: 'ibr_resource_session',
     secret: process.env.SESSION_SECRET || '59c81a27a88a41f51677925579b821be37323c37ec21c73bf865c3f053a1698df3ac7d6e739149652c476897156dce7e',
     resave: false,
     saveUninitialized: false,
-    store: sessionStore,
     cookie: {
         domain: process.env.COOKIE_DOMAIN || 'premium.ibrecruitment.com',
         path: '/',
@@ -93,7 +64,6 @@ app.use(session({
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,  // Prevents XSS cookie theft
         sameSite: 'strict' // Prevents CSRF
-        ,maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
 }));
 
