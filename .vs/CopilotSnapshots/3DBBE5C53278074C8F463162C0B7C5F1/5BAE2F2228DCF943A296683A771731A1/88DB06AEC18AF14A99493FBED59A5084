@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -32,7 +32,7 @@
 
     <div class="actions">
       <button id="googleBtn" class="btn btn-primary" type="button">Sign in with Google</button>
-      <a class="btn btn-outline" href="/index.html">Return to public site</a>
+      <a class="btn btn-outline" href="/resource-centre.html">Return to public site</a>
     </div>
 
     <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
@@ -57,7 +57,7 @@
       auth.getRedirectResult().then((result) => {
         if (result && result.user) {
           // Signed in via redirect
-          window.location.replace('/index.html');
+          window.location.replace('/resource-centre.html');
         }
       }).catch((err) => {
         console.error('Redirect result error', err);
@@ -66,7 +66,7 @@
 
       // If already signed in, go to resource centre
       auth.onAuthStateChanged(user => {
-        if (user) window.location.replace('/index.html');
+        if (user) window.location.replace('/resource-centre.html');
       });
 
       async function signInWithGoogle(){
