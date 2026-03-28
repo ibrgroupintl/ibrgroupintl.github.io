@@ -1,11 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Secure Login</title>
   <link rel="stylesheet" href="/resource-centre.css">
-  <link rel="stylesheet" href="/index.css">
   <style>
     /* Minimal, neutral login card styling */
     body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:var(--rc-bg)}
@@ -91,6 +90,5 @@
 
     })();
   </script>
-  <script src="/index.js" defer></script>
 </body>
 </html>
