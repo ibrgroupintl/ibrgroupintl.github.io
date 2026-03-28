@@ -24,4 +24,33 @@ document.addEventListener('DOMContentLoaded', function(){
     a.setAttribute('href', 'mailto:' + SITE_CONFIG.contactEmail);
     if (a.textContent.indexOf('@') === -1) a.textContent = SITE_CONFIG.contactEmail;
   });
+
+  // Cookie consent: create element if not previously dismissed
+  try {
+    var cookieName = 'ibr_cookie_consent_v1';
+    function setCookie(name, value, days){
+      var d = new Date(); d.setTime(d.getTime()+(days*24*60*60*1000));
+      document.cookie = name + '=' + encodeURIComponent(value) + ';path=/;SameSite=Lax';
+    }
+    function getCookie(name){
+      var v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+      return v ? decodeURIComponent(v.pop()) : null;
+    }
+
+    if (!getCookie(cookieName) && location.hostname === 'premium.ibrecruitment.com'){
+      var bar = document.createElement('div');
+      bar.className = 'cookie-consent';
+      bar.innerHTML = '<div class="container"><p>We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:#fff;text-decoration:underline;margin-left:6px">Learn more</a></p><div class="actions"><button class="btn btn-secondary" id="cookieDecline">Decline</button><button class="btn btn-primary" id="cookieAccept">Accept</button></div></div>';
+      document.body.appendChild(bar);
+
+      document.getElementById('cookieAccept').addEventListener('click', function(){
+        setCookie(cookieName, 'accepted', 365);
+        bar.remove();
+      });
+      document.getElementById('cookieDecline').addEventListener('click', function(){
+        setCookie(cookieName, 'declined', 365);
+        bar.remove();
+      });
+    }
+  } catch (e) { console.error('Cookie consent init failed', e); }
 });

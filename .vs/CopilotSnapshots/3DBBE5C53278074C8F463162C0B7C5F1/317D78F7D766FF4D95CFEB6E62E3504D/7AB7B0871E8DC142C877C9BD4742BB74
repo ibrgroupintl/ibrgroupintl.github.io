@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -40,22 +40,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 .btn-primary:active{transform:translateY(-1px);}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
 
-/* Cookie consent bar */
-.cookie-consent{
-  position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:14px 18px;backdrop-filter:blur(6px);
-  background:linear-gradient(180deg, rgba(2,6,23,0.9), rgba(2,6,23,0.85));color:#fff;font-size:0.95rem
-}
-.cookie-consent .container{max-width:var(--container-max);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.cookie-consent p{margin:0;color:rgba(255,255,255,0.95)}
-.cookie-consent .actions{display:flex;gap:8px}
-.cookie-consent .btn{padding:8px 12px;border-radius:8px}
-.cookie-consent .btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.18);color:#fff}
-.cookie-consent .btn-primary{background:var(--accent);color:#fff}
-@media (max-width:600px){
-  .cookie-consent{padding:12px 10px}
-  .cookie-consent .container{flex-direction:column;align-items:flex-start}
-  .cookie-consent .actions{width:100%;justify-content:flex-end}
-}
 /* Ensure header login outline button contrasts against the nav background image */
 .resource-nav .btn-outline.nav-login{
   color: var(--text);
