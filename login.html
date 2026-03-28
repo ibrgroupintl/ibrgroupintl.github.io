@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Secure Login</title>
   <link rel="stylesheet" href="/index.css">
+  <!-- Firebase client SDKs -->
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="/firebase-config.js"></script>
   <style>
     /* Minimal, neutral login card styling */
     body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:var(--rc-bg, var(--site-bg))}
@@ -42,13 +46,64 @@
     <div id="error" role="alert"></div>
 
     <div class="actions">
-      <a class="btn btn-primary" href="/auth/google">Sign in with Google</a>
+      <button id="googleBtn" class="btn btn-primary" type="button">Sign in with Google</button>
       <a class="btn btn-outline" href="/index.html">Return to public site</a>
     </div>
 
     <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
   </div>
 
+  <script>
+    // Wait for page and deferred SDKs to load
+    window.addEventListener('load', function () {
+      if (!window.firebase || !window.firebaseConfig) {
+        console.error('Firebase SDK or config not available');
+        return;
+      }
+      try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
+
+      const auth = firebase.auth();
+      const googleBtn = document.getElementById('googleBtn');
+      const errEl = document.getElementById('error');
+
+      function showError(msg) { if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; } }
+
+      // Handle redirect result (if used as fallback)
+      auth.getRedirectResult().then((result) => {
+        if (result && result.user) {
+          result.user.getIdToken().then(idToken => {
+            // Send token to server to create session
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken })
+            }).then(r => r.json()).then(() => window.location.replace('/index.html')).catch(err => showError('Server login failed'));
+          });
+        }
+      }).catch(err => console.error('Redirect result error', err));
+
+      async function signInWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+          const result = await auth.signInWithPopup(provider);
+          const idToken = await result.user.getIdToken();
+          const res = await fetch('/sessionLogin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken })
+          });
+          if (res.ok) return window.location.replace('/index.html');
+          const json = await res.json();
+          showError(json && json.error ? json.error : 'Server login failed');
+        } catch (err) {
+          console.warn('Popup failed, falling back to redirect', err);
+          try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }
+        }
+      }
+
+      if (googleBtn) googleBtn.addEventListener('click', () => { if (errEl) errEl.style.display='none'; signInWithGoogle(); });
+    });
+  </script>
   <script src="/index.js" defer></script>
 </body>
 </html>

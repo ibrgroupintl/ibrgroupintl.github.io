@@ -1,5 +1,5 @@
 INSERT INTO admin_users (username, password_hash) 
-VALUES ('admin', '<HASH>');
+VALUES ('admin', '$argon2id$v=19$m=65536,t=4,p=1$3IhnoZydiov1og0/M9bvHQ$WX4axyJta9pl5zKPll7mwpFUSm0PbqNxVmkAM5haQm4');
 
 
 To create login credentials for your new Express/Node.js system, you need to insert a record into your MySQL admin_users table with a password hashed using the Argon2id algorithm.
