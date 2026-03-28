@@ -20,7 +20,7 @@
     },
     "apphosting": {
       "port": 5002,
-      "rootDirectory": "/",
+      "rootDirectory": "./",
       "startCommand": "npm run dev"
     },
     "auth": {
@@ -93,9 +93,24 @@
       "source": "new1"
     },
     {
-      "source": "new",
       "codebase": "new",
       "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "source": "new"
+    },
+    {
+      "codebase": "many",
+      "disallowLegacyRuntimeConfig": true,
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "source": "lowkey",
       "ignore": [
         "node_modules",
         ".git",
@@ -127,6 +142,17 @@
         "firebase-debug.*.log",
         "functions"
       ]
+    },
+    {
+      "backendId": "my-web-app-5",
+      "rootDir": "many",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
     }
   ],
   "storage": {
@@ -141,7 +167,6 @@
   },
   "auth": {
     "providers": {
-      "emailPassword": true,
       "googleSignIn": {
         "oAuthBrandDisplayName": "IBLogin",
         "supportEmail": "developers@ibrecruitment.com"

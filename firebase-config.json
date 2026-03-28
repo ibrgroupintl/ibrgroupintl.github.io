@@ -1,7 +1,8 @@
- "version": "2",
+{
+  "version": "2",
   "projectNumber": "447556072560",
   "projectId": "supa-73a39",
-  "appId": "1:447556072560:web:c64bc48cafd5d0f6f470b5",
+  "appId": "1:447556072560:web:f93c023dbe6c874ef470b5",
   "realtimeDatabaseInstanceUri": "https://supa-73a39-default-rtdb.firebaseio.com",
   "realtimeDatabaseUrl": "",
   "storageBucket": "supa-73a39.firebasestorage.app",
@@ -9,4 +10,5 @@
   "apiKey": "AIzaSyD0IQolC1QyP-RV0QWdJQ7MteXl5axb1go",
   "authDomain": "supa-73a39.firebaseapp.com",
   "messagingSenderId": "447556072560",
-  "measurementId": "G-P7S6JD3MR9"
+  "measurementId": "G-9KW92KZPLP"
+}
