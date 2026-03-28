@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -31,8 +31,10 @@
       .note{font-size:0.82rem}
     }
   </style>
-</head>
-<body>
+  <!-- Firebase compat SDKs (loaded from CDN) -->
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="/firebase-config.js"></script>
 </head>
 <body>
   <div class="card" role="main" aria-labelledby="signin-title">
@@ -42,13 +44,65 @@
     <div id="error" role="alert"></div>
 
     <div class="actions">
-      <a class="btn btn-primary" href="/auth/google">Sign in with Google</a>
+      <button id="googleBtn" class="btn btn-primary" type="button">Sign in with Google</button>
       <a class="btn btn-outline" href="/index.html">Return to public site</a>
     </div>
 
     <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
   </div>
 
+  <script>
+    // Initialize Firebase and set up auth flows
+    (function(){
+      try {
+        firebase.initializeApp(window.firebaseConfig);
+      } catch (e) {
+        // firebase app already initialized or missing config
+      }
+
+      const auth = firebase.auth();
+      const googleBtn = document.getElementById('googleBtn');
+      const errEl = document.getElementById('error');
+
+      function showError(msg){ errEl.textContent = msg; errEl.style.display = 'block'; }
+
+      // Handle redirect result (if signInWithRedirect was used)
+      auth.getRedirectResult().then((result) => {
+        if (result && result.user) {
+          // Signed in via redirect
+          window.location.replace('/resource-centre.html');
+        }
+      }).catch((err) => {
+        console.error('Redirect result error', err);
+        showError(err.message || 'Authentication error');
+      });
+
+      // If already signed in, go to resource centre
+      auth.onAuthStateChanged(user => {
+        if (user) window.location.replace('/resource-centre.html');
+      });
+
+      async function signInWithGoogle(){
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+          // Try popup first
+          await auth.signInWithPopup(provider);
+        } catch (err) {
+          console.warn('Popup failed, falling back to redirect', err);
+          // Popup blocked or unsupported - fallback to redirect
+          try {
+            await auth.signInWithRedirect(provider);
+          } catch (rerr) {
+            console.error('Redirect fallback failed', rerr);
+            showError(rerr.message || 'Authentication failed');
+          }
+        }
+      }
+
+      googleBtn.addEventListener('click', () => { errEl.style.display='none'; signInWithGoogle(); });
+
+    })();
+  </script>
   <script src="/index.js" defer></script>
 </body>
 </html>
