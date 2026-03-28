@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <header class="resource-nav" role="banner">
     <div class="container container-nav">
       <div class="logo">
-        <span class="site-title">Home</span>
+        <span class="site-title">Impact in Business Recruitment</span>
       </div>
       <div class="user-menu">
         <a class="btn btn-primary nav-login" href="/login.html">Sign in</a>
