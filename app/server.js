@@ -161,7 +161,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID || '',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || '/auth/google/callback'
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'supa-73a39.firebaseapp.com/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         // Here you could find or create a corresponding local user record.
@@ -204,9 +204,6 @@ const authCheck = (req, res, next) => {
 app.get('/login', (req, res) => {
     res.render('login', { error: null });
 });
-
-// Start Google OAuth flow
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // OAuth callback
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
