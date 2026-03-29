@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -113,10 +113,23 @@
       if (googleBtn) googleBtn.addEventListener('click', () => { if (errEl) errEl.style.display='none'; signInWithGoogle(); });
     });
   </script>
-  <div class="container" style="text-align:center;margin:18px 0 24px">
-    <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px;margin-right:8px">Terms</a>
-    <a href="/privacy.html" class="btn btn-outline" style="padding:6px 10px">Privacy</a>
-  </div>
+  <footer class="resource-footer">
+    <div class="container" style="text-align:center">
+      
+
+      <!-- Inline cookie consent UI placed inside footer (non-fixed) -->
+      <div id="cookieConsentBar" style="width:100%;max-width:900px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
+        <div style="flex:1;min-width:180px;color:var(--muted)">We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
+          <button id="cookieAcceptBtn" style="background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;">Accept</button>
+        </div>
+      </div>
+
+      <div>
+        </div>
+    </div>
+  </footer>
 
   <script src="/index.js" defer></script>
   <script>
