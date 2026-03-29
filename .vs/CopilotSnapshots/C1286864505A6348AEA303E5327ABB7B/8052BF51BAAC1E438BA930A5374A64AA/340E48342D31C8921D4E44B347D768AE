@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -24,19 +24,7 @@
     </div>
   </header>
 
-  <!-- Login section (shown when not authenticated) -->
-  <div id="login-section" style="max-width:820px;margin:1.5rem auto;text-align:center">
-    <div class="signin-card">
-      <p class="intro-note">Please sign in with your Google account to access the members area.</p>
-      <div class="divider"></div>
-      <div class="center-buttons">
-        <div id="g_id_signin" aria-hidden="false"></div>
-        <div id="google-login-status" role="status" aria-live="polite" style="color:var(--text); margin-left:8px;">Not signed in</div>
-      </div>
-    </div>
-  </div>
-
-  <main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
+  <main class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center">
     <h1>Members Area</h1>
     <p class="lead">Welcome to the members area. This page is protected and requires authentication.</p>
     <div style="margin-top:1.5rem">

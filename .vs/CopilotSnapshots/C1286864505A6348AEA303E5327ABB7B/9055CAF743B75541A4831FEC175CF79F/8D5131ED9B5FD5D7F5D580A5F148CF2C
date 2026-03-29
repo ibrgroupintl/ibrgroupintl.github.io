@@ -1,0 +1,46 @@
+﻿import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged, getIdToken } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { firebaseConfig } from "./firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const protectedContent = document.getElementById('protected-content');
+const userNameEl = document.getElementById('userName');
+const userEmailEl = document.querySelector('[data-user-email]');
+const logoutBtn = document.getElementById('logoutBtn');
+
+// Sign out handler
+logoutBtn?.addEventListener('click', () => {
+  signOut(auth).catch(err => console.error('Sign out error', err));
+});
+
+// Enforce authentication: if not signed-in, redirect to /login.html
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    // Reveal protected UI
+    if (protectedContent) protectedContent.style.display = '';
+    if (userNameEl) userNameEl.textContent = user.displayName || user.email || 'Member';
+    if (userEmailEl) userEmailEl.textContent = user.email || '';
+
+    // Send ID token to backend to establish a secure session cookie (server should verify)
+    try {
+      const idToken = await getIdToken(user, /* forceRefresh= */ false);
+      fetch('/sessionLogin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken })
+      }).then(resp => {
+        if (!resp.ok) console.warn('sessionLogin returned non-OK', resp.status);
+      }).catch(err => console.error('sessionLogin network error', err));
+    } catch (err) {
+      console.error('Failed to get ID token', err);
+    }
+  } else {
+    // Not signed in — hide content and redirect to login page
+    if (protectedContent) protectedContent.style.display = 'none';
+    // Small delay to allow the client script to settle before navigation
+    setTimeout(() => { window.location.href = '/login.html'; }, 250);
+  }
+});
