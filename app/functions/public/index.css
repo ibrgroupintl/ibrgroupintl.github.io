@@ -19,11 +19,11 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 
 /* Header */
 .resource-nav{
-  /* background image with subtle dark overlay for legibility */
-  background: linear-gradient(rgba(2,6,23,0.45), rgba(2,6,23,0.25)), url('/assets/logistics.jpg') center/cover no-repeat, var(--card-bg);
+  /* simplified header background (removed image for a cleaner, consistent header) */
+  background: linear-gradient(180deg, rgba(2,6,23,0.9), rgba(2,6,23,0.85));
   border-bottom:1px solid rgba(255,255,255,0.08);
   padding:1rem 0;
-  color: #fff; /* ensure header text is readable against the image */
+  color: #fff;
 }
 .container-nav{display:flex;align-items:center;justify-content:space-between}
 .site-title{font-weight:700;color:var(--accent);font-size:1.125rem}
