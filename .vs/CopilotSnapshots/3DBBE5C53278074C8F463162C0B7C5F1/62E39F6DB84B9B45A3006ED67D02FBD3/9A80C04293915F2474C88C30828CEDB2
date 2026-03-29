@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <header class="resource-nav" role="banner">
     <div class="container container-nav">
       <div class="logo">
-        <span class="site-title" style="color:#0284c7">User Portal</span>
+        <span class="site-title">User Portal</span>
       </div>
       <div class="user-menu">
         <a class="btn btn-outline nav-login" href="/login.html">Sign In</a>
