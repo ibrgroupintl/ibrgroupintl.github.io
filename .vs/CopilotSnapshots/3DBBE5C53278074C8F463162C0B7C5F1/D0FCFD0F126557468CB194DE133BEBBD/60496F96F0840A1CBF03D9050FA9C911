@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,7 +10,7 @@
 <body>
   <header class="resource-nav" role="banner">
     <div class="container container-nav">
-      <div class="logo"><a href="/" class="site-title" style="color:var(--text)">Home</a></div>
+      <div class="logo"><a href="/" class="site-title">Home</a></div>
       <div class="user-menu">
         <a class="btn btn-primary nav-login" href="/login.html">Sign in</a>
       </div>
