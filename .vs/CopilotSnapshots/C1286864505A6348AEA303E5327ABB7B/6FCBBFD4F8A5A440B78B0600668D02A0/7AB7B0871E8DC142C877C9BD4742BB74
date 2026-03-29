@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -57,20 +57,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   color: rgba(255,255,255,0.95);
   background: rgba(255,255,255,0.06);
   border-color: rgba(255,255,255,0.12);
-}
-
-/* Contact code snippet in header */
-.contact-code{
-  color: lightgrey;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
-  background: rgba(255,255,255,0.03);
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  margin-right: 0.75rem;
-  font-size: 0.95rem;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 /* Hero */
