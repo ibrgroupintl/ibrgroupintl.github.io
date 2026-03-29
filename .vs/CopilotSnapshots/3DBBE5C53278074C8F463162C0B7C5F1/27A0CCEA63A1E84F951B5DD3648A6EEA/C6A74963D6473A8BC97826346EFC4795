@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,8 +28,11 @@
     #error{color:#b00020;font-size:0.95rem;display:none;margin-top:8px}
     /* Page-scoped container centering for login page only */
     .login-page .container{display:flex;flex-direction:column;align-items:center;justify-content:center}
-    /* Links block inside the card: horizontal and centered */
-    .meta-links{display:flex;flex-direction:row;gap:12px;justify-content:center;align-items:center}
+    /* Links block when placed alongside the card */
+    .meta-links{display:flex;flex-direction:column;gap:12px;align-items:center}
+    @media (min-width:760px){
+      .meta-links{align-items:flex-start}
+    }
   </style>
   <style>
     /* Mobile responsiveness for login card */
