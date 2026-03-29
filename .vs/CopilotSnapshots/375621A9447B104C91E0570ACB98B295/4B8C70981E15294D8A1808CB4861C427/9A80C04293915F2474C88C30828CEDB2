@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -14,10 +14,9 @@
 	<body>
 		<header class="resource-nav" role="banner">
 			<div class="container container-nav">
-      <div class="logo" style="display:flex;align-items:center;gap:12px">
-		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
-		<span class="site-title" style="color:lightgrey">User Portal</span>
-	  </div>
+				<div class="logo">
+					<span class="site-title" style="color:lightgrey">User Portal</span>
+				</div>
 				<div class="user-menu">
 					<code class="contact-code">
 						<b>Enquiries:</b> 07940916731
