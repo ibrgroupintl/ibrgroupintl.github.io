@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width,initial-scale=1">
-				<meta name="robots" content="index, follow">
-					<title>Impact in Business Recruitment — Human Resources Centre</title>
-					<link rel="stylesheet" href="/resource-centre.css">
-						<link rel="stylesheet" href="/index.css">
-							<link rel="preconnect" href="https://fonts.googleapis.com">
-								<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-									<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <title>Impact in Business Recruitment — Human Resources Centre</title>
+  <link rel="stylesheet" href="/resource-centre.css">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 	<body>
 		<header class="resource-nav" role="banner">
@@ -19,7 +19,7 @@
 				</div>
 				<div class="user-menu">
 					<code class="contact-code">
-						</><b>United Kingdom:</b> +44 (0) 7940 916 731
+						</><b>Product Subscription Enquiries:</b> +44 (0) 7940 916 731
 					</code>
 					<a class="btn btn-outline nav-login" href="/login.html">Sign In</a>
 				</div>
@@ -89,17 +89,45 @@
 
 		<script src="/top-script.js" defer=""></script>
 		<script src="/index.js" defer=""></script>
+		</main>
+	</body>
 
-		<!-- cookie consent bar removed from fixed position; consent UI moved into footer below -->
+  <!-- cookie consent bar removed from fixed position; consent UI moved into footer below -->
 
-		<footer class="resource-footer" role="contentinfo">
-			<div class="container" style="text-align:center">
+  <footer class="resource-footer" role="contentinfo">
+    <div class="container" style="text-align:center">
+     
+      <!-- Inline cookie consent UI placed inside footer (non-fixed) -->
+      <div id="cookieConsentBar" style="width:100%;max-width:1200px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
+        <div style="flex:1;min-width:220px;color:var(--muted)">We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
+          <button id="cookieAcceptBtn" style="background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;">Accept</button>
+        </div>
+      </div>
 
-				<!-- Inline cookie consent UI placed inside footer (non-fixed) -->
-				<div id="cookieConsentBar" style="width:100%;max-width:1200px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
-					<div style="flex:1;min-width:220px;color:var(--muted)">
-						We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a>
-					</div>
-					<div style="display:flex;gap:8px;align-items:center">
-						<button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
-						<button id="cookieAcceptBtn" 
+      <div>
+        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Load Font Awesome for icons used in header (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" defer></script>
+  <script src="/index.js" defer></script>
+  <script>
+    (function(){
+      try {
+        var cookieName = 'ibr_cookie_consent_v1';
+        function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+(days*24*60*60*1000));document.cookie = name+'='+encodeURIComponent(value)+';path=/;SameSite=Lax';}
+        function getCookie(name){var v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');return v?decodeURIComponent(v.pop()):null}
+        var bar = document.getElementById('cookieConsentBar');
+        if (!bar) return;
+        if (getCookie(cookieName)) { bar.style.display = 'none'; return; }
+        document.getElementById('cookieAcceptBtn').addEventListener('click', function(){ setCookie(cookieName,'accepted',365); bar.style.display = 'none'; });
+        document.getElementById('cookieDeclineBtn').addEventListener('click', function(){ setCookie(cookieName,'declined',365); bar.style.display = 'none'; });
+      } catch(e){ console.error('cookie bar init', e);}    
+    })();
+  </script>
+</body>
+</html>
