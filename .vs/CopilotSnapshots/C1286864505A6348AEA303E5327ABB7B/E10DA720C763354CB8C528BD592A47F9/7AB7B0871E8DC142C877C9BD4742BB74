@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -113,18 +113,4 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   .card-icon{font-size:1.6rem}
   /* ensure touch targets remain large enough */
   .btn{min-height:var(--touch-target)}
-
-  /* Header adjustments for narrow screens: stack items and reduce contact code */
-  .container-nav{flex-direction:row;align-items:center;gap:8px}
-  .user-menu{display:flex;align-items:center;gap:8px}
-  .contact-code{font-size:0.85rem;padding:5px 8px;margin-right:0.5rem}
-  /* On very small screens hide the phone snippet to keep header compact */
-  @media (max-width:360px){
-    .contact-code{display:none}
-  }
-
-  /* Cookie consent bar stack and full-width buttons */
-  #cookieConsentBar{flex-direction:column;align-items:stretch;padding:10px}
-  #cookieConsentBar > div:first-child{margin-bottom:8px}
-  #cookieConsentBar button{width:100%;}
 }
