@@ -110,14 +110,27 @@
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run build"
       ],
-      "source": "lowkey",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log",
         "*.local"
-      ]
+      ],
+      "source": "lowkey"
+    },
+    {
+      "source": "scratch",
+      "codebase": "scratch",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "runtime": "python313"
     }
   ],
   "apphosting": [
@@ -168,7 +181,7 @@
   "auth": {
     "providers": {
       "googleSignIn": {
-        "oAuthBrandDisplayName": "IBLogin",
+        "oAuthBrandDisplayName": "Italiano",
         "supportEmail": "developers@ibrecruitment.com"
       }
     }
