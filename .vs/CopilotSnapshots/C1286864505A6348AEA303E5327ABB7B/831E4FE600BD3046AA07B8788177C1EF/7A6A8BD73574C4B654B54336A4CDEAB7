@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -50,13 +50,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   background: rgba(255,255,255,0.10);
   border-color: rgba(255,255,255,0.14);
   backdrop-filter: blur(2px);
-}
-
-/* Ensure any outline buttons inside the header also appear lighter */
-.resource-nav .btn-outline{
-  color: rgba(255,255,255,0.95);
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.12);
 }
 
 /* Hero */

@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -26,7 +26,7 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   color: #fff;
 }
 .container-nav{display:flex;align-items:center;justify-content:space-between}
-.site-title{font-weight:700;color:rgba(255,255,255,0.95);font-size:1.125rem}
+.site-title{font-weight:700;color:var(--accent);font-size:1.125rem}
 .user-menu{display:flex;align-items:center;gap:0.75rem}
 
 /* Buttons */
@@ -44,19 +44,12 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 /* cookie consent styles removed - cookie bar implemented directly in index.html */
 /* Ensure header login outline button contrasts against the nav background image */
 .resource-nav .btn-outline.nav-login{
-  color: rgba(255,255,255,0.95);
+  color: var(--text);
   font-weight:700;
-  /* subtle light background for contrast against header */
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.14);
+  /* subtle light background for contrast against image */
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.18);
   backdrop-filter: blur(2px);
-}
-
-/* Ensure any outline buttons inside the header also appear lighter */
-.resource-nav .btn-outline{
-  color: rgba(255,255,255,0.95);
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.12);
 }
 
 /* Hero */
