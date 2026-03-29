@@ -7,26 +7,83 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import {setGlobalOptions} from "firebase-functions";
-import {onRequest} from "firebase-functions/https";
-import * as logger from "firebase-functions/logger";
+import { setGlobalOptions } from 'firebase-functions';
+import { onRequest } from 'firebase-functions/https';
+import * as logger from 'firebase-functions/logger';
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+import * as express from 'express';
+import * as admin from 'firebase-admin';
+import * as cookieParser from 'cookie-parser';
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
+// Initialize global options and Firebase Admin
 setGlobalOptions({ maxInstances: 10 });
+try { admin.initializeApp(); } catch (e) { /* already initialized */ }
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+
+const SESSION_COOKIE_NAME = 'session';
+const SESSION_EXPIRES = 14 * 24 * 60 * 60 * 1000; // 14 days
+
+function serveStatic(res: express.Response, filepath: string) {
+  const root = join(__dirname, '..', 'public');
+  const full = join(root, filepath);
+  if (!existsSync(full)) return res.status(404).send('Not found');
+  const data = readFileSync(full);
+  if (filepath.endsWith('.html')) res.set('Content-Type', 'text/html');
+  else if (filepath.endsWith('.js')) res.set('Content-Type', 'application/javascript');
+  else if (filepath.endsWith('.css')) res.set('Content-Type', 'text/css');
+  else if (filepath.endsWith('.png')) res.set('Content-Type', 'image/png');
+  else if (filepath.endsWith('.jpg') || filepath.endsWith('.jpeg')) res.set('Content-Type', 'image/jpeg');
+  return res.status(200).send(data);
+}
+
+// POST /sessionLogin - exchanges an ID token for a session cookie
+app.post('/sessionLogin', async (req, res) => {
+  const idToken = req.body && req.body.idToken;
+  if (!idToken) return res.status(400).json({ error: 'Missing idToken' });
+  try {
+    const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn: SESSION_EXPIRES });
+    const cookieDomain = process.env.COOKIE_DOMAIN || '.ibrecruitment.com';
+    const options: any = { maxAge: SESSION_EXPIRES, httpOnly: true, secure: true, sameSite: 'Lax', path: '/', domain: cookieDomain };
+    res.cookie(SESSION_COOKIE_NAME, sessionCookie, options);
+    return res.json({ status: 'success' });
+  } catch (err) {
+    logger.error('sessionLogin failed', err);
+    return res.status(401).json({ error: 'UNAUTHORIZED' });
+  }
+});
+
+// POST /sessionLogout - clears the session cookie
+app.post('/sessionLogout', (req, res) => {
+  const cookieDomain = process.env.COOKIE_DOMAIN || '.ibrecruitment.com';
+  res.clearCookie(SESSION_COOKIE_NAME, { path: '/', domain: cookieDomain });
+  return res.json({ status: 'logged_out' });
+});
+
+// Auth proxy - verify session cookie and serve static files
+app.get('*', async (req, res) => {
+  try {
+    const sessionCookie = req.cookies && req.cookies[SESSION_COOKIE_NAME];
+    // allow login page and public firebase config to be served without auth
+    const publicPaths = ['/login.html', '/firebase-config.js', '/firebase-config.json'];
+    if (!sessionCookie) {
+      if (publicPaths.includes(req.path)) return serveStatic(res, req.path.replace(/^\//, '') || 'login.html');
+      return res.redirect('/login.html');
+    }
+    const decoded = await admin.auth().verifySessionCookie(sessionCookie, true).catch(() => null);
+    if (!decoded) return res.redirect('/login.html');
+    let p = req.path;
+    if (p === '/' || p === '') p = '/index.html';
+    if (p.startsWith('/')) p = p.substring(1);
+    return serveStatic(res, p || 'index.html');
+  } catch (err) {
+    logger.error('auth proxy error', err);
+    return res.redirect('/login.html');
+  }
+});
+
+export const authProxy = onRequest(app);
