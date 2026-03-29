@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -64,7 +64,7 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 .card-icon{font-size:2rem;margin-bottom:0.5rem}
 
 /* Footer */
-.resource-footer{padding:2rem 0;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.resource-footer{padding:2rem 0;text-align:center;color:var(--muted)}
 
 /* small responsive tweaks */
 /* Improved mobile-first and modern responsive rules */
