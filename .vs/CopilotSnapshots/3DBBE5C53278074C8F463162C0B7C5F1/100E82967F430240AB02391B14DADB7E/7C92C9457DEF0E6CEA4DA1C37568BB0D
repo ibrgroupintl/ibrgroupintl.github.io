@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -57,8 +57,8 @@
     </div>
   </main>
 
-  <div class="container" style="display:flex;justify-content:center;gap:12px;margin:18px 0 8px">
-    <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px">Terms</a>
+  <div class="container" style="text-align:center;margin:18px 0 8px">
+    <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px;margin-right:8px">Terms</a>
     <a href="/privacy.html" class="btn btn-outline" style="padding:6px 10px">Privacy</a>
   </div>
 
