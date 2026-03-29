@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -39,8 +39,9 @@
   </style>
 </head>
 <body>
-  <main class="login-main">
-    <div class="card" role="main" aria-labelledby="signin-title">
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="signin-title">
     <h1 id="signin-title">Secure Login</h1>
     <p class="lead">Sign in with your Google account to access the protected portal.</p>
 
@@ -51,13 +52,13 @@
       <a class="btn btn-outline" href="/index.html">Return to public site</a>
     </div>
 
-    <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
-    </div>
-  </main>
-
+  <!-- Terms & Privacy links (bottom of page, above footer) -->
   <div class="container" style="text-align:center;margin:18px 0 8px">
     <a href="/terms.html" class="btn btn-outline" style="padding:6px 10px;margin-right:8px">Terms</a>
     <a href="/privacy.html" class="btn btn-outline" style="padding:6px 10px">Privacy</a>
+  </div>
+
+    <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
   </div>
 
   <script>
