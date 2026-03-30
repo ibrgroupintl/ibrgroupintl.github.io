@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -28,10 +28,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
 .container-nav{display:flex;align-items:center;justify-content:space-between}
 .site-title{font-weight:700;color:rgba(255,255,255,0.95);font-size:1.125rem}
 .user-menu{display:flex;align-items:center;gap:0.75rem}
-
-/* Mobile nav toggle (hidden on desktop) */
-#navToggle{display:none;padding:0.5rem 0.7rem;border-radius:8px}
-
 
 /* Buttons */
 .btn{display:inline-block;padding:0.5rem 0.9rem;border-radius:8px;font-weight:600;border:none;cursor:pointer;line-height:1;min-height:var(--touch-target);display:inline-flex;align-items:center;justify-content:center}
@@ -103,10 +99,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   .hub-main h1{font-size:1.75rem}
   .resource-grid{grid-template-columns:1fr}
   .resource-card{padding:1rem}
-  /* show nav toggle on smaller screens */
-  #navToggle{display:inline-flex}
-  .user-menu{display:none}
-  body.nav-open .user-menu{display:flex;flex-direction:column;position:absolute;top:64px;right:12px;background:linear-gradient(180deg,#fff,#fff);padding:10px;border-radius:8px;box-shadow:var(--elev-1);color:var(--text)}
 }
 
 @media (max-width:420px) {

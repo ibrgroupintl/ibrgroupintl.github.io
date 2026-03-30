@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,100 +30,6 @@
     .login-page .container{display:flex;flex-direction:column;align-items:center;justify-content:center}
     /* Links block inside the card: horizontal and centered */
     .meta-links{display:flex;flex-direction:row;gap:12px;justify-content:center;align-items:center}
-    
-    /* Google Sign-In Button Styling */
-    .google-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 0;
-      height: 40px;
-      border-radius: 4px;
-      border: none;
-      background: #4285f4;
-      color: #fff;
-      font-family: 'Roboto', Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s, box-shadow 0.3s;
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
-      width: 100%;
-    }
-    .google-btn:hover {
-      background: #357ae8;
-      box-shadow: 0 3px 8px 0 rgba(0,0,0,.3);
-    }
-    .google-btn:active {
-      background: #2c5dd4;
-    }
-    .google-btn-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      width: 40px;
-      height: 40px;
-      border-radius: 2px 0 0 2px;
-      flex-shrink: 0;
-    }
-    .google-btn-text {
-      padding-right: 12px;
-      flex: 1;
-      text-align: center;
-    }
-    
-    /* User Status Display */
-    .user-status {
-      display: none;
-      padding: 16px;
-      background: rgba(66, 133, 244, 0.1);
-      border-radius: 8px;
-      border: 1px solid rgba(66, 133, 244, 0.3);
-    }
-    .user-status.active {
-      display: block;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .user-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-    }
-    .user-details {
-      flex: 1;
-    }
-    .user-name {
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 4px 0;
-    }
-    .user-email {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin: 0;
-    }
-    .sign-out-btn {
-      background: #ea4335;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-      width: 100%;
-      transition: background 0.3s;
-    }
-    .sign-out-btn:hover {
-      background: #d33426;
-    }
   </style>
   <style>
     /* Mobile responsiveness for login card */
@@ -156,30 +62,8 @@
 
     <div id="error" role="alert"></div>
 
-    <!-- User Status (shown when logged in) -->
-    <div id="userStatus" class="user-status">
-      <div class="user-info">
-        <img id="userAvatar" class="user-avatar" src="" alt="User avatar">
-        <div class="user-details">
-          <p class="user-name" id="userName"></p>
-          <p class="user-email" id="userEmail"></p>
-        </div>
-      </div>
-      <button id="signOutBtn" class="sign-out-btn">Sign Out</button>
-    </div>
-
-    <div id="signInActions" class="actions">
-      <button id="googleBtn" class="google-btn" type="button">
-        <span class="google-btn-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18">
-            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
-            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-            <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z"/>
-            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z"/>
-          </svg>
-        </span>
-        <span class="google-btn-text">Sign in with Google</span>
-      </button>
+    <div class="actions">
+      <button id="googleBtn" class="btn btn-primary" type="button">Sign in with Google</button>
       <a class="btn btn-outline" href="/index.html">Return to public site</a>
     </div>
 
@@ -207,59 +91,18 @@
         try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 
         const auth = firebase.auth();
+        // If already signed in, go straight to protected page
+        auth.onAuthStateChanged(function(user){ if (user) window.location.replace('/index.html'); });
         const googleBtn = document.getElementById('googleBtn');
-        const signOutBtn = document.getElementById('signOutBtn');
         const errEl = document.getElementById('error');
-        const userStatus = document.getElementById('userStatus');
-        const signInActions = document.getElementById('signInActions');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
 
-        function showError(msg) { 
-          if (errEl) { 
-            errEl.textContent = msg; 
-            errEl.style.display = 'block'; 
-          } 
-        }
-
-        function showUserStatus(user) {
-          if (userStatus && signInActions) {
-            userStatus.classList.add('active');
-            signInActions.style.display = 'none';
-            if (userAvatar && user.photoURL) {
-              userAvatar.src = user.photoURL;
-              userAvatar.alt = user.displayName || 'User';
-            }
-            if (userName) userName.textContent = user.displayName || 'User';
-            if (userEmail) userEmail.textContent = user.email || '';
-          }
-        }
-
-        function hideUserStatus() {
-          if (userStatus && signInActions) {
-            userStatus.classList.remove('active');
-            signInActions.style.display = 'flex';
-          }
-        }
-
-        // Monitor auth state changes
-        auth.onAuthStateChanged(function(user) {
-          if (user) {
-            showUserStatus(user);
-          } else {
-            hideUserStatus();
-          }
-        });
+        function showError(msg) { if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; } }
 
         // Handle redirect result (if used as fallback)
         auth.getRedirectResult().then((result) => {
           if (result && result.user) {
-            // Show user status briefly before redirecting
-            showUserStatus(result.user);
-            setTimeout(() => {
-              window.location.replace('/index.html');
-            }, 1000);
+            // Client-only flow: Firebase persists the session. Redirect to protected page.
+            window.location.replace('/index.html');
           }
         }).catch(err => console.error('Redirect result error', err));
 
@@ -267,40 +110,20 @@
           const provider = new firebase.auth.GoogleAuthProvider();
           try {
             const result = await auth.signInWithPopup(provider);
-            // Show user status briefly before redirecting
-            showUserStatus(result.user);
-            setTimeout(() => {
-              window.location.replace('/index.html');
-            }, 1000);
+            // Client-only flow: Firebase persists the session locally, redirect to protected page
+            return window.location.replace('/index.html');
           } catch (err) {
             console.warn('Popup failed, falling back to redirect', err);
             try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }
           }
         }
 
-        async function signOut() {
-          try {
-            await auth.signOut();
-            hideUserStatus();
-            if (errEl) errEl.style.display = 'none';
-          } catch (err) {
-            showError('Sign out failed: ' + (err.message || 'Unknown error'));
-          }
-        }
-
         if (googleBtn) {
           googleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Prevent any default behavior
             if (errEl) errEl.style.display='none';
             signInWithGoogle();
-          }, { once: false });
-        }
-
-        if (signOutBtn) {
-          signOutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            signOut();
-          });
+          }, { once: true }); // Use 'once' option to ensure handler runs only once
         }
       });
     })();

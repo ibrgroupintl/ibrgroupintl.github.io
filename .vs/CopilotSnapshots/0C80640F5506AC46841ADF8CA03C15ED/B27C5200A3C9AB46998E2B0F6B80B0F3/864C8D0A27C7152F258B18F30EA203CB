@@ -1,10 +1,8 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="theme-color" content="#0284c7">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="index, follow">
   <title>Impact in Business Recruitment — Human Resources Centre</title>
   <link rel="stylesheet" href="/resource-centre.css">
@@ -20,7 +18,6 @@
 		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
 		<span class="site-title" style="color:lightgrey">User Portal</span>
 	  </div>
-      <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
 				<div class="user-menu">
 					<code class="contact-code">
 						<b>Enquiries:</b> 07940916731
@@ -82,7 +79,7 @@
        <section style="margin-top:2rem">
 				<h2>Your Resources</h2>
 				<p>Access exclusive reports and tools available to authenticated users.</p>
-				<a class="btn btn-primary" href="">Open Latest Job Requisition</a>
+				<a class="btn btn-primary" href="/resource-centre">Open Resource Centre</a>
 			</section>
 	</main>
 
@@ -166,16 +163,6 @@
 		});
 	  });
 	});
-</script>
-<script>
-  // Mobile nav toggle handler
-  (function(){
-	var btn = document.getElementById('navToggle');
-	if (!btn) return;
-	btn.addEventListener('click', function(){
-	  document.body.classList.toggle('nav-open');
-	});
-  })();
 </script>
 </body>
 </html>
