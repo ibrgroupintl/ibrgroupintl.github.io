@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -43,18 +43,6 @@
   </style>
 </head>
 <body>
-  <header class="resource-nav" role="banner">
-    <div class="container container-nav">
-      <div class="logo" style="display:flex;align-items:center;gap:12px">
-        <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
-        <span class="site-title" style="color:lightgrey">User Portal</span>
-      </div>
-      <div class="user-menu">
-        <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
-      </div>
-    </div>
-  </header>
-
   <main class="login-main">
     <div class="card" role="main" aria-labelledby="signin-title">
     <h1 id="signin-title">Secure Login</h1>
@@ -86,8 +74,6 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 
       const auth = firebase.auth();
-      // If already signed in, go straight to protected page
-      auth.onAuthStateChanged(function(user){ if (user) window.location.replace('/index.html'); });
       const googleBtn = document.getElementById('googleBtn');
       const errEl = document.getElementById('error');
 
@@ -96,8 +82,14 @@
       // Handle redirect result (if used as fallback)
       auth.getRedirectResult().then((result) => {
         if (result && result.user) {
-          // Client-only flow: Firebase persists the session. Redirect to protected page.
-          window.location.replace('/index.html');
+          result.user.getIdToken().then(idToken => {
+            // Send token to server to create session
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken })
+            }).then(r => r.json()).then(() => window.location.replace('/index.html')).catch(err => showError('Server login failed'));
+          });
         }
       }).catch(err => console.error('Redirect result error', err));
 
@@ -105,8 +97,15 @@
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
           const result = await auth.signInWithPopup(provider);
-          // Client-only flow: Firebase persists the session locally, redirect to protected page
-          return window.location.replace('/index.html');
+          const idToken = await result.user.getIdToken();
+          const res = await fetch('/sessionLogin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken })
+          });
+          if (res.ok) return window.location.replace('/index.html');
+          const json = await res.json();
+          showError(json && json.error ? json.error : 'Server login failed');
         } catch (err) {
           console.warn('Popup failed, falling back to redirect', err);
           try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }
@@ -135,21 +134,5 @@
       } catch(e){ console.error('cookie bar init', e);}    
     })();
   </script>
-
-  <!-- Inline cookie consent UI placed in footer for login page -->
-  <footer class="resource-footer" role="contentinfo">
-    <div class="container" style="text-align:center">
-      <div id="cookieConsentBar" style="width:100%;max-width:1200px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
-        <div style="flex:1;min-width:220px;color:var(--muted)">We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
-          <button id="cookieAcceptBtn" style="background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;">Accept</button>
-        </div>
-      </div>
-      <div>
-        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
 </body>
 </html>

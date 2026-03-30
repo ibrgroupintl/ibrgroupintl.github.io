@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -86,8 +86,6 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 
       const auth = firebase.auth();
-      // If already signed in, go straight to protected page
-      auth.onAuthStateChanged(function(user){ if (user) window.location.replace('/index.html'); });
       const googleBtn = document.getElementById('googleBtn');
       const errEl = document.getElementById('error');
 

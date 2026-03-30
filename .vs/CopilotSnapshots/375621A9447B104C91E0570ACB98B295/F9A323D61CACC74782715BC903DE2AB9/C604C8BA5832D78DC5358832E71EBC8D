@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -86,8 +86,6 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 
       const auth = firebase.auth();
-      // If already signed in, go straight to protected page
-      auth.onAuthStateChanged(function(user){ if (user) window.location.replace('/index.html'); });
       const googleBtn = document.getElementById('googleBtn');
       const errEl = document.getElementById('error');
 
@@ -96,8 +94,14 @@
       // Handle redirect result (if used as fallback)
       auth.getRedirectResult().then((result) => {
         if (result && result.user) {
-          // Client-only flow: Firebase persists the session. Redirect to protected page.
-          window.location.replace('/index.html');
+          result.user.getIdToken().then(idToken => {
+            // Send token to server to create session
+            fetch('/sessionLogin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken })
+            }).then(r => r.json()).then(() => window.location.replace('/index.html')).catch(err => showError('Server login failed'));
+          });
         }
       }).catch(err => console.error('Redirect result error', err));
 
@@ -105,8 +109,15 @@
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
           const result = await auth.signInWithPopup(provider);
-          // Client-only flow: Firebase persists the session locally, redirect to protected page
-          return window.location.replace('/index.html');
+          const idToken = await result.user.getIdToken();
+          const res = await fetch('/sessionLogin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken })
+          });
+          if (res.ok) return window.location.replace('/index.html');
+          const json = await res.json();
+          showError(json && json.error ? json.error : 'Server login failed');
         } catch (err) {
           console.warn('Popup failed, falling back to redirect', err);
           try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }

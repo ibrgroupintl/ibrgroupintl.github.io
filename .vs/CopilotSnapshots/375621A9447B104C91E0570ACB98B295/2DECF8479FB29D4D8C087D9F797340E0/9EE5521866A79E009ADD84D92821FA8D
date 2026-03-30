@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -22,8 +22,7 @@
 					<code class="contact-code">
 						<b>Enquiries:</b> 07940916731
 					</code>
-             <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
-				<button class="btn btn-outline" id="signOutBtn" style="display:none">Sign Out</button>
+					<a class="btn btn-outline nav-login" href="/login.html">Sign In</a>
 				</div>
 			</div>
 		</header>
@@ -42,7 +41,8 @@
 					<div id="google-login-status" role="status" aria-live="polite" style="color:lightgrey; margin-left:8px;">Not signed in</div>
 				</div>
 			</div>
-  </div>
+		</div>
+	</br>
 
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
 
@@ -76,14 +76,14 @@
 				<p data-user-email=""></p>
 			</div>
 
-       <section style="margin-top:2rem">
+			<section style="margin-top:2rem">
 				<h2>Your Resources</h2>
 				<p>Access exclusive reports and tools available to authenticated users.</p>
 				<a class="btn btn-primary" href="/resource-centre">Open Resource Centre</a>
 			</section>
-	</main>
+	
 
-	<footer class="resource-footer">
+		<footer class="resource-footer">
 			<div class="container" style="text-align:center">
 			</div>
 		</footer>
@@ -114,55 +114,22 @@
   
 
   <!-- Load Font Awesome for icons used in header (CDN) -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" defer></script>
-
-  <!-- Firebase SDKs (compat) and project config for client-only auth -->
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script defer src="/firebase-config.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" defer></script>
+  <script src="/index.js" defer></script>
   <script>
-	// Client-only auth: show/hide protected UI using Firebase Auth
-	window.addEventListener('load', function () {
-	  if (!window.firebase || !window.firebaseConfig) {
-		console.warn('Firebase not available; protected UI will remain hidden');
-		return;
-	  }
-	  try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
-	  const auth = firebase.auth();
-	  const protectedMain = document.getElementById('protected-content');
-	  const loginSection = document.getElementById('login-section');
-	  const userNameEl = document.getElementById('userName');
-	  const signOutBtn = document.getElementById('signOutBtn');
-	  const signInLink = document.getElementById('signInLink');
-
-	  function showAuthenticated(user) {
-		if (loginSection) loginSection.style.display = 'none';
-		if (protectedMain) protectedMain.style.display = 'block';
-		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
-		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
-		if (signInLink) signInLink.style.display = 'none';
-	  }
-	  function showSignedOut() {
-		if (loginSection) loginSection.style.display = 'block';
-		if (protectedMain) protectedMain.style.display = 'none';
-		if (userNameEl) userNameEl.textContent = 'Member';
-		if (signOutBtn) signOutBtn.style.display = 'none';
-		if (signInLink) signInLink.style.display = 'inline-flex';
-	  }
-
-	  auth.onAuthStateChanged(function (user) {
-		if (user) showAuthenticated(user);
-		else showSignedOut();
-	  });
-
-	  if (signOutBtn) signOutBtn.addEventListener('click', function () {
-		auth.signOut().then(() => {
-		  showSignedOut();
-		  window.location.replace('/login.html');
-		});
-	  });
-	});
-</script>
+    (function(){
+      try {
+        var cookieName = 'ibr_cookie_consent_v1';
+        function setCookie(name,value,days){var d=new Date();d.setTime(d.getTime()+(days*24*60*60*1000));document.cookie = name+'='+encodeURIComponent(value)+';path=/;SameSite=Lax';}
+        function getCookie(name){var v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');return v?decodeURIComponent(v.pop()):null}
+        var bar = document.getElementById('cookieConsentBar');
+        if (!bar) return;
+        if (getCookie(cookieName)) { bar.style.display = 'none'; return; }
+        document.getElementById('cookieAcceptBtn').addEventListener('click', function(){ setCookie(cookieName,'accepted',365); bar.style.display = 'none'; });
+        document.getElementById('cookieDeclineBtn').addEventListener('click', function(){ setCookie(cookieName,'declined',365); bar.style.display = 'none'; });
+      } catch(e){ console.error('cookie bar init', e);}    
+    })();
+  </script>
+  </main>
 </body>
 </html>
