@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
@@ -116,25 +116,20 @@ passport.deserializeUser((obj, done) => {
 });
 
 // Configure Google Strategy
-// Initialize Google OAuth strategy only when credentials are provided.
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-    passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        // Default to localhost callback for development; override with GOOGLE_CALLBACK_URL in production
-        callbackURL: process.env.GOOGLE_CALLBACK_URL || '/auth/google/callback'
-    }, async (accessToken, refreshToken, profile, done) => {
-        try {
-            // Here you could find or create a corresponding local user record.
-            // For now we just pass the profile through.
-            return done(null, profile);
-        } catch (err) {
-            return done(err);
-        }
-    }));
-} else {
-    console.warn('Google OAuth not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to enable OAuth login.');
-}
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID || '',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    // Default to localhost callback for development; override with GOOGLE_CALLBACK_URL in production
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || '/index.html'
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        // Here you could find or create a corresponding local user record.
+        // For now we just pass the profile through.
+        return done(null, profile);
+    } catch (err) {
+        return done(err);
+    }
+}));
 
 // --- 4. Auth Middleware ---
 const authCheck = (req, res, next) => {
