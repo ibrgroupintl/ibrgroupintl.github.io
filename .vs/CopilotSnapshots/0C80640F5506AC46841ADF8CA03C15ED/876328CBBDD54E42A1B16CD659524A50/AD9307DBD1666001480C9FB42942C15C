@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
@@ -196,9 +196,8 @@ app.post('/login', (req, res) => {
     res.status(501).render('login', { error: 'Local login disabled. Use Google Sign-In or server-provided authentication.' });
 });
 
-// Serve client-side index for client-only auth flows
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
+app.get('/index', authCheck, (req, res) => {
+    res.send('Welcome to the Protected Resources Centre, ' + req.session.username);
 });
 
 const PORT = process.env.PORT || 3000;

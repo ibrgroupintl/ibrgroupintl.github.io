@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
@@ -165,18 +165,19 @@ const authCheck = (req, res, next) => {
 // --- 5. Routes ---
 
 // Login Page (GET)
-// Serve client-only login page (static) for Firebase-based sign-in
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'login.html'));
+    res.render('login', { error: null });
 });
 
-// OAuth callback (kept for server-side OAuth flows). Redirect to client index page.
+// OAuth callback
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-    // Successful authentication (server-side). Redirect to client-protected page.
-    req.session.user_id = req.user && (req.user.id || req.user.sub) || null;
-    req.session.username = req.user && (req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value)) || 'google-user';
+    // Successful authentication
+    // Optionally persist user to DB here and set minimal session values
+    req.session.user_id = req.user.id || req.user.sub || null;
+    req.session.username = req.user.displayName || (req.user.emails && req.user.emails[0] && req.user.emails[0].value) || 'google-user';
+    // normalize session timestamp name used by authCheck
     req.session.logged_in_at = Math.floor(Date.now() / 1000);
-    res.redirect('/index.html');
+    res.redirect('/index');
 });
 
 // Logout
@@ -196,9 +197,8 @@ app.post('/login', (req, res) => {
     res.status(501).render('login', { error: 'Local login disabled. Use Google Sign-In or server-provided authentication.' });
 });
 
-// Serve client-side index for client-only auth flows
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
+app.get('/index', authCheck, (req, res) => {
+    res.send('Welcome to the Protected Resources Centre, ' + req.session.username);
 });
 
 const PORT = process.env.PORT || 3000;
