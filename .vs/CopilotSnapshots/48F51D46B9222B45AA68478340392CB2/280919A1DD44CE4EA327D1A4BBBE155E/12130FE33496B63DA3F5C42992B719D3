@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -12,23 +12,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    .page-wrapper {
-      background: white;
-      max-width: 1920px;
-      min-height: 1080px;
-      margin: 0 auto;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-  </style>
 </head>
 	<body>
-		<div class="page-wrapper">
 		<header class="resource-nav" role="banner">
 			<div class="container container-nav">
       <div class="logo" style="display:flex;align-items:center;gap:12px">
 		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
-		<span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
+		<span class="site-title" style="color:lightgrey">User Portal</span>
 	  </div>
       <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
 				<div class="user-menu">
@@ -57,10 +47,6 @@
 			</div>
   </div>
 
-		<div style="max-width:820px;margin:1.5rem auto;padding:12px 16px;background:rgba(255,193,7,0.15);border-left:4px solid #ffc107;border-radius:4px;text-align:center;">
-			<p style="margin:0;color:var(--text);font-weight:600;">System maintenance is scheduled for Wednesday, 1 April 2026 between the hours of 3am - 6am BST</p>
-		</div>
-
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
 
 			<section class="container" style="padding:3rem 0">
@@ -85,7 +71,7 @@
 
 
 			<h1>Members Area</h1>
-			<p class="lead">Welcome to the members area. This area is protected and requires authentication. You can manage your subscription on <a href="https://substack.ibrecruitment.com/account?utm_source=user-menu">Substack.com</a> by clicking 'manage subscription' in your publisher dashboard settings.</p>
+			<p class="lead">Welcome to the members area. This page is protected and requires authentication. You can manage your subscription on <a href="https://substack.ibrecruitment.com/account?utm_source=user-menu">Substack.com</a> by clicking 'manage subscription' in your publisher dashboard settings.</p>
 			<div style="margin-top:1.5rem">
 				<p>
 					Hello, <strong id="userName">Member</strong>
@@ -95,7 +81,7 @@
 
        <section style="margin-top:2rem">
 				<h2>Your Resources</h2>
-				<p>You can now access exclusive reports and tools available to Premium subscribers.</p>
+				<p>Access exclusive reports and tools available to authenticated users.</p>
 				<a class="btn btn-primary" href="">Open Latest Job Requisition</a>
 			</section>
 	</main>
@@ -104,7 +90,6 @@
 			<div class="container" style="text-align:center">
 			</div>
 		</footer>
-		</div>
 
 		<script src="/top-script.js" defer=""></script>
 		<script src="/index.js" defer=""></script>
@@ -117,17 +102,11 @@
      
       <!-- Inline cookie consent UI placed inside footer (non-fixed) -->
       <div id="cookieConsentBar" style="width:100%;max-width:1200px;margin:0 auto 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:8px;background:rgba(2,6,23,0.06);">
-        <div style="flex:1;min-width:220px;color:var(--muted)">This website uses cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
+        <div style="flex:1;min-width:220px;color:var(--muted)">We use cookies to improve your experience. By using this site you agree to our use of cookies. <a href="/privacy.html" style="color:var(--text);text-decoration:underline;margin-left:8px">Learn more</a></div>
         <div style="display:flex;gap:8px;align-items:center">
           <button id="cookieDeclineBtn" style="background:transparent;border:1px solid rgba(0,0,0,0.08);color:var(--text);padding:8px 12px;border-radius:8px;">Decline</button>
           <button id="cookieAcceptBtn" style="background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;">Accept</button>
         </div>
-      </div>
-
-      <div style="margin:12px 0;display:flex;gap:16px;justify-content:center;align-items:center;">
-        <a href="/terms.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Terms of Service</a>
-        <span style="color:var(--muted)">|</span>
-        <a href="/privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Privacy Policy</a>
       </div>
 
       <div>
@@ -146,7 +125,7 @@
   <script defer src="/firebase-config.js"></script>
 
   <script>
-	<!-- Client-only auth: showhide protected UI using Firebase -->
+	// Client-only auth: show/hide protected UI using Firebase Auth
 	window.addEventListener('load', function () {
 	  if (!window.firebase || !window.firebaseConfig) {
 		console.warn('Firebase not available; protected UI will remain hidden');

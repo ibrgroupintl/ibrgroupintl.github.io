@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,7 +28,7 @@
 			<div class="container container-nav">
       <div class="logo" style="display:flex;align-items:center;gap:12px">
 		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
-		<span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
+		<span class="site-title" style="color:lightgrey">User Portal</span>
 	  </div>
       <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
 				<div class="user-menu">
@@ -58,7 +58,7 @@
   </div>
 
 		<div style="max-width:820px;margin:1.5rem auto;padding:12px 16px;background:rgba(255,193,7,0.15);border-left:4px solid #ffc107;border-radius:4px;text-align:center;">
-			<p style="margin:0;color:var(--text);font-weight:600;">System maintenance is scheduled for Wednesday, 1 April 2026 between the hours of 3am - 6am BST</p>
+			<p style="margin:0;color:var(--text);font-weight:600;">Maintenance is scheduled for Wednesday, 1 April 3am - 6am GMT</p>
 		</div>
 
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
@@ -85,7 +85,7 @@
 
 
 			<h1>Members Area</h1>
-			<p class="lead">Welcome to the members area. This area is protected and requires authentication. You can manage your subscription on <a href="https://substack.ibrecruitment.com/account?utm_source=user-menu">Substack.com</a> by clicking 'manage subscription' in your publisher dashboard settings.</p>
+			<p class="lead">Welcome to the members area. This page is protected and requires authentication. You can manage your subscription on <a href="https://substack.ibrecruitment.com/account?utm_source=user-menu">Substack.com</a> by clicking 'manage subscription' in your publisher dashboard settings.</p>
 			<div style="margin-top:1.5rem">
 				<p>
 					Hello, <strong id="userName">Member</strong>
@@ -95,7 +95,7 @@
 
        <section style="margin-top:2rem">
 				<h2>Your Resources</h2>
-				<p>You can now access exclusive reports and tools available to Premium subscribers.</p>
+				<p>Access exclusive reports and tools available to authenticated users.</p>
 				<a class="btn btn-primary" href="">Open Latest Job Requisition</a>
 			</section>
 	</main>
