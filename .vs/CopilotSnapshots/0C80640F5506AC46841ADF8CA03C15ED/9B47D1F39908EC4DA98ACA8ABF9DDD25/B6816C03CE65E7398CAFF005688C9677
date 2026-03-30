@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -7,14 +7,7 @@ const helmet = require('helmet');
 const path = require('path');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// Optional MySQL-backed session store. If the package isn't installed we fall back
-// to the default in-memory store so the server can still start in development.
-let MySQLStore = null;
-try {
-    MySQLStore = require('express-mysql-session')(session);
-} catch (e) {
-    console.warn('express-mysql-session not available; falling back to MemoryStore. Install express-mysql-session for persistent sessions.');
-}
+const MySQLStore = require('express-mysql-session')(session);
 
 // Optional Firebase Admin SDK (used to verify ID tokens when running with server sessions)
 let admin = null;
@@ -95,7 +88,6 @@ const sessionStoreOptions = {
     // default expiration handled by session cookie maxAge below
     createDatabaseTable: true
 };
-const MySQLStore = require('express-mysql-session')(session);
 const sessionStore = new MySQLStore(sessionStoreOptions);
 app.use(session({
     name: 'ibr_resource_session',

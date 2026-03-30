@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -95,14 +95,11 @@ const sessionStoreOptions = {
     // default expiration handled by session cookie maxAge below
     createDatabaseTable: true
 };
-const MySQLStore = require('express-mysql-session')(session);
-const sessionStore = new MySQLStore(sessionStoreOptions);
-app.use(session({
+let sessionOptions = {
     name: 'ibr_resource_session',
     secret: process.env.SESSION_SECRET || '59c81a27a88a41f51677925579b821be37323c37ec21c73bf865c3f053a1698df3ac7d6e739149652c476897156dce7e',
     resave: false,
     saveUninitialized: false,
-    store: sessionStore,
     cookie: {
         domain: process.env.COOKIE_DOMAIN || 'ibrecruitment.com',
         path: '/',
@@ -112,7 +109,20 @@ app.use(session({
         sameSite: 'strict', // Prevents CSRF
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
-}));
+};
+
+if (MySQLStore) {
+    try {
+        const sessionStore = new MySQLStore(sessionStoreOptions);
+        sessionOptions.store = sessionStore;
+    } catch (e) {
+        console.warn('Failed to initialize MySQL session store - falling back to MemoryStore:', e && e.message);
+    }
+} else {
+    // No persistent store available; development fallback to MemoryStore.
+}
+
+app.use(session(sessionOptions));
 
 // --- Firebase Admin (for verifying ID tokens from client) ---
 try {
@@ -178,21 +188,25 @@ passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
 
-// Configure Google Strategy
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID || '',
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-    // Default to localhost callback for development; override with GOOGLE_CALLBACK_URL in production
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || '/index.html'
-}, async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Here you could find or create a corresponding local user record.
-        // For now we just pass the profile through.
-        return done(null, profile);
-    } catch (err) {
-        return done(err);
-    }
-}));
+// Configure Google Strategy only when credentials are available
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        // Default to localhost callback for development; override with GOOGLE_CALLBACK_URL in production
+        callbackURL: process.env.GOOGLE_CALLBACK_URL || '/auth/google/callback'
+    }, async (accessToken, refreshToken, profile, done) => {
+        try {
+            // Here you could find or create a corresponding local user record.
+            // For now we just pass the profile through.
+            return done(null, profile);
+        } catch (err) {
+            return done(err);
+        }
+    }));
+} else {
+    console.warn('Google OAuth not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to enable OAuth login.');
+}
 
 // --- 4. Auth Middleware ---
 const authCheck = (req, res, next) => {
