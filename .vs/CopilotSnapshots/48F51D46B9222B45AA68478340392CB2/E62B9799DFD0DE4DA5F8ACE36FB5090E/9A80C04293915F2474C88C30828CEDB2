@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -71,7 +71,7 @@
 
 
 			<h1>Members Area</h1>
-			<p class="lead">Welcome to the members area. This page is protected and requires authentication. You can manage your subscription on <a href="https://substack.ibrecruitment.com/account?utm_source=user-menu">Substack.com</a> by clicking 'manage subscription' in your publisher dashboard settings.</p>
+			<p class="lead">Welcome to the members area. This page is protected and requires authentication. You can manage your subscription on Substack.com</p>
 			<div style="margin-top:1.5rem">
 				<p>
 					Hello, <strong id="userName">Member</strong>
