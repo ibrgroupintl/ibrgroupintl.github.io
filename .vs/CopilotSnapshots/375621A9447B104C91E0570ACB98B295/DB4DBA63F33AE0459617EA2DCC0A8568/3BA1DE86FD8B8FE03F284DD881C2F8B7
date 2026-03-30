@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables from .env
+﻿require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
@@ -8,14 +8,6 @@ const path = require('path');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const MySQLStore = require('express-mysql-session')(session);
-
-// Optional Firebase Admin SDK (used to verify ID tokens when running with server sessions)
-let admin = null;
-try {
-    admin = require('firebase-admin');
-} catch (e) {
-    console.warn('firebase-admin not available; /sessionLogin will be disabled unless firebase-admin is installed');
-}
 
 const app = express();
 
@@ -108,7 +100,6 @@ app.use(session({
 
 // --- Firebase Admin (for verifying ID tokens from client) ---
 try {
-    if (!admin) throw new Error('firebase-admin SDK not loaded');
     if (process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
         // Load service account JSON from file path specified in env
         const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_PATH);
@@ -119,17 +110,13 @@ try {
     }
     console.log('Firebase Admin initialized');
 } catch (err) {
-    // Keep running without Firebase Admin; /sessionLogin endpoint will return 501 when called
-    console.warn('Firebase Admin initialization skipped or failed: ', err && err.message);
+    console.warn('Firebase Admin initialization failed or not configured: ', err && err.message);
 }
 
 // Endpoint: accept Firebase ID token from client, verify and create server session
 app.post('/sessionLogin', async (req, res) => {
     const idToken = req.body && req.body.idToken;
     if (!idToken) return res.status(400).json({ error: 'Missing idToken' });
-    if (!admin || !admin.auth) {
-        return res.status(501).json({ error: 'Server not configured to verify tokens (firebase-admin missing)' });
-    }
     try {
         const decoded = await admin.auth().verifyIdToken(idToken);
         // Create a minimal session
@@ -174,8 +161,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID || '',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-    // Default to localhost callback for development; override with GOOGLE_CALLBACK_URL in production
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'https://supa-73a39.firebaseapp.com/__/auth/handler'
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'supa-73a39.firebaseapp.com/__/auth/handler'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         // Here you could find or create a corresponding local user record.
