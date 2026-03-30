@@ -1,6 +1,6 @@
 specVersion: "v1"
-serviceId: "app-1"
-location: "us-central1"
+serviceId: "app"
+location: "us-east4"
 schemas:
   - source: "./schema"
     datasource:

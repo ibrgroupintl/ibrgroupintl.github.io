@@ -54,7 +54,7 @@
   },
   "firestore": {
     "database": "(default)",
-    "location": "eur3",
+    "location": "nam7",
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
@@ -142,10 +142,35 @@
         "firebase-debug.*.log",
         "*.local"
       ],
-      "source": "breeze",
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run lint"
-      ]
+      ],
+      "source": "breeze"
+    },
+    {
+      "codebase": "macron",
+      "disallowLegacyRuntimeConfig": true,
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "source": "macron"
+    },
+    {
+      "codebase": "wretch32",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "source": "wretch32"
     }
   ],
   "apphosting": [
@@ -203,6 +228,50 @@
         "firebase-debug.*.log",
         "functions"
       ]
+    },
+    {
+      "backendId": "gaza",
+      "rootDir": "gullyside",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    },
+    {
+      "backendId": "gaza",
+      "rootDir": "gullyside",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    },
+    {
+      "backendId": "gza",
+      "rootDir": "gza",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    },
+    {
+      "backendId": "gza",
+      "rootDir": "gullyside",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
     }
   ],
   "storage": {
@@ -218,7 +287,7 @@
   "auth": {
     "providers": {
       "googleSignIn": {
-        "oAuthBrandDisplayName": "Italiano",
+        "oAuthBrandDisplayName": "Frano",
         "supportEmail": "developers@ibrecruitment.com"
       }
     }

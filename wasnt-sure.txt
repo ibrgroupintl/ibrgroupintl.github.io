@@ -19,3 +19,18 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+{
+  "version": "2",
+  "projectNumber": "916707769747",
+  "projectId": "wale-491803",
+  "appId": "1:916707769747:web:dcc1f83b793c101e7d7c66",
+  "realtimeDatabaseInstanceUri": "https://wale-491803-default-rtdb.firebaseio.com",
+  "realtimeDatabaseUrl": "",
+  "storageBucket": "wale-491803.firebasestorage.app",
+  "locationId": "",
+  "apiKey": "AIzaSyCcsm1Pvh_h1M1OySEXTYeZnOtBUAYExio",
+  "authDomain": "wale-491803.firebaseapp.com",
+  "messagingSenderId": "916707769747",
+  "measurementId": "G-FZMT05FVYY"
+}

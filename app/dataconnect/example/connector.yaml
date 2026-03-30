@@ -1,8 +1,6 @@
 connectorId: example
 generate:
-  javascriptSdk:
-    - outputDir: ..\..\src\dataconnect-generated
-      package: "@dataconnect/generated"
-      packageJsonDir: ..\..
-      react: false
-      angular: false
+  adminNodeSdk:
+    - outputDir: ..\..\wretch32\src\dataconnect-admin-generated
+      package: "@dataconnect/admin-generated"
+      packageJsonDir: ..\..\wretch32
