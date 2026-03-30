@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -29,13 +29,6 @@
       <div class="logo" style="display:flex;align-items:center;gap:12px">
 		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
 		<span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
-	  </div>
-      <!-- Top nav search (visible only to authenticated users) -->
-	  <div id="topNavSearch" class="top-nav-search" style="flex:1;display:none;align-items:center;justify-content:center;margin-left:12px">
-		<div style="position:relative;max-width:480px;width:100%">
-		  <input id="siteSearchInput" type="search" placeholder="Search site resources..." aria-label="Search site" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
-		  <div id="searchResults" style="position:absolute;top:110%;left:0;right:0;background:#fff;border:1px solid #e6e9ee;border-radius:6px;box-shadow:0 8px 20px rgba(2,6,23,0.08);max-height:320px;overflow:auto;display:none;z-index:1000"></div>
-		</div>
 	  </div>
       <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
 				<div class="user-menu">
@@ -133,16 +126,9 @@
 			</section>
 
        <section style="margin-top:2rem">
-				<h2>Become a Founding Subscriber</h2>
-				<p>You can now access exclusive reports and tools not available to Premium subscribers.</p>
-                <a class="btn btn-primary" href="" style="background:#afb8e9;border-color:#afb8e9;color:#fff">Open Latest Job Requisition</a>
-				<!-- Stripe Buy Button for authorized users -->
-				<div style="margin-top:1rem">
-				  <stripe-buy-button
-					buy-button-id="buy_btn_1TGkauIZSvVNdV4dUY4tNAvS"
-					publishable-key="pk_live_51IC6ReIZSvVNdV4dVhLOdnhfuSHXP0vZ9GlvIbGqTEPGzc1ywN5t9IphIUbFXEoQD8QMnRYgY7LEelyJBCb7E7T000hnIoomYV">
-				  </stripe-buy-button>
-				</div>
+				<h2>Your Resources</h2>
+				<p>You can now access exclusive reports and tools available to Premium subscribers.</p>
+				<a class="btn btn-primary" href="">Open Latest Job Requisition</a>
 			</section>
 	</main>
 
@@ -154,9 +140,6 @@
 
 		<script src="/top-script.js" defer=""></script>
 		<script src="/index.js" defer=""></script>
-
-		<!-- Stripe Buy Button script -->
-		<script async src="https://js.stripe.com/v3/buy-button.js"></script>
 		
 
   <!-- cookie consent bar removed from fixed position; consent UI moved into footer below -->
@@ -208,9 +191,6 @@
 	  const userNameEl = document.getElementById('userName');
 	  const signOutBtn = document.getElementById('signOutBtn');
 	  const signInLink = document.getElementById('signInLink');
-  const topNavSearch = document.getElementById('topNavSearch');
-  const siteSearchInput = document.getElementById('siteSearchInput');
-  const searchResultsEl = document.getElementById('searchResults');
 
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
@@ -218,7 +198,6 @@
 		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
-    if (topNavSearch) topNavSearch.style.display = 'flex';
 	  }
 	  function showSignedOut() {
 		if (loginSection) loginSection.style.display = 'block';
@@ -226,86 +205,12 @@
 		if (userNameEl) userNameEl.textContent = 'Member';
 		if (signOutBtn) signOutBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
-    if (topNavSearch) topNavSearch.style.display = 'none';
 	  }
 
 	  auth.onAuthStateChanged(function (user) {
 		if (user) showAuthenticated(user);
 		else showSignedOut();
 	  });
-
-  // Basic client-side search (searches headings, paragraphs, articles inside main)
-  function performSearch(q) {
-	if (!q || q.trim().length < 2) {
-	  if (searchResultsEl) searchResultsEl.style.display = 'none';
-	  return;
-	}
-	const query = q.trim().toLowerCase();
-	const candidates = document.querySelectorAll('main h1, main h2, main h3, main h4, main p, main article, main li, main a');
-	const results = [];
-	candidates.forEach(el => {
-	  const txt = (el.textContent || '').trim();
-	  if (!txt) return;
-	  const idx = txt.toLowerCase().indexOf(query);
-	  if (idx !== -1) {
-		// find nearest heading for title
-		let title = '';
-		const containerArticle = el.closest('article');
-		if (containerArticle) title = (containerArticle.querySelector('h3') || containerArticle.querySelector('h2') || containerArticle.querySelector('h1'))?.textContent || '';
-		if (!title) title = txt.slice(0, 60);
-		const snippet = txt.slice(Math.max(0, idx - 30), Math.min(txt.length, idx + 80)).replace(/\s+/g, ' ');
-		results.push({ el, title, snippet });
-	  }
-	});
-
-	if (!searchResultsEl) return;
-	if (results.length === 0) {
-	  searchResultsEl.innerHTML = '<div style="padding:12px;color:#666">No results</div>';
-	  searchResultsEl.style.display = 'block';
-	  return;
-	}
-	searchResultsEl.innerHTML = results.map((r, i) => {
-	  return `<div class="sr-item" data-idx="${i}" style="padding:10px 12px;cursor:pointer;border-bottom:1px solid #f4f6f8"><div style=\"font-weight:600;color:#092a4b;margin-bottom:6px\">${escapeHtml(r.title)}</div><div style=\"font-size:0.9rem;color:#556\">${escapeHtml(r.snippet)}</div></div>`;
-	}).join('');
-	searchResultsEl.style.display = 'block';
-
-	// attach click handlers
-	Array.from(searchResultsEl.querySelectorAll('.sr-item')).forEach((node, i) => {
-	  node.addEventListener('click', function () {
-		const target = results[i].el;
-		if (target) {
-		  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-		  const prev = target.style.backgroundColor;
-		  target.style.transition = 'background-color 0.3s ease';
-		  target.style.backgroundColor = 'rgba(255,244,179,0.8)';
-		  setTimeout(() => { target.style.backgroundColor = prev || ''; }, 1600);
-		}
-		if (searchResultsEl) searchResultsEl.style.display = 'none';
-	  });
-	});
-  }
-
-  function escapeHtml(s) {
-	return (s||'').replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]; });
-  }
-
-  // wire input events
-  if (siteSearchInput) {
-	siteSearchInput.addEventListener('input', function (e) { performSearch(e.target.value); });
-	siteSearchInput.addEventListener('keydown', function (e) { if (e.key === 'Escape') { siteSearchInput.value = ''; if (searchResultsEl) searchResultsEl.style.display = 'none'; } });
-  }
-
-  // hide on outside click
-  document.addEventListener('click', function (ev) {
-	const path = ev.composedPath ? ev.composedPath() : (ev.path || []);
-	if (!path.length) {
-	  // fallback: check target containment
-	  if (siteSearchInput && (siteSearchInput.contains(ev.target) || (searchResultsEl && searchResultsEl.contains(ev.target)))) return;
-	} else {
-	  if (path.indexOf(siteSearchInput) !== -1 || path.indexOf(searchResultsEl) !== -1) return;
-	}
-	if (searchResultsEl) searchResultsEl.style.display = 'none';
-  });
 
 	  if (signOutBtn) signOutBtn.addEventListener('click', function () {
 		auth.signOut().then(() => {

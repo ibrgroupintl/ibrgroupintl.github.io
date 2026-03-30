@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -133,16 +133,9 @@
 			</section>
 
        <section style="margin-top:2rem">
-				<h2>Become a Founding Subscriber</h2>
-				<p>You can now access exclusive reports and tools not available to Premium subscribers.</p>
-                <a class="btn btn-primary" href="" style="background:#afb8e9;border-color:#afb8e9;color:#fff">Open Latest Job Requisition</a>
-				<!-- Stripe Buy Button for authorized users -->
-				<div style="margin-top:1rem">
-				  <stripe-buy-button
-					buy-button-id="buy_btn_1TGkauIZSvVNdV4dUY4tNAvS"
-					publishable-key="pk_live_51IC6ReIZSvVNdV4dVhLOdnhfuSHXP0vZ9GlvIbGqTEPGzc1ywN5t9IphIUbFXEoQD8QMnRYgY7LEelyJBCb7E7T000hnIoomYV">
-				  </stripe-buy-button>
-				</div>
+				<h2>Your Resources</h2>
+				<p>You can now access exclusive reports and tools available to Premium subscribers.</p>
+				<a class="btn btn-primary" href="">Open Latest Job Requisition</a>
 			</section>
 	</main>
 
@@ -154,9 +147,6 @@
 
 		<script src="/top-script.js" defer=""></script>
 		<script src="/index.js" defer=""></script>
-
-		<!-- Stripe Buy Button script -->
-		<script async src="https://js.stripe.com/v3/buy-button.js"></script>
 		
 
   <!-- cookie consent bar removed from fixed position; consent UI moved into footer below -->
