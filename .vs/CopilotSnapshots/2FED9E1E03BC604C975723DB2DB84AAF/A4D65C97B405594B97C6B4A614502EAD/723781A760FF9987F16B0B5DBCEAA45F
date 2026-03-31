@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -75,17 +75,6 @@
     }
   });
 
-  // wire resource-card download buttons to the protected download flow
-  const resourceDownloadBtns = document.querySelectorAll('.resource-download');
-  if (resourceDownloadBtns && resourceDownloadBtns.length) {
-	resourceDownloadBtns.forEach(function (b) {
-	  b.addEventListener('click', function () {
-		// forward to the protected download button handler
-		if (downloadPostsBtn) downloadPostsBtn.click();
-	  });
-	});
-  }
-
   // call this to start sign-in (e.g. wire to your Sign In button)
   function signInWithGoogleGSI() {
     tokenClient.requestAccessToken(); // opens accounts.google.com popup (no firebaseapp.com)
@@ -154,7 +143,7 @@
 
        <section style="margin-top:2rem">
 				<h2>Become a Founding Subscriber</h2>
-				<p>You can now access exclusive reports and tools not available to free or paid (Monthly) subscribers.</p>
+				<p>You can now access exclusive reports and tools not available to Premium subscribers.</p>
                 <a class="btn btn-primary" href="mailto:alfred.mayaki@ibrecruitment.com" style="background:#afb8e9;border-color:#afb8e9;color:#000">Subscriber Technical Support Contact</a>
 				<!-- Stripe Buy Button for authorized users -->
 				<div style="margin-top:1rem">

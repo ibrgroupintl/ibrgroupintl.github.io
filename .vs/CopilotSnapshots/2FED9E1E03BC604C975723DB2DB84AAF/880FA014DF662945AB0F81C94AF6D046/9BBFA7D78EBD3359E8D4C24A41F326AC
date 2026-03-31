@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -75,17 +75,6 @@
     }
   });
 
-  // wire resource-card download buttons to the protected download flow
-  const resourceDownloadBtns = document.querySelectorAll('.resource-download');
-  if (resourceDownloadBtns && resourceDownloadBtns.length) {
-	resourceDownloadBtns.forEach(function (b) {
-	  b.addEventListener('click', function () {
-		// forward to the protected download button handler
-		if (downloadPostsBtn) downloadPostsBtn.click();
-	  });
-	});
-  }
-
   // call this to start sign-in (e.g. wire to your Sign In button)
   function signInWithGoogleGSI() {
     tokenClient.requestAccessToken(); // opens accounts.google.com popup (no firebaseapp.com)
@@ -128,33 +117,24 @@
 					<article class="resource-card">
 						<div class="card-icon">📊</div>
 						<h3>Market Reports</h3>
-                 <p>Download annual hiring trends and sector analysis to inform hiring strategy.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
-					</div>
+						<p>Download annual hiring trends and sector analysis to inform hiring strategy.</p>
 					</article>
 					<article class="resource-card">
 						<div class="card-icon">🏢</div>
 						<h3>Executive Moves</h3>
-                 <p>Monitor senior hires and leadership transitions across the industry.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
-					</div>
+						<p>Monitor senior hires and leadership transitions across the industry.</p>
 					</article>
 					<article class="resource-card">
 						<div class="card-icon">📚</div>
 						<h3>Insights Archive</h3>
-                   <p>Access past research and editorial content for reference and benchmarking.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
-					</div>
+						<p>Access past research and editorial content for reference and benchmarking.</p>
 					</article>
 				</div>
 			</section>
 
        <section style="margin-top:2rem">
 				<h2>Become a Founding Subscriber</h2>
-				<p>You can now access exclusive reports and tools not available to free or paid (Monthly) subscribers.</p>
+				<p>You can now access exclusive reports and tools not available to Premium subscribers.</p>
                 <a class="btn btn-primary" href="mailto:alfred.mayaki@ibrecruitment.com" style="background:#afb8e9;border-color:#afb8e9;color:#000">Subscriber Technical Support Contact</a>
 				<!-- Stripe Buy Button for authorized users -->
 				<div style="margin-top:1rem">
@@ -246,7 +226,6 @@
   const topNavSearch = document.getElementById('topNavSearch');
   const siteSearchInput = document.getElementById('siteSearchInput');
   const searchResultsEl = document.getElementById('searchResults');
-  const downloadPostsBtn = document.getElementById('downloadPostsBtn');
 
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
@@ -255,7 +234,6 @@
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'flex';
-    if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
 	  }
 	  function showSignedOut() {
 		if (loginSection) loginSection.style.display = 'block';
@@ -264,47 +242,12 @@
 		if (signOutBtn) signOutBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
     if (topNavSearch) topNavSearch.style.display = 'none';
-    if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
 	  }
 
 	  auth.onAuthStateChanged(function (user) {
 		if (user) showAuthenticated(user);
 		else showSignedOut();
 	  });
-
-  // Protected download handler for posts.csv (client-side enforcement)
-  if (downloadPostsBtn) {
-	downloadPostsBtn.addEventListener('click', async function () {
-	  const user = auth.currentUser;
-	  if (!user) {
-		alert('Please sign in to download posts.csv');
-		return;
-	  }
-	  try {
-		// attempt to get idToken (not used by static hosting but included for completeness)
-		const idToken = await user.getIdToken();
-		const res = await fetch('/posts.csv', {
-		  credentials: 'same-origin',
-		  headers: {
-			'Authorization': 'Bearer ' + idToken
-		  }
-		});
-		if (!res.ok) throw new Error('Network response was not ok');
-		const blob = await res.blob();
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'posts.csv';
-		document.body.appendChild(a);
-		a.click();
-		a.remove();
-		URL.revokeObjectURL(url);
-	  } catch (err) {
-		console.error(err);
-		alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
-	  }
-	});
-  }
 
   // Basic client-side search (searches headings, paragraphs, articles inside main)
   function performSearch(q) {
