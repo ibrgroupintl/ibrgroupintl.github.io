@@ -74,18 +74,6 @@
       }
     }
   });
-
-  // wire resource-card download buttons to the protected download flow
-  const resourceDownloadBtns = document.querySelectorAll('.resource-download');
-  if (resourceDownloadBtns && resourceDownloadBtns.length) {
-	resourceDownloadBtns.forEach(function (b) {
-	  b.addEventListener('click', function () {
-		// forward to the protected download button handler
-		if (downloadPostsBtn) downloadPostsBtn.click();
-	  });
-	});
-  }
-
   // call this to start sign-in (e.g. wire to your Sign In button)
   function signInWithGoogleGSI() {
     tokenClient.requestAccessToken(); // opens accounts.google.com popup (no firebaseapp.com)
@@ -129,25 +117,21 @@
 						<div class="card-icon">📊</div>
 						<h3>Market Reports</h3>
                  <p>Download annual hiring trends and sector analysis to inform hiring strategy.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
+                    <div style="margin-top:8px">
+					  <button id="downloadPostsBtn" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
 					</div>
 					</article>
 					<article class="resource-card">
 						<div class="card-icon">🏢</div>
 						<h3>Executive Moves</h3>
                  <p>Monitor senior hires and leadership transitions across the industry.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
-					</div>
+
 					</article>
 					<article class="resource-card">
 						<div class="card-icon">📚</div>
 						<h3>Insights Archive</h3>
                    <p>Access past research and editorial content for reference and benchmarking.</p>
-					<div style="margin-top:8px">
-					  <button class="resource-download" style="background:#afb8e9;border:1px solid #afb8e9;color:#000;padding:6px 10px;border-radius:6px;cursor:pointer">Download posts.csv</button>
-					</div>
+
 					</article>
 				</div>
 			</section>
@@ -163,10 +147,7 @@
 					publishable-key="pk_live_51IC6ReIZSvVNdV4dVhLOdnhfuSHXP0vZ9GlvIbGqTEPGzc1ywN5t9IphIUbFXEoQD8QMnRYgY7LEelyJBCb7E7T000hnIoomYV">
 				  </stripe-buy-button>
 				</div>
-                <div style="margin-top:1rem;">
-				  <button id="downloadPostsBtn" class="btn btn-outline" style="padding:8px 12px;border-radius:6px;">Download posts.csv</button>
-				  <div id="downloadNote" style="font-size:0.85rem;color:var(--muted);margin-top:6px">Secure download — sign in required.</div>
-				</div>
+
 			</section>
 	</main>
 
@@ -282,21 +263,26 @@
 		alert('Please sign in to download posts.csv');
 		return;
 	  }
-      try {
-		// Use Firebase Storage SDK to enforce storage rules server-side for authenticated users
-		const storageRef = firebase.storage().ref('Default/posts.csv');
-		const url = await storageRef.getDownloadURL();
-		const res = await fetch(url);
+	  try {
+		// attempt to get idToken (not used by static hosting but included for completeness)
+        const idToken = await user.getIdToken();
+		const res = await fetch(POSTS_FILE_URL, {
+		  // include credentials where applicable; file is served from Cloud Storage
+		  credentials: 'include',
+		  headers: {
+			'Authorization': 'Bearer ' + idToken
+		  }
+		});
 		if (!res.ok) throw new Error('Network response was not ok');
 		const blob = await res.blob();
-		const objUrl = URL.createObjectURL(blob);
+		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
-		a.href = objUrl;
+		a.href = url;
 		a.download = 'posts.csv';
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
-		URL.revokeObjectURL(objUrl);
+		URL.revokeObjectURL(url);
 	  } catch (err) {
 		console.error(err);
 		alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
