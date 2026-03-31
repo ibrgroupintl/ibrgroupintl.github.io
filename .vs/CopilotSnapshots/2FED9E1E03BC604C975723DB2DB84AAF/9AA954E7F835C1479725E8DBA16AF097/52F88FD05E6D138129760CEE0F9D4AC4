@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 
@@ -16,8 +16,8 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
 
   const file = storage.bucket(BUCKET).file('Default/posts.csv');
   try {
-    // Signed URL expiry: 5 minutes
-    const expiresMs = Date.now() + 5 * 60 * 1000; // 5 minutes
+    // Signed URL expiry: 60 seconds (short-lived for improved security)
+    const expiresMs = Date.now() + 60 * 1000; // 60 seconds
     const [url] = await file.getSignedUrl({
       version: 'v4',
       action: 'read',

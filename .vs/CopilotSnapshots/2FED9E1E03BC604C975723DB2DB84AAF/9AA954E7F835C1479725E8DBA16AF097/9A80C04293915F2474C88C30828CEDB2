@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -255,8 +255,7 @@
 		else showSignedOut();
 	  });
 
-  // Protected download handler using Firebase Storage SDK so Storage Rules are enforced.
-  // This will request a download URL for the path defined in your Storage Rules (Default/posts.csv).
+  // Protected download handler using callable Cloud Function that returns a short-lived signed URL
   if (downloadPostsBtn) {
 	downloadPostsBtn.addEventListener('click', async function () {
 	  const user = auth.currentUser;
@@ -265,16 +264,15 @@
 		return;
 	  }
 	  try {
-		if (!firebase.storage) {
-		  console.error('Firebase Storage SDK not loaded');
+		if (!firebase.functions) {
+		  console.error('Firebase Functions SDK not loaded');
 		  alert('Download not available');
 		  return;
 		}
-		// Storage path must match the rule path in your Storage Rules: match /Default/{allPaths=**}
-		const storagePath = 'Default/posts.csv';
-		const storageRef = firebase.storage().ref(storagePath);
-		// getDownloadURL will succeed only if Storage Rules allow this authenticated user to read
-		const url = await storageRef.getDownloadURL();
+		const getPostsCsv = firebase.functions().httpsCallable('getPostsCsv');
+		const res = await getPostsCsv();
+		const url = res.data && res.data.url;
+		if (!url) throw new Error('No download URL returned');
 		const a = document.createElement('a');
 		a.href = url;
 		a.download = 'posts.csv';
@@ -282,7 +280,7 @@
 		a.click();
 		a.remove();
 	  } catch (err) {
-		console.error('Download error', err);
+		console.error(err);
 		alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
 	  }
 	});
