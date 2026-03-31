@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -76,7 +76,15 @@
   });
 
   // wire resource-card download buttons to the protected download flow
-  // resource-download buttons are wired after Firebase initializes
+  const resourceDownloadBtns = document.querySelectorAll('.resource-download');
+  if (resourceDownloadBtns && resourceDownloadBtns.length) {
+	resourceDownloadBtns.forEach(function (b) {
+	  b.addEventListener('click', function () {
+		// forward to the protected download button handler
+		if (downloadPostsBtn) downloadPostsBtn.click();
+	  });
+	});
+  }
 
   // call this to start sign-in (e.g. wire to your Sign In button)
   function signInWithGoogleGSI() {
@@ -263,42 +271,33 @@
 		else showSignedOut();
 	  });
 
-  // Protected download flow (used by central button or resource cards)
-  async function downloadPostsCsvSecure() {
-	const user = auth.currentUser;
-	if (!user) {
-	  alert('Please sign in to download posts.csv');
-	  return;
-	}
-	try {
-	  const storageRef = firebase.storage().ref('Default/posts.csv');
-	  const url = await storageRef.getDownloadURL();
-	  const res = await fetch(url);
-	  if (!res.ok) throw new Error('Network response was not ok');
-	  const blob = await res.blob();
-	  const objUrl = URL.createObjectURL(blob);
-	  const a = document.createElement('a');
-	  a.href = objUrl;
-	  a.download = 'posts.csv';
-	  document.body.appendChild(a);
-	  a.click();
-	  a.remove();
-	  URL.revokeObjectURL(objUrl);
-	} catch (err) {
-	  console.error(err);
-	  alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
-	}
-  }
-
-  if (downloadPostsBtn) downloadPostsBtn.addEventListener('click', downloadPostsCsvSecure);
-
-  // Wire individual resource card download buttons
-  const resourceDownloadBtns = document.querySelectorAll('.resource-download');
-  if (resourceDownloadBtns && resourceDownloadBtns.length) {
-	resourceDownloadBtns.forEach(function (b) {
-	  b.addEventListener('click', function () {
-		downloadPostsCsvSecure();
-	  });
+  // Protected download handler for posts.csv (client-side enforcement)
+  if (downloadPostsBtn) {
+	downloadPostsBtn.addEventListener('click', async function () {
+	  const user = auth.currentUser;
+	  if (!user) {
+		alert('Please sign in to download posts.csv');
+		return;
+	  }
+      try {
+		// Use Firebase Storage SDK to enforce storage rules server-side for authenticated users
+		const storageRef = firebase.storage().ref('Default/posts.csv');
+		const url = await storageRef.getDownloadURL();
+		const res = await fetch(url);
+		if (!res.ok) throw new Error('Network response was not ok');
+		const blob = await res.blob();
+		const objUrl = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = objUrl;
+		a.download = 'posts.csv';
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		URL.revokeObjectURL(objUrl);
+	  } catch (err) {
+		console.error(err);
+		alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
+	  }
 	});
   }
 
