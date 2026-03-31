@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -209,7 +209,6 @@
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-functions-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
 
   <script>
@@ -255,7 +254,7 @@
 		else showSignedOut();
 	  });
 
-  // Protected download handler using callable Cloud Function that returns a short-lived signed URL
+  // Protected download handler for posts.csv using Firebase Storage SDK
   if (downloadPostsBtn) {
 	downloadPostsBtn.addEventListener('click', async function () {
 	  const user = auth.currentUser;
@@ -264,15 +263,13 @@
 		return;
 	  }
 	  try {
-		if (!firebase.functions) {
-		  console.error('Firebase Functions SDK not loaded');
+		if (!firebase.storage) {
+		  console.error('Firebase Storage SDK not loaded');
 		  alert('Download not available');
 		  return;
 		}
-		const getPostsCsv = firebase.functions().httpsCallable('getPostsCsv');
-		const res = await getPostsCsv();
-		const url = res.data && res.data.url;
-		if (!url) throw new Error('No download URL returned');
+		const storageRef = firebase.storage().ref('Default/posts.csv');
+		const url = await storageRef.getDownloadURL(); // SDK enforces storage rules
 		const a = document.createElement('a');
 		a.href = url;
 		a.download = 'posts.csv';

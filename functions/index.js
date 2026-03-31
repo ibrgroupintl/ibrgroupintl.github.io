@@ -1,11 +1,11 @@
-// functions/index.js
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 
 admin.initializeApp();
 const storage = new Storage();
-const BUCKET = 'wale-491803.firebasestorage.app'; // Exact bucket name
+// Use the bucket name you confirmed in Console
+const BUCKET = 'wale-491803.firebasestorage.app';
 
 exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
