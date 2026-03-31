@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -35,11 +35,6 @@
 	  font-size: 0.95rem;
 	  line-height: 1.2;
 	  text-decoration: none;
-	}
-
-	/* Contact code uses Arial for clarity */
-	.contact-code {
-	  font-family: Arial, Helvetica, sans-serif;
 	}
   </style>
 </head>
