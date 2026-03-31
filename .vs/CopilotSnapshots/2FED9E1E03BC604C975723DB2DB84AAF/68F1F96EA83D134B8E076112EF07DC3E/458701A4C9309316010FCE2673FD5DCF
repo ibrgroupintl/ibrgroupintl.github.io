@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -227,7 +227,6 @@
   <!-- Firebase SDKs (compat) and project config for client-only auth -->
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
 
   <script>
@@ -248,7 +247,6 @@
   const siteSearchInput = document.getElementById('siteSearchInput');
   const searchResultsEl = document.getElementById('searchResults');
   const downloadPostsBtn = document.getElementById('downloadPostsBtn');
-  const POSTS_FILE_URL = 'https://storage.cloud.google.com/wale-491803.firebasestorage.app/Default/posts.csv';
 
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
@@ -282,21 +280,25 @@
 		alert('Please sign in to download posts.csv');
 		return;
 	  }
-      try {
-		// Use Firebase Storage SDK to enforce storage rules server-side for authenticated users
-		const storageRef = firebase.storage().ref('Default/posts.csv');
-		const url = await storageRef.getDownloadURL();
-		const res = await fetch(url);
+	  try {
+		// attempt to get idToken (not used by static hosting but included for completeness)
+		const idToken = await user.getIdToken();
+		const res = await fetch('/posts.csv', {
+		  credentials: 'same-origin',
+		  headers: {
+			'Authorization': 'Bearer ' + idToken
+		  }
+		});
 		if (!res.ok) throw new Error('Network response was not ok');
 		const blob = await res.blob();
-		const objUrl = URL.createObjectURL(blob);
+		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
-		a.href = objUrl;
+		a.href = url;
 		a.download = 'posts.csv';
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
-		URL.revokeObjectURL(objUrl);
+		URL.revokeObjectURL(url);
 	  } catch (err) {
 		console.error(err);
 		alert('Download failed: ' + (err && err.message ? err.message : 'unknown error'));
