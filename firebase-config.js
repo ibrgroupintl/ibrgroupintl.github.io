@@ -4,6 +4,7 @@ window.firebaseConfig = {
   apiKey: "AIzaSyCcsm1Pvh_h1M1OySEXTYeZnOtBUAYExio",
   authDomain: "wale-491803.firebaseapp.com",
   projectId: "wale-491803",
+  storageBucket: "wale-491803.firebasestorage.app"
   appId: "1:916707769747:web:dcc1f83b793c101e7d7c66",
   // other fields...
 };
