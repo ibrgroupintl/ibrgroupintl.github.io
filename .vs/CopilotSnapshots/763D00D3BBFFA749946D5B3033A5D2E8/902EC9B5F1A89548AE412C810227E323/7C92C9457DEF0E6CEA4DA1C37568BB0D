@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -244,33 +244,23 @@
           }
         }
 
-        let redirectTimer = null;
-        function redirectToPortal() {
-          if (redirectTimer) return;
-          redirectTimer = setTimeout(function () {
-            window.location.replace('/index.html');
-          }, 500);
-        }
-
         // Monitor auth state changes
         auth.onAuthStateChanged(function(user) {
           if (user) {
             showUserStatus(user);
-            redirectToPortal();
           } else {
             hideUserStatus();
-            if (redirectTimer) {
-              clearTimeout(redirectTimer);
-              redirectTimer = null;
-            }
           }
         });
 
         // Handle redirect result (if used as fallback)
         auth.getRedirectResult().then((result) => {
           if (result && result.user) {
+            // Show user status briefly before redirecting
             showUserStatus(result.user);
-            redirectToPortal();
+            setTimeout(() => {
+              window.location.replace('/index.html');
+            }, 1000);
           }
         }).catch(err => console.error('Redirect result error', err));
 
@@ -278,8 +268,11 @@
           const provider = new firebase.auth.GoogleAuthProvider();
           try {
             const result = await auth.signInWithPopup(provider);
+            // Show user status briefly before redirecting
             showUserStatus(result.user);
-            redirectToPortal();
+            setTimeout(() => {
+              window.location.replace('/index.html');
+            }, 1000);
           } catch (err) {
             console.warn('Popup failed, falling back to redirect', err);
             try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }
