@@ -41,6 +41,53 @@
 	.contact-code {
 	  font-family: Arial, Helvetica, sans-serif;
 	}
+
+	/* Navigation dropdown menu */
+	.nav-dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+	.dropdown-btn {
+	  background: #f0f2f7;
+	  border: 1px solid #afb8e9;
+	  color: #092a4b;
+	  padding: 8px 12px;
+	  border-radius: 6px;
+	  cursor: pointer;
+	  font-weight: 600;
+	  font-size: 0.95rem;
+	  display: flex;
+	  align-items: center;
+	  gap: 6px;
+	}
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #ffffff;
+	  min-width: 200px;
+	  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	  padding: 12px 0;
+	  z-index: 1;
+	  border-radius: 6px;
+	  border: 1px solid #e6e9ee;
+	  top: 100%;
+	  left: 0;
+	  margin-top: 4px;
+	}
+	.dropdown-content a {
+	  color: #092a4b !important;
+	  padding: 12px 20px;
+	  text-decoration: none;
+	  display: block;
+	  font-size: 0.95rem;
+	  transition: background 0.3s;
+	}
+	.dropdown-content a:hover {
+	  background-color: rgba(175, 184, 233, 0.1);
+	}
+	.nav-dropdown:hover .dropdown-content {
+	  display: block;
+	}
   </style>
 </head>
 	<body>
@@ -51,15 +98,25 @@
 		<img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
 		<span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
 	  </div>
+      <!-- Navigation dropdown menu (visible only to authenticated users) -->
+      <div style="flex:1;display:none;align-items:center;margin-left:24px" id="topNavMenu">
+        <div class="nav-dropdown">
+          <button class="dropdown-btn">☰ Menu</button>
+          <div class="dropdown-content">
+            <a href="/index.html">Members Area</a>
+            <a href="/insights.html">Insights</a>
+          </div>
+        </div>
+      </div>
       <!-- Top nav search (visible only to authenticated users) -->
-	  <div id="topNavSearch" class="top-nav-search" style="flex:1;display:none;align-items:center;justify-content:center;margin-left:12px">
+	  <div id="topNavSearch" class="top-nav-search" style="flex:0 1 auto;display:none;align-items:center;justify-content:center;margin:0 24px">
 		<div style="position:relative;max-width:480px;width:100%">
 		  <input id="siteSearchInput" type="search" placeholder="Search site resources..." aria-label="Search site" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
 		  <div id="searchResults" style="position:absolute;top:110%;left:0;right:0;background:#fff;border:1px solid #e6e9ee;border-radius:6px;box-shadow:0 8px 20px rgba(2,6,23,0.08);max-height:320px;overflow:auto;display:none;z-index:1000"></div>
 		</div>
 	  </div>
       <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
-				<div class="user-menu">
+				<div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
 					<code class="contact-code">
 						<b>Enquiries:</b> 07940916731
 					</code>
@@ -120,7 +177,7 @@
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
 
 <div style="max-width:820px;margin:1.5rem auto;padding:12px 16px;background:rgba(255,193,7,0.15);border-left:4px solid #ffc107;border-radius:4px;text-align:center;">
-			<p style="margin:0;color:var(--text);font-weight:600;">System maintenance is scheduled for Wednesday, 1 April 2026 between the hours of 3am - 6am BST</p>
+			<p style="margin:0;color:var(--text);font-weight:600;">System maintenance is scheduled for Wednesday, 7 April 2026 between the hours of 3am - 6am BST</p>
 		</div>
 		
 		<h1>Members Area</h1>
@@ -164,16 +221,6 @@
 			<!-- // Additional protected content sections can be added here -->
 
 
-
-            <section>
-				<hr>
-					<div style="text-align:center;margin:10px 0">
-						<p style="margin:0;font-size:0.95rem;color:var(--muted)">
-							Recommended reading: <a href="https://doi.org/10.1111/1748-8583.70035" target="_blank" rel="noopener noreferrer">"Leveraging AI to Capture Textual and Visual Elements: Insights for HRM Research and Practice"</a> — Liang, Aroles &amp; Li (30 March 2026). Open Access.
-						</p>
-					</div>
-				</hr>
-			</section>
 
        <section style="margin-top:2rem">
 				<h2>Become a Founding Subscriber</h2>
@@ -264,10 +311,11 @@
 	  const userNameEl = document.getElementById('userName');
 	  const signOutBtn = document.getElementById('signOutBtn');
 	  const signInLink = document.getElementById('signInLink');
-  const topNavSearch = document.getElementById('topNavSearch');
-  const siteSearchInput = document.getElementById('siteSearchInput');
-  const searchResultsEl = document.getElementById('searchResults');
-  const downloadPostsBtn = document.getElementById('downloadPostsBtn');
+	  const topNavSearch = document.getElementById('topNavSearch');
+	  const topNavMenu = document.getElementById('topNavMenu');
+	  const siteSearchInput = document.getElementById('siteSearchInput');
+	  const searchResultsEl = document.getElementById('searchResults');
+	  const downloadPostsBtn = document.getElementById('downloadPostsBtn');
 
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
@@ -276,6 +324,7 @@
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'flex';
+    if (topNavMenu) topNavMenu.style.display = 'flex';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
 	  }
 	  function showSignedOut() {
@@ -285,6 +334,7 @@
 		if (signOutBtn) signOutBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
     if (topNavSearch) topNavSearch.style.display = 'none';
+    if (topNavMenu) topNavMenu.style.display = 'none';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
 	  }
 
