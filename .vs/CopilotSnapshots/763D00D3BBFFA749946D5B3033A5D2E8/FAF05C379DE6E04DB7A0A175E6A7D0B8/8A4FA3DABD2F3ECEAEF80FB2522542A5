@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -224,91 +224,93 @@
 
       const USER_ID_PREFIX = 'IB';
       const USER_ID_TOTAL_LENGTH = 8;
-      const USER_ID_SUFFIX_LENGTH = USER_ID_TOTAL_LENGTH - USER_ID_PREFIX.length;
+      const USER_ID_RANDOM_LENGTH = USER_ID_TOTAL_LENGTH - USER_ID_PREFIX.length;
 
-      function toBase36Padded(num, len) {
-        return (num >>> 0).toString(36).toUpperCase().padStart(len, '0').slice(-len);
+      function generateCandidateUserId() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let suffix = '';
+        for (let i = 0; i < USER_ID_RANDOM_LENGTH; i++) {
+          suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return USER_ID_PREFIX + suffix;
       }
 
-      function generateDeterministicUserId(uid, salt) {
+      function generateFallbackUserId(uid) {
         if (!uid) return 'IB000000';
-        const input = String(uid) + '|' + String(salt || 0) + '|IBR';
         let hash = 2166136261;
-        for (let i = 0; i < input.length; i++) {
-          hash ^= input.charCodeAt(i);
-          hash = Math.imul(hash, 16777619);
+        for (let i = 0; i < uid.length; i++) {
+          hash ^= uid.charCodeAt(i);
+          hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
         }
-        return USER_ID_PREFIX + toBase36Padded(hash, USER_ID_SUFFIX_LENGTH);
+        const positive = hash >>> 0;
+        const value = (positive % 2176782336).toString(36).toUpperCase().padStart(6, '0');
+        return 'IB' + value;
       }
 
       async function createUniqueUserIdForUser(user) {
-        const deterministicFallback = generateDeterministicUserId(user && user.uid, 0);
         if (!db) {
-          return deterministicFallback;
+          return generateFallbackUserId(user && user.uid);
         }
-
         const profileRef = db.collection('userProfiles').doc(user.uid);
 
-        for (let attempt = 0; attempt < 200; attempt++) {
-          const candidate = generateDeterministicUserId(user.uid, attempt);
+        for (let attempt = 0; attempt < 30; attempt++) {
+          const candidate = generateCandidateUserId();
           const candidateRef = db.collection('userIds').doc(candidate);
 
           try {
-            const assigned = await db.runTransaction(async function (tx) {
-              const profileSnap = await tx.get(profileRef);
-              if (profileSnap.exists) {
-                const existing = profileSnap.data() && profileSnap.data().userId;
-                if (existing && typeof existing === 'string') {
-                  return existing.toUpperCase();
-                }
-              }
-
+            await db.runTransaction(async function (tx) {
               const candidateSnap = await tx.get(candidateRef);
               if (candidateSnap.exists) {
-                const data = candidateSnap.data() || {};
-                if (data.uid !== user.uid) {
-                  throw new Error('collision');
-                }
+                throw new Error('collision');
               }
 
               tx.set(candidateRef, {
                 uid: user.uid,
                 email: user.email || '',
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-              }, { merge: true });
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
 
               tx.set(profileRef, {
                 userId: candidate,
                 email: user.email || '',
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
               }, { merge: true });
-
-              return candidate;
             });
 
-            if (assigned) return assigned.toUpperCase();
+            return candidate;
           } catch (err) {
             if (err && err.message === 'collision') continue;
             throw err;
           }
         }
 
-        return deterministicFallback;
+        throw new Error('Unable to create unique user ID after multiple attempts.');
       }
 
       async function getOrCreateUserId(user) {
-        const deterministicFallback = generateDeterministicUserId(user && user.uid, 0);
         if (!db) {
-          return deterministicFallback;
+          return generateFallbackUserId(user && user.uid);
         }
-
         const profileRef = db.collection('userProfiles').doc(user.uid);
         const profileSnap = await profileRef.get();
 
         if (profileSnap.exists) {
           const data = profileSnap.data() || {};
           if (data.userId && typeof data.userId === 'string') {
-            return data.userId.toUpperCase();
+            const existingId = data.userId.toUpperCase();
+            await profileRef.set({
+              userId: existingId,
+              email: user.email || data.email || '',
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            await db.collection('userIds').doc(existingId).set({
+              uid: user.uid,
+              email: user.email || '',
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            return existingId;
           }
         }
 
@@ -322,7 +324,7 @@
           if (settingsUserId) settingsUserId.textContent = userId;
         } catch (err) {
           console.error('User ID load failed', err);
-          const fallbackId = generateDeterministicUserId(user && user.uid, 0);
+          const fallbackId = generateFallbackUserId(user && user.uid);
           if (settingsUserId) settingsUserId.textContent = fallbackId;
         }
       }
