@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -143,11 +143,12 @@
     </header>
 
     <div id="login-section" style="max-width:820px;margin:1.5rem auto;text-align:center">
-      <div class="signin-card">
-        <p class="intro-note">Please sign in to access your account settings.</p>
-        <div class="divider"></div>
-        <div class="center-buttons">
+      <div class="signin-card" style="background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:1.25rem;">
+        <p class="intro-note">Please sign in to upload resumes securely.</p>
+        <div class="divider" style="height:1px;background:var(--border);margin:12px 0"></div>
+        <div class="center-buttons" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
           <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
+          <span id="google-login-status" role="status" aria-live="polite" style="color:var(--muted);">Not signed in</span>
         </div>
       </div>
     </div>
