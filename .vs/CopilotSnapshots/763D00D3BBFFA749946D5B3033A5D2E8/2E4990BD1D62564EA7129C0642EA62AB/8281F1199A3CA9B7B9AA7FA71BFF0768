@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -162,10 +162,6 @@
           <div class="settings-value" id="settingsUserEmail">-</div>
         </div>
         <div class="settings-row">
-          <div class="settings-label">User ID</div>
-          <div class="settings-value" id="settingsUserId">-</div>
-        </div>
-        <div class="settings-row">
           <div class="settings-label">Last Login (Firebase Timestamp)</div>
           <div class="settings-value" id="settingsLastLogin">-</div>
         </div>
@@ -194,7 +190,6 @@
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
 
   <script>
@@ -206,7 +201,6 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
 
       const auth = firebase.auth();
-      const db = firebase.firestore();
       const protectedMain = document.getElementById('protected-content');
       const loginSection = document.getElementById('login-section');
       const signOutBtn = document.getElementById('signOutBtn');
@@ -219,96 +213,7 @@
 
       const settingsUserName = document.getElementById('settingsUserName');
       const settingsUserEmail = document.getElementById('settingsUserEmail');
-      const settingsUserId = document.getElementById('settingsUserId');
       const settingsLastLogin = document.getElementById('settingsLastLogin');
-
-      const USER_ID_PREFIX = 'IB';
-      const USER_ID_TOTAL_LENGTH = 8;
-      const USER_ID_RANDOM_LENGTH = USER_ID_TOTAL_LENGTH - USER_ID_PREFIX.length;
-
-      function generateCandidateUserId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let suffix = '';
-        for (let i = 0; i < USER_ID_RANDOM_LENGTH; i++) {
-          suffix += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return USER_ID_PREFIX + suffix;
-      }
-
-      async function createUniqueUserIdForUser(user) {
-        const profileRef = db.collection('userProfiles').doc(user.uid);
-
-        for (let attempt = 0; attempt < 30; attempt++) {
-          const candidate = generateCandidateUserId();
-          const candidateRef = db.collection('userIds').doc(candidate);
-
-          try {
-            await db.runTransaction(async function (tx) {
-              const candidateSnap = await tx.get(candidateRef);
-              if (candidateSnap.exists) {
-                throw new Error('collision');
-              }
-
-              tx.set(candidateRef, {
-                uid: user.uid,
-                email: user.email || '',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-              });
-
-              tx.set(profileRef, {
-                userId: candidate,
-                email: user.email || '',
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-              }, { merge: true });
-            });
-
-            return candidate;
-          } catch (err) {
-            if (err && err.message === 'collision') continue;
-            throw err;
-          }
-        }
-
-        throw new Error('Unable to create unique user ID after multiple attempts.');
-      }
-
-      async function getOrCreateUserId(user) {
-        const profileRef = db.collection('userProfiles').doc(user.uid);
-        const profileSnap = await profileRef.get();
-
-        if (profileSnap.exists) {
-          const data = profileSnap.data() || {};
-          if (data.userId && typeof data.userId === 'string') {
-            const existingId = data.userId.toUpperCase();
-            await profileRef.set({
-              userId: existingId,
-              email: user.email || data.email || '',
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-
-            await db.collection('userIds').doc(existingId).set({
-              uid: user.uid,
-              email: user.email || '',
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-
-            return existingId;
-          }
-        }
-
-        return createUniqueUserIdForUser(user);
-      }
-
-      async function loadUserId(user) {
-        if (settingsUserId) settingsUserId.textContent = 'Generating...';
-        try {
-          const userId = await getOrCreateUserId(user);
-          if (settingsUserId) settingsUserId.textContent = userId;
-        } catch (err) {
-          console.error('User ID load failed', err);
-          if (settingsUserId) settingsUserId.textContent = 'Unavailable';
-        }
-      }
 
       function setAccountDetails(user) {
         if (settingsUserName) settingsUserName.textContent = user.displayName || 'Not set';
@@ -324,7 +229,6 @@
         if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         setAccountDetails(user);
-        loadUserId(user);
       }
 
       function showSignedOut() {
@@ -334,7 +238,6 @@
         if (signInLink) signInLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
-        if (settingsUserId) settingsUserId.textContent = '-';
       }
 
       auth.onAuthStateChanged(function (user) {
