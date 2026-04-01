@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index, follow">
-  <title>Resume Uploads — Impact in Business Recruitment</title>
+  <title>Account Settings — Impact in Business Recruitment</title>
   <link rel="stylesheet" href="/resource-centre.css">
   <link rel="stylesheet" href="/index.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,17 +16,14 @@
     .page-wrapper {
       background: white;
       max-width: 1920px;
-      min-height: 100vh;
+      min-height: 1080px;
       margin: 0 auto;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
     .contact-code {
       font-family: Arial, Helvetica, sans-serif;
     }
-    .nav-dropdown {
-      position: relative;
-      display: inline-block;
-    }
+    .nav-dropdown { position: relative; display: inline-block; }
     .dropdown-btn {
       background: #eef2ff;
       border: 1px solid #c7d2fe;
@@ -54,7 +51,7 @@
       min-width: 220px;
       box-shadow: 0 10px 24px rgba(2, 6, 23, 0.18);
       padding: 8px 0;
-      z-index: 1001;
+      z-index: 1;
       border-radius: 8px;
       border: 1px solid #dbe3ee;
       top: 100%;
@@ -74,42 +71,28 @@
       background-color: #092a4b;
       color: #ffffff !important;
     }
-    .nav-dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .upload-panel {
+    .nav-dropdown:hover .dropdown-content { display: block; }
+
+    .settings-card {
+      margin: 2rem auto;
+      max-width: 760px;
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 12px;
       box-shadow: var(--shadow);
       padding: 1.25rem;
       text-align: left;
-      max-width: 720px;
-      margin: 1.5rem auto;
     }
-    .upload-help {
-      color: var(--muted);
-      margin-top: 0;
-    }
-    .upload-actions {
-      display: flex;
-      flex-wrap: wrap;
+    .settings-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
       gap: 10px;
-      align-items: center;
-      margin-top: 1rem;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef2f7;
     }
-    .status-note {
-      margin-top: 0.85rem;
-      color: var(--muted);
-      min-height: 1.2rem;
-      word-break: break-word;
-    }
-    progress {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      margin-top: 10px;
-    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-label { color: var(--muted); font-weight: 600; }
+    .settings-value { color: var(--text); word-break: break-word; }
   </style>
 </head>
 <body>
@@ -136,13 +119,12 @@
 
         <div id="topNavSearch" class="top-nav-search" style="flex:0 1 auto;display:none;align-items:center;justify-content:center;margin:0 24px">
           <div style="position:relative;max-width:480px;width:100%">
-            <input id="siteSearchInput" type="search" placeholder="Search this page..." aria-label="Search uploads page" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
+            <input id="siteSearchInput" type="search" placeholder="Search this page" aria-label="Search settings page" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
             <div id="searchResults" style="position:absolute;top:110%;left:0;right:0;background:#fff;border:1px solid #e6e9ee;border-radius:6px;box-shadow:0 8px 20px rgba(2,6,23,0.08);max-height:320px;overflow:auto;display:none;z-index:1000"></div>
           </div>
         </div>
 
         <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
-
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
           <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
@@ -161,29 +143,33 @@
       </div>
     </div>
 
-    <main id="protected-content" class="container" role="main" style="padding:2rem 0 3rem;max-width:960px;text-align:center;display:none">
-      <h1>Resume Uploads</h1>
-      <p class="lead">Upload candidate resumes to secure cloud storage. Files are stored under your authenticated account.</p>
+    <main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
+      <h1>Account Settings</h1>
+      <p class="lead">Your account profile details are loaded from Firebase Authentication for your signed-in user.</p>
 
       <div style="margin-top:1rem">
-        Hello, <strong id="userName">Member</strong>
+        <a class="btn btn-outline" href="/index.html">Back to Homepage</a>
       </div>
 
-      <section class="upload-panel" aria-labelledby="uploadHeading">
-        <h2 id="uploadHeading" style="margin-top:0">Upload a resume</h2>
-        <p class="upload-help">Accepted formats: PDF, DOC, DOCX. Maximum file size: 5 MB.</p>
-
-        <label for="resumeFile" style="font-weight:600;display:block;margin-bottom:0.5rem">Choose file</label>
-        <input id="resumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-
-        <div class="upload-actions">
-          <button id="uploadBtn" class="btn btn-primary" type="button">Upload Resume</button>
-          <span id="fileNamePreview" style="color:var(--muted)">No file selected</span>
+      <section class="settings-card" aria-labelledby="accountDetailsHeading">
+        <h2 id="accountDetailsHeading" style="margin-top:0">Account Details</h2>
+        <div class="settings-row">
+          <div class="settings-label">Name</div>
+          <div class="settings-value" id="settingsUserName">-</div>
         </div>
-
-        <progress id="uploadProgress" max="100" value="0" style="display:none"></progress>
-        <div id="uploadStatus" class="status-note" role="status" aria-live="polite"></div>
+        <div class="settings-row">
+          <div class="settings-label">Email</div>
+          <div class="settings-value" id="settingsUserEmail">-</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Last Login (Firebase Timestamp)</div>
+          <div class="settings-value" id="settingsLastLogin">-</div>
+        </div>
       </section>
+
+      <div style="margin:1.25rem auto 0;max-width:760px;text-align:right;">
+        <button class="btn btn-outline" id="deleteAccountBtn" style="border-color:#ef4444;color:#ef4444">Delete Your Account</button>
+      </div>
     </main>
 
     <footer class="resource-footer" role="contentinfo">
@@ -195,66 +181,63 @@
           <span style="color:var(--muted)">|</span>
           <a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
         </div>
-        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
+        <div>
+          <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   </div>
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
 
   <script>
     window.addEventListener('load', function () {
       if (!window.firebase || !window.firebaseConfig) {
-        console.warn('Firebase not available.');
+        console.warn('Firebase not available; protected UI will remain hidden');
         return;
       }
-
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
 
       const auth = firebase.auth();
-      const storage = firebase.storage();
-
       const protectedMain = document.getElementById('protected-content');
       const loginSection = document.getElementById('login-section');
-      const userNameEl = document.getElementById('userName');
       const signOutBtn = document.getElementById('signOutBtn');
+      const deleteAccountBtn = document.getElementById('deleteAccountBtn');
       const signInLink = document.getElementById('signInLink');
-      const topNavSearch = document.getElementById('topNavSearch');
       const topNavMenu = document.getElementById('topNavMenu');
-      const loginStatus = document.getElementById('google-login-status');
-
-      const fileInput = document.getElementById('resumeFile');
-      const uploadBtn = document.getElementById('uploadBtn');
-      const uploadProgress = document.getElementById('uploadProgress');
-      const uploadStatus = document.getElementById('uploadStatus');
-      const fileNamePreview = document.getElementById('fileNamePreview');
-
+      const topNavSearch = document.getElementById('topNavSearch');
       const siteSearchInput = document.getElementById('siteSearchInput');
       const searchResultsEl = document.getElementById('searchResults');
+
+      const settingsUserName = document.getElementById('settingsUserName');
+      const settingsUserEmail = document.getElementById('settingsUserEmail');
+      const settingsLastLogin = document.getElementById('settingsLastLogin');
+
+      function setAccountDetails(user) {
+        if (settingsUserName) settingsUserName.textContent = user.displayName || 'Not set';
+        if (settingsUserEmail) settingsUserEmail.textContent = user.email || 'Not available';
+        if (settingsLastLogin) settingsLastLogin.textContent = (user.metadata && user.metadata.lastSignInTime) ? user.metadata.lastSignInTime : 'Not available';
+      }
 
       function showAuthenticated(user) {
         if (loginSection) loginSection.style.display = 'none';
         if (protectedMain) protectedMain.style.display = 'block';
-        if (userNameEl) userNameEl.textContent = user.displayName || user.email || 'Member';
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
-        if (topNavSearch) topNavSearch.style.display = 'flex';
         if (topNavMenu) topNavMenu.style.display = 'flex';
-        if (loginStatus) loginStatus.textContent = 'Signed in';
+        if (topNavSearch) topNavSearch.style.display = 'flex';
+        setAccountDetails(user);
       }
 
       function showSignedOut() {
         if (loginSection) loginSection.style.display = 'block';
         if (protectedMain) protectedMain.style.display = 'none';
-        if (userNameEl) userNameEl.textContent = 'Member';
         if (signOutBtn) signOutBtn.style.display = 'none';
         if (signInLink) signInLink.style.display = 'inline-flex';
-        if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
-        if (loginStatus) loginStatus.textContent = 'Not signed in';
+        if (topNavSearch) topNavSearch.style.display = 'none';
       }
 
       auth.onAuthStateChanged(function (user) {
@@ -271,88 +254,47 @@
         });
       }
 
-      if (fileInput) {
-        fileInput.addEventListener('change', function () {
-          const selected = fileInput.files && fileInput.files[0];
-          if (fileNamePreview) fileNamePreview.textContent = selected ? selected.name : 'No file selected';
-        });
-      }
-
-      if (uploadBtn) {
-        uploadBtn.addEventListener('click', function () {
+      if (deleteAccountBtn) {
+        deleteAccountBtn.addEventListener('click', async function () {
           const user = auth.currentUser;
-          const file = fileInput && fileInput.files ? fileInput.files[0] : null;
-
           if (!user) {
-            if (uploadStatus) uploadStatus.textContent = 'Please sign in before uploading.';
+            alert('Please sign in first.');
             return;
           }
-
-          if (!file) {
-            if (uploadStatus) uploadStatus.textContent = 'Please choose a resume file first.';
-            return;
-          }
-
-          const validTypes = [
-            'application/pdf',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-          ];
-          const validExt = /\.(pdf|doc|docx)$/i.test(file.name);
-          if (!validTypes.includes(file.type) && !validExt) {
-            if (uploadStatus) uploadStatus.textContent = 'Invalid file format. Use PDF, DOC, or DOCX.';
-            return;
-          }
-
-          if (file.size > 5 * 1024 * 1024) {
-            if (uploadStatus) uploadStatus.textContent = 'File is too large. Maximum is 5 MB.';
-            return;
-          }
-
-          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const objectPath = 'Default/' + safeName;
-          const metadata = {
-            contentType: file.type || 'application/octet-stream',
-            customMetadata: {
-              uploadedBy: user.uid,
-              uploadedByEmail: user.email || ''
+          const confirmed = window.confirm('Are you sure you want to permanently delete your account? This cannot be undone.');
+          if (!confirmed) return;
+          try {
+            await user.delete();
+            alert('Your account has been deleted.');
+            window.location.replace('/login.html');
+          } catch (err) {
+            if (err && err.code === 'auth/requires-recent-login') {
+              try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                await user.reauthenticateWithPopup(provider);
+                await user.delete();
+                alert('Your account has been deleted.');
+                window.location.replace('/login.html');
+              } catch (reauthErr) {
+                console.error('Re-auth or delete failed', reauthErr);
+                alert('Account deletion failed: ' + (reauthErr && reauthErr.message ? reauthErr.message : 'unknown error'));
+              }
+            } else {
+              console.error('Delete account failed', err);
+              alert('Account deletion failed: ' + (err && err.message ? err.message : 'unknown error'));
             }
-          };
-
-          if (uploadStatus) uploadStatus.textContent = 'Uploading...';
-          if (uploadProgress) {
-            uploadProgress.style.display = 'block';
-            uploadProgress.value = 0;
           }
-
-          const uploadTask = storage.ref(objectPath).put(file, metadata);
-
-          uploadTask.on('state_changed', function (snapshot) {
-            if (!uploadProgress) return;
-            const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            uploadProgress.value = pct;
-          }, function (error) {
-            if (uploadStatus) uploadStatus.textContent = 'Upload failed: ' + (error && error.message ? error.message : 'unknown error');
-          }, function () {
-            uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
-              if (uploadStatus) uploadStatus.textContent = 'Upload complete. File stored successfully.';
-              if (uploadProgress) uploadProgress.value = 100;
-              if (fileInput) fileInput.value = '';
-              if (fileNamePreview) fileNamePreview.textContent = 'No file selected';
-              console.log('Uploaded resume URL:', url);
-            });
-          });
         });
       }
 
-      function performSearch(q) {
-        if (!q || q.trim().length < 2) {
+      function performSearch(queryText) {
+        if (!queryText || queryText.trim().length < 2) {
           if (searchResultsEl) searchResultsEl.style.display = 'none';
           return;
         }
 
-        const query = q.trim().toLowerCase();
-        const candidates = document.querySelectorAll('main h1, main h2, main h3, main p, main label, main button, main a, main span');
+        const query = queryText.trim().toLowerCase();
+        const candidates = document.querySelectorAll('main h1, main h2, main p, main div');
         const results = [];
 
         candidates.forEach(function (el) {
@@ -360,49 +302,37 @@
           if (!text) return;
           const idx = text.toLowerCase().indexOf(query);
           if (idx === -1) return;
-
-          const titleEl = el.closest('section') ? el.closest('section').querySelector('h2') : null;
-          const title = titleEl ? titleEl.textContent : text.slice(0, 60);
-          const snippet = text.slice(Math.max(0, idx - 30), Math.min(text.length, idx + 80));
-          results.push({ element: el, title: title, snippet: snippet });
+          results.push({ el: el, title: text.slice(0, 60), snippet: text.slice(Math.max(0, idx - 20), Math.min(text.length, idx + 80)) });
         });
 
         if (!searchResultsEl) return;
         if (results.length === 0) {
-          searchResultsEl.innerHTML = '<div style="padding:10px 12px;color:var(--muted)">No results found.</div>';
+          searchResultsEl.innerHTML = '<div style="padding:12px;color:#666">No results</div>';
           searchResultsEl.style.display = 'block';
           return;
         }
 
         searchResultsEl.innerHTML = results.slice(0, 8).map(function (r, i) {
-          return '<button type="button" data-ridx="' + i + '" style="display:block;width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-bottom:1px solid #f1f5f9">' +
-            '<div style="font-weight:600;color:var(--text)">' + r.title + '</div>' +
-            '<div style="font-size:0.9rem;color:var(--muted)">' + r.snippet.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
-            '</button>';
+          return '<div class="sr-item" data-idx="' + i + '" style="padding:10px 12px;cursor:pointer;border-bottom:1px solid #f4f6f8"><div style="font-weight:600;color:#092a4b;margin-bottom:6px">' + r.title + '</div><div style="font-size:0.9rem;color:#556">' + r.snippet + '</div></div>';
         }).join('');
-
         searchResultsEl.style.display = 'block';
 
-        Array.from(searchResultsEl.querySelectorAll('button[data-ridx]')).forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            const idx = Number(btn.getAttribute('data-ridx'));
-            const result = results[idx];
-            if (!result || !result.element) return;
-            result.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        Array.from(searchResultsEl.querySelectorAll('.sr-item')).forEach(function (node, i) {
+          node.addEventListener('click', function () {
+            const target = results[i].el;
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             searchResultsEl.style.display = 'none';
           });
         });
       }
 
       if (siteSearchInput) {
-        siteSearchInput.addEventListener('input', function () {
-          performSearch(siteSearchInput.value || '');
-        });
+        siteSearchInput.addEventListener('input', function (e) { performSearch(e.target.value); });
       }
 
-      document.addEventListener('click', function (e) {
+      document.addEventListener('click', function (ev) {
         if (!searchResultsEl || !siteSearchInput) return;
-        if (e.target === siteSearchInput || searchResultsEl.contains(e.target)) return;
+        if (ev.target === siteSearchInput || searchResultsEl.contains(ev.target)) return;
         searchResultsEl.style.display = 'none';
       });
     });

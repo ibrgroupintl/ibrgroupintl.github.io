@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,39 +28,31 @@
       display: inline-block;
     }
     .dropdown-btn {
-      background: #eef2ff;
-      border: 1px solid #c7d2fe;
+      background: #f0f2f7;
+      border: 1px solid #afb8e9;
       color: #092a4b;
       padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
       font-size: 0.95rem;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-    }
-    .dropdown-btn:hover,
-    .dropdown-btn:focus {
-      background: #092a4b;
-      border-color: #092a4b;
-      color: #fff;
     }
     .dropdown-content {
       display: none;
       position: absolute;
       background-color: #ffffff;
       min-width: 220px;
-      box-shadow: 0 10px 24px rgba(2, 6, 23, 0.18);
-      padding: 8px 0;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      padding: 12px 0;
       z-index: 1001;
-      border-radius: 8px;
-      border: 1px solid #dbe3ee;
+      border-radius: 6px;
+      border: 1px solid #e6e9ee;
       top: 100%;
       left: 0;
-      margin-top: 6px;
-      overflow: hidden;
+      margin-top: 4px;
     }
     .dropdown-content a {
       color: #092a4b !important;
@@ -68,11 +60,10 @@
       text-decoration: none;
       display: block;
       font-size: 0.95rem;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background 0.3s;
     }
     .dropdown-content a:hover {
-      background-color: #092a4b;
-      color: #ffffff !important;
+      background-color: rgba(175, 184, 233, 0.1);
     }
     .nav-dropdown:hover .dropdown-content {
       display: block;
