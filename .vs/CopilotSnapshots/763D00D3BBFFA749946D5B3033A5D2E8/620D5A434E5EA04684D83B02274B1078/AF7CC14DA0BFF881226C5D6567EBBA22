@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -112,7 +112,7 @@
       <!-- Top nav search (visible only to authenticated users) -->
 	  <div id="topNavSearch" class="top-nav-search" style="flex:0 1 auto;display:none;align-items:center;justify-content:center;margin:0 24px">
 		<div style="position:relative;max-width:480px;width:100%">
-		  <input id="siteSearchInput" type="search" placeholder="Search this page" aria-label="Search site" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
+		  <input id="siteSearchInput" type="search" placeholder="Search site resources..." aria-label="Search site" style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background:#fff;" />
 		  <div id="searchResults" style="position:absolute;top:110%;left:0;right:0;background:#fff;border:1px solid #e6e9ee;border-radius:6px;box-shadow:0 8px 20px rgba(2,6,23,0.08);max-height:320px;overflow:auto;display:none;z-index:1000"></div>
 		</div>
 	  </div>
