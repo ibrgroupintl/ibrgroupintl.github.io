@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -154,10 +154,6 @@
           <div class="settings-value" id="settingsLastLogin">-</div>
         </div>
       </section>
-
-      <div style="margin:1.25rem auto 0;max-width:760px;text-align:right;">
-        <button class="btn btn-outline" id="deleteAccountBtn" style="border-color:#ef4444;color:#ef4444">Delete Your Account</button>
-      </div>
     </main>
 
     <footer class="resource-footer" role="contentinfo">
@@ -192,7 +188,6 @@
       const protectedMain = document.getElementById('protected-content');
       const loginSection = document.getElementById('login-section');
       const signOutBtn = document.getElementById('signOutBtn');
-      const deleteAccountBtn = document.getElementById('deleteAccountBtn');
       const signInLink = document.getElementById('signInLink');
       const topNavMenu = document.getElementById('topNavMenu');
       const topNavSearch = document.getElementById('topNavSearch');
@@ -239,39 +234,6 @@
             showSignedOut();
             window.location.replace('/login.html');
           });
-        });
-      }
-
-      if (deleteAccountBtn) {
-        deleteAccountBtn.addEventListener('click', async function () {
-          const user = auth.currentUser;
-          if (!user) {
-            alert('Please sign in first.');
-            return;
-          }
-          const confirmed = window.confirm('Are you sure you want to permanently delete your account? This cannot be undone.');
-          if (!confirmed) return;
-          try {
-            await user.delete();
-            alert('Your account has been deleted.');
-            window.location.replace('/login.html');
-          } catch (err) {
-            if (err && err.code === 'auth/requires-recent-login') {
-              try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                await user.reauthenticateWithPopup(provider);
-                await user.delete();
-                alert('Your account has been deleted.');
-                window.location.replace('/login.html');
-              } catch (reauthErr) {
-                console.error('Re-auth or delete failed', reauthErr);
-                alert('Account deletion failed: ' + (reauthErr && reauthErr.message ? reauthErr.message : 'unknown error'));
-              }
-            } else {
-              console.error('Delete account failed', err);
-              alert('Account deletion failed: ' + (err && err.message ? err.message : 'unknown error'));
-            }
-          }
         });
       }
 
