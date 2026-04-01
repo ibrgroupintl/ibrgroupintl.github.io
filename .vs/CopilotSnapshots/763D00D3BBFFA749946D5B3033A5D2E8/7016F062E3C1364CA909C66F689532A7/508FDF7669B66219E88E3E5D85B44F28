@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -206,7 +206,7 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
 
       const auth = firebase.auth();
-      const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
+      const db = firebase.firestore();
       const protectedMain = document.getElementById('protected-content');
       const loginSection = document.getElementById('login-section');
       const signOutBtn = document.getElementById('signOutBtn');
@@ -235,22 +235,7 @@
         return USER_ID_PREFIX + suffix;
       }
 
-      function generateFallbackUserId(uid) {
-        if (!uid) return 'IB000000';
-        let hash = 2166136261;
-        for (let i = 0; i < uid.length; i++) {
-          hash ^= uid.charCodeAt(i);
-          hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-        }
-        const positive = hash >>> 0;
-        const value = (positive % 2176782336).toString(36).toUpperCase().padStart(6, '0');
-        return 'IB' + value;
-      }
-
       async function createUniqueUserIdForUser(user) {
-        if (!db) {
-          return generateFallbackUserId(user && user.uid);
-        }
         const profileRef = db.collection('userProfiles').doc(user.uid);
 
         for (let attempt = 0; attempt < 30; attempt++) {
@@ -288,9 +273,6 @@
       }
 
       async function getOrCreateUserId(user) {
-        if (!db) {
-          return generateFallbackUserId(user && user.uid);
-        }
         const profileRef = db.collection('userProfiles').doc(user.uid);
         const profileSnap = await profileRef.get();
 
@@ -324,8 +306,7 @@
           if (settingsUserId) settingsUserId.textContent = userId;
         } catch (err) {
           console.error('User ID load failed', err);
-          const fallbackId = generateFallbackUserId(user && user.uid);
-          if (settingsUserId) settingsUserId.textContent = fallbackId;
+          if (settingsUserId) settingsUserId.textContent = 'Unavailable';
         }
       }
 
