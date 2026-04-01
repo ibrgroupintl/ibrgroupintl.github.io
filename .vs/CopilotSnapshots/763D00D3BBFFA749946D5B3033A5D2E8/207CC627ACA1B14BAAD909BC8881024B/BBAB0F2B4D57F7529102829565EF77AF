@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,7 +30,6 @@
     .login-page .container{display:flex;flex-direction:column;align-items:center;justify-content:center}
     /* Links block inside the card: horizontal and centered */
     .meta-links{display:flex;flex-direction:row;gap:12px;justify-content:center;align-items:center}
-    .contact-code{font-family: Arial, Helvetica, sans-serif;}
     
     /* Google Sign-In Button Styling */
     .google-btn {
