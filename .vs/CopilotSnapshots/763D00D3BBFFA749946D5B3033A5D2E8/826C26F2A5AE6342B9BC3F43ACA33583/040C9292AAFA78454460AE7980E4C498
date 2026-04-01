@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -123,7 +123,6 @@
 						<b>Enquiries:</b> 07940916731
 					</code>
              <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
-				<button class="btn btn-outline" id="deleteAccountBtn" style="display:none;border-color:#ef4444;color:#ef4444">Delete Your Account</button>
 				<button class="btn btn-outline" id="signOutBtn" style="display:none">Sign Out</button>
 				</div>
 			</div>
@@ -313,7 +312,6 @@
 	  const loginSection = document.getElementById('login-section');
 	  const userNameEl = document.getElementById('userName');
 	  const signOutBtn = document.getElementById('signOutBtn');
-	  const deleteAccountBtn = document.getElementById('deleteAccountBtn');
 	  const signInLink = document.getElementById('signInLink');
 	  const topNavSearch = document.getElementById('topNavSearch');
 	  const topNavMenu = document.getElementById('topNavMenu');
@@ -326,7 +324,6 @@
 		if (protectedMain) protectedMain.style.display = 'block';
 		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
-		if (deleteAccountBtn) deleteAccountBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'flex';
     if (topNavMenu) topNavMenu.style.display = 'flex';
@@ -337,7 +334,6 @@
 		if (protectedMain) protectedMain.style.display = 'none';
 		if (userNameEl) userNameEl.textContent = 'Member';
 		if (signOutBtn) signOutBtn.style.display = 'none';
-		if (deleteAccountBtn) deleteAccountBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
@@ -455,44 +451,13 @@
 	if (searchResultsEl) searchResultsEl.style.display = 'none';
   });
 
-	  if (deleteAccountBtn) deleteAccountBtn.addEventListener('click', async function () {
-		const user = auth.currentUser;
-		if (!user) {
-		  alert('Please sign in first.');
-		  return;
-		}
-		const confirmed = window.confirm('Are you sure you want to permanently delete your account? This cannot be undone.');
-		if (!confirmed) return;
-		try {
-		  await user.delete();
-		  alert('Your account has been deleted.');
-		  window.location.replace('/login.html');
-		} catch (err) {
-		  if (err && err.code === 'auth/requires-recent-login') {
-			try {
-			  const provider = new firebase.auth.GoogleAuthProvider();
-			  await user.reauthenticateWithPopup(provider);
-			  await user.delete();
-			  alert('Your account has been deleted.');
-			  window.location.replace('/login.html');
-			} catch (reauthErr) {
-			  console.error('Re-auth or delete failed', reauthErr);
-			  alert('Account deletion failed: ' + (reauthErr && reauthErr.message ? reauthErr.message : 'unknown error'));
-			}
-		  } else {
-			console.error('Delete account failed', err);
-			alert('Account deletion failed: ' + (err && err.message ? err.message : 'unknown error'));
-		  }
-		}
-	  });
-
 	  if (signOutBtn) signOutBtn.addEventListener('click', function () {
 		auth.signOut().then(() => {
 		  showSignedOut();
 		  window.location.replace('/login.html');
 		});
 	  });
-  });
+	});
 </script>
 <script>
   // Mobile nav toggle handler
