@@ -3,7 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Temp\\VisualStudio\\copilot-vs\\plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|MarkdownSecurePreview"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:settings.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -172,8 +173,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:404.html||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:settings.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\.github\\copilot-instructions.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.github\\copilot-instructions.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     }
   ],
   "DocumentGroupContainers": [
@@ -183,7 +184,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -192,10 +193,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{7513ff4e-9271-4984-bbcd-46ff9e185399}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -208,27 +205,28 @@
             {
               "$type": "Document",
               "DocumentIndex": 43,
-              "Title": "settings.html",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
-              "RelativeDocumentMoniker": "settings.html",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
-              "RelativeToolTip": "settings.html",
-              "ViewState": "AgIAAEQCAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-02T04:51:46.899Z",
+              "Title": "copilot-instructions.md",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\.github\\copilot-instructions.md",
+              "RelativeDocumentMoniker": ".github\\copilot-instructions.md",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\.github\\copilot-instructions.md",
+              "RelativeToolTip": ".github\\copilot-instructions.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-04-02T06:42:11.853Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md [Preview]",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Temp\\VisualStudio\\copilot-vs\\plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Temp\\VisualStudio\\copilot-vs\\plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Temp\\VisualStudio\\copilot-vs\\plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md [Preview]",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\Temp\\VisualStudio\\copilot-vs\\plan-d3003d76-ffbb-49a7-946d-5b3033a5d2e8.md [Preview]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-04-02T04:47:31.742Z",
-              "EditorCaption": " [Preview]"
+              "Title": "settings.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
+              "RelativeDocumentMoniker": "settings.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
+              "RelativeToolTip": "settings.html",
+              "ViewState": "AgIAALcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-04-02T04:51:46.899Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -240,8 +238,7 @@
               "RelativeToolTip": "uploads.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-02T04:40:44.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T04:40:44.77Z"
             },
             {
               "$type": "Document",
@@ -253,8 +250,7 @@
               "RelativeToolTip": "insights.html",
               "ViewState": "AgIAAPIAAAAAAAAAAAAqwPsAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-01T03:08:32.856Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T03:08:32.856Z"
             },
             {
               "$type": "Document",
@@ -266,8 +262,7 @@
               "RelativeToolTip": "index.html",
               "ViewState": "AgIAAPoAAAAAAAAAAAAqwCMBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-28T09:15:25.161Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-28T09:15:25.161Z"
             },
             {
               "$type": "Document",
@@ -279,8 +274,7 @@
               "RelativeToolTip": "privacy.html",
               "ViewState": "AgIAADIAAAAAAAAAAAAQwBEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-28T17:56:09.067Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-28T17:56:09.067Z"
             },
             {
               "$type": "Document",
