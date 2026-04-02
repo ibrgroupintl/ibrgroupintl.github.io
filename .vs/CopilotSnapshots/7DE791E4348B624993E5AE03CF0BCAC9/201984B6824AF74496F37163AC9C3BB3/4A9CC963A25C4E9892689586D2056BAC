@@ -1,5 +1,6 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const {defineJsonSecret} = require('firebase-functions/params');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
 try {
@@ -13,22 +14,17 @@ const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
 const db = admin.firestore();
-const FUNCTIONS_CONFIG_SECRET_NAME = 'FUNCTIONS_CONFIG_EXPORT';
+const functionsConfig = defineJsonSecret('FUNCTIONS_CONFIG_EXPORT');
 
-function getFunctionsConfigExport() {
+function getMailConfig() {
   try {
-    const raw = process.env[FUNCTIONS_CONFIG_SECRET_NAME] || '';
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? parsed : {};
+    const config = functionsConfig.value();
+    return config && typeof config === 'object' && config.mail && typeof config.mail === 'object'
+      ? config.mail
+      : {};
   } catch (err) {
     return {};
   }
-}
-
-function getMailConfig() {
-  const config = getFunctionsConfigExport();
-  return config && config.mail && typeof config.mail === 'object' ? config.mail : {};
 }
 
 function getEnv(name) {
@@ -130,7 +126,7 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   }
 });
 
-exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).https.onRequest(async (req, res) => {
+exports.adminMessageWebhook = functions.runWith({ secrets: [functionsConfig] }).https.onRequest(async (req, res) => {
   try {
     if (req.method === 'GET') {
       return res.status(200).json({ ok: true, service: 'adminMessageWebhook' });
@@ -185,7 +181,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
   }
 });
 
-exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).firestore.document('messages/{messageId}').onCreate(async (snap) => {
+exports.notifyMessageRecipient = functions.runWith({ secrets: [functionsConfig] }).firestore.document('messages/{messageId}').onCreate(async (snap) => {
   const data = snap.data() || {};
   const recipientEmail = normalizeEmail(data.recipientEmail);
 
