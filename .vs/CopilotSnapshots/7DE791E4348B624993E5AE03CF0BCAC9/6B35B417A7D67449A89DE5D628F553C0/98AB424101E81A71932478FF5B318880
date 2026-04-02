@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -169,7 +169,6 @@
             <div class="dropdown-content">
               <a href="/index.html">Members Area</a>
               <a href="/messages.html">Messages Inbox</a>
-              <a href="/compose.html">Compose Message</a>
               <a href="/insights.html">Insights Archive</a>
               <a href="/uploads.html">Resume Uploads</a>
               <a href="/settings.html">Account Settings</a>
@@ -212,7 +211,7 @@
 
     <main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:980px;text-align:center;display:none">
       <h1>Messages Inbox</h1>
-      <p class="lead">This secure inbox shows messages routed to your authenticated account. New Firebase messages are queued for Mailgun email notification and displayed here in real time.</p>
+      <p class="lead">This secure inbox shows messages routed to your authenticated account. Admin messages sent to <strong>admin-messages@ibrecruitment.com</strong> should be forwarded here by the delivery workflow.</p>
 
       <div class="inbox-shell">
         <div class="message-toolbar">
@@ -228,7 +227,7 @@
 
         <div class="inbox-summary">
           <p style="margin:0 0 0.5rem;font-weight:600">Delivery note</p>
-          <p style="margin:0;color:var(--text)">Mailgun notification status is shown for each message. If no messages are available yet, the inbox will remain empty.</p>
+          <p style="margin:0;color:var(--text)">This page is ready for a backend workflow that stores inbound email as message records for the signed-in user. If no messages are available yet, the inbox will remain empty.</p>
         </div>
 
         <section aria-labelledby="inboxHeading">
@@ -281,17 +280,9 @@
       const userEmailDisplay = document.getElementById('userEmailDisplay');
       const messagesStatus = document.getElementById('messagesStatus');
       const messagesList = document.getElementById('messagesList');
-      let unsubscribeInbox = null;
 
       function escapeHtml(s) {
         return (s || '').replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
-      }
-
-      function clearInboxListener() {
-        if (typeof unsubscribeInbox === 'function') {
-          unsubscribeInbox();
-          unsubscribeInbox = null;
-        }
       }
 
       function toMillis(value) {
@@ -319,13 +310,6 @@
         }).format(date);
       }
 
-      function formatDeliveryStatus(status) {
-        const normalized = (status || '').toLowerCase();
-        if (normalized === 'delivered') return 'Sent via Mailgun';
-        if (normalized === 'queued') return 'Queued for Mailgun';
-        return 'Stored only';
-      }
-
       function renderMessages(items) {
         if (!messagesStatus || !messagesList) return;
         if (!items.length) {
@@ -340,7 +324,6 @@
             '<div class="message-meta">' +
               '<span><strong>From:</strong> ' + escapeHtml(item.senderEmail || 'Admin') + '</span>' +
               '<span><strong>Received:</strong> ' + escapeHtml(item.receivedAtText) + '</span>' +
-              '<span><strong>Email notification:</strong> ' + escapeHtml(item.deliveryStatusText) + '</span>' +
             '</div>' +
             '<h3 class="message-subject">' + escapeHtml(item.subject || 'No subject') + '</h3>' +
             '<p class="message-body">' + escapeHtml(item.body || '') + '</p>' +
@@ -348,20 +331,19 @@
         }).join('');
       }
 
-      function loadInbox(user) {
+      async function loadInbox(user) {
         const email = (user && user.email) ? user.email : '';
         if (userEmailDisplay) userEmailDisplay.textContent = email || 'Not available';
 
-        clearInboxListener();
-
         if (!db || !email) {
-          if (messagesStatus) messagesStatus.textContent = 'Messages will appear here when the Mailgun workflow is connected.';
+          if (messagesStatus) messagesStatus.textContent = 'Messages will appear here when the delivery workflow is connected.';
           if (messagesList) messagesList.innerHTML = '';
           return;
         }
 
-        if (messagesStatus) messagesStatus.textContent = 'Loading your inbox...';
-        unsubscribeInbox = db.collection('messages').where('recipientEmail', '==', email).onSnapshot(function (snapshot) {
+        try {
+          if (messagesStatus) messagesStatus.textContent = 'Loading your inbox...';
+          const snapshot = await db.collection('messages').where('recipientEmail', '==', email).get();
           const items = [];
           snapshot.forEach(function (doc) {
             const data = doc.data() || {};
@@ -372,8 +354,7 @@
               body: data.body || data.message || '',
               senderEmail: data.senderEmail || data.fromEmail || 'admin-messages@ibrecruitment.com',
               receivedAtText: formatReceivedAt(receivedAtValue),
-              receivedAtSort: toMillis(receivedAtValue),
-              deliveryStatusText: formatDeliveryStatus(data.deliveryStatus)
+              receivedAtSort: toMillis(receivedAtValue)
             });
           });
 
@@ -382,11 +363,11 @@
           });
 
           renderMessages(items.slice(0, 50));
-        }, function (err) {
+        } catch (err) {
           console.error('Inbox load failed', err);
           if (messagesStatus) messagesStatus.textContent = 'Unable to load messages right now.';
           if (messagesList) messagesList.innerHTML = '<div class="message-empty">Messages could not be loaded.</div>';
-        });
+        }
       }
 
       function showAuthenticated(user) {
@@ -406,7 +387,6 @@
         if (signInLink) signInLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
-        clearInboxListener();
         if (messagesStatus) messagesStatus.textContent = 'Please sign in to view your inbox.';
         if (messagesList) messagesList.innerHTML = '';
       }

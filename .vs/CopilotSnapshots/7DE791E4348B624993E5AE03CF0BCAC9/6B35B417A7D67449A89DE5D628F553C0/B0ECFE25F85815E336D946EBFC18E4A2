@@ -1,6 +1,5 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {defineJsonSecret} = require('firebase-functions/params');
 const {Storage} = require('@google-cloud/storage');
 const nodemailer = require('nodemailer');
 
@@ -9,26 +8,9 @@ const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
 const db = admin.firestore();
-const functionsConfig = defineJsonSecret('FUNCTIONS_CONFIG_EXPORT');
-
-function getMailConfig() {
-  try {
-    const config = functionsConfig.value();
-    return config && typeof config === 'object' && config.mail && typeof config.mail === 'object'
-      ? config.mail
-      : {};
-  } catch (err) {
-    return {};
-  }
-}
 
 function getEnv(name) {
-  const envValue = process.env[name];
-  if (envValue !== undefined && envValue !== null && String(envValue).trim() !== '') return envValue;
-
-  const mailConfig = getMailConfig();
-  const key = String(name || '').toLowerCase();
-  return mailConfig[key] || '';
+  return process.env[name] || (functions.config() && functions.config().mail && functions.config().mail[name.toLowerCase()]) || '';
 }
 
 function normalizeEmail(value) {
@@ -116,7 +98,7 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   }
 });
 
-exports.adminMessageWebhook = functions.runWith({ secrets: [functionsConfig] }).https.onRequest(async (req, res) => {
+exports.adminMessageWebhook = functions.https.onRequest(async (req, res) => {
   try {
     if (req.method === 'GET') {
       return res.status(200).json({ ok: true, service: 'adminMessageWebhook' });
@@ -171,7 +153,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [functionsConfig] }).
   }
 });
 
-exports.notifyMessageRecipient = functions.runWith({ secrets: [functionsConfig] }).firestore.document('messages/{messageId}').onCreate(async (snap) => {
+exports.notifyMessageRecipient = functions.firestore.document('messages/{messageId}').onCreate(async (snap) => {
   const data = snap.data() || {};
   const recipientEmail = normalizeEmail(data.recipientEmail);
 

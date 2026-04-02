@@ -110,6 +110,7 @@
             <div class="dropdown-content">
               <a href="/index.html">Members Area</a>
               <a href="/messages.html">Messages Inbox</a>
+              <a href="/compose.html">Compose Message</a>
               <a href="/insights.html">Insights Archive</a>
               <a href="/uploads.html">Resume Uploads</a>
               <a href="/settings.html">Account Settings</a>
@@ -410,7 +411,7 @@
                 alert('Your account has been deleted.');
                 window.location.replace('/login.html');
               } catch (reauthErr) {
-                console.error('Re-auth or delete failed', reauthErr);
+                console.error('Re-auth or delete失败', reauthErr);
                 alert('Account deletion failed: ' + (reauthErr && reauthErr.message ? reauthErr.message : 'unknown error'));
               }
             } else {

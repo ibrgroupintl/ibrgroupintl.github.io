@@ -10,5 +10,8 @@
     "apiKey": "AIzaSyCcsm1Pvh_h1M1OySEXTYeZnOtBUAYExio",
     "authDomain": "wale-491803.firebaseapp.com",
     "messagingSenderId": "916707769747",
-    "measurementId": "G-FZMT05FVYY"
+    "measurementId": "G-FZMT05FVYY",
+    "mail": {
+        "smtp_user": "admin@mac.ibrecruitment.com"
+    }
 }

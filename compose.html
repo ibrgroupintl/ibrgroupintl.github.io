@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="index, nofollow">
+  <title>Compose Message — Impact in Business Recruitment</title>
+  <link rel="stylesheet" href="/resource-centre.css">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .page-wrapper {
+      background: white;
+      max-width: 1920px;
+      min-height: 1080px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .contact-code { font-family: Arial, Helvetica, sans-serif; }
+    .nav-dropdown { position: relative; display: inline-block; }
+    .dropdown-btn {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      color: #092a4b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .dropdown-btn:hover,
+    .dropdown-btn:focus {
+      background: #092a4b;
+      border-color: #092a4b;
+      color: #fff;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 220px;
+      box-shadow: 0 10px 24px rgba(2, 6, 23, 0.18);
+      padding: 8px 0;
+      z-index: 1;
+      border-radius: 8px;
+      border: 1px solid #dbe3ee;
+      top: 100%;
+      left: 0;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .dropdown-content a {
+      color: #092a4b !important;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: block;
+      font-size: 0.95rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .dropdown-content a:hover {
+      background-color: #092a4b;
+      color: #ffffff !important;
+    }
+    .nav-dropdown:hover .dropdown-content { display: block; }
+    .message-icon-link {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: 1px solid #c7d2fe;
+      background: #eef2ff;
+      color: #092a4b;
+      text-decoration: none;
+      flex: 0 0 auto;
+    }
+    .message-icon-link:hover,
+    .message-icon-link:focus {
+      background: #092a4b;
+      border-color: #092a4b;
+      color: #fff;
+    }
+    .compose-shell {
+      margin: 2rem auto;
+      max-width: 920px;
+      text-align: left;
+    }
+    .compose-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field-block { display: grid; gap: 6px; margin-bottom: 12px; }
+    .field-block label { font-weight: 600; color: var(--text); }
+    .field-block input,
+    .field-block textarea {
+      width: 100%;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: inherit;
+      box-sizing: border-box;
+    }
+    .field-block textarea { min-height: 130px; resize: vertical; }
+    .compose-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .compose-status {
+      margin-top: 12px;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #d6e0ec;
+      background: #f8fbff;
+      color: #334155;
+      white-space: pre-wrap;
+    }
+    .compose-status.error { background: #fff5f5; border-color: #fecaca; color: #7f1d1d; }
+    .compose-status.success { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
+    @media (max-width: 740px) { .field-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="resource-nav" role="banner">
+      <div class="container container-nav">
+        <div class="logo" style="display:flex;align-items:center;gap:12px">
+          <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
+          <span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
+        </div>
+
+        <div style="flex:1;display:none;align-items:center;margin-left:24px" id="topNavMenu">
+          <div class="nav-dropdown">
+            <button class="dropdown-btn">☰ Menu</button>
+            <div class="dropdown-content">
+              <a href="/index.html">Members Area</a>
+              <a href="/messages.html">Messages Inbox</a>
+              <a href="/compose.html">Compose Message</a>
+              <a href="/insights.html">Insights Archive</a>
+              <a href="/uploads.html">Resume Uploads</a>
+              <a href="/settings.html">Account Settings</a>
+              <a href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
+          <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
+          <a class="message-icon-link" href="/messages.html" aria-label="Open secure messages inbox" title="Messages inbox">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+              <path d="M6 8l6 4 6-4"></path>
+            </svg>
+          </a>
+          <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
+          <button class="btn btn-outline" id="signOutBtn" style="display:none">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="login-section" style="max-width:820px;margin:1.5rem auto;text-align:center">
+      <div class="signin-card">
+        <p class="intro-note">Please sign in to compose and send secure messages.</p>
+        <div class="divider"></div>
+        <div class="center-buttons">
+          <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
+        </div>
+      </div>
+    </div>
+
+    <main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:980px;text-align:center;display:none">
+      <h1>Compose Message (HTTP)</h1>
+      <p class="lead">Create a message and send it to the HTTP webhook. This stores the message in Firebase and triggers Mailgun notification delivery.</p>
+
+      <div class="compose-shell">
+        <div class="compose-card">
+          <p style="margin:0 0 0.75rem;font-weight:600">Authenticated sender</p>
+          <p style="margin:0 0 1rem;color:var(--muted)" id="senderIdentity">-</p>
+
+          <form id="composeForm" novalidate>
+            <div class="field-grid">
+              <div class="field-block">
+                <label for="webhookUrl">Webhook URL</label>
+                <input id="webhookUrl" type="url" placeholder="https://.../adminMessageWebhook" required>
+              </div>
+              <div class="field-block">
+                <label for="webhookSecret">Webhook secret</label>
+                <input id="webhookSecret" type="password" placeholder="x-webhook-secret">
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field-block">
+                <label for="recipientEmail">Recipient email</label>
+                <input id="recipientEmail" type="email" placeholder="member@example.com" required>
+              </div>
+              <div class="field-block">
+                <label for="senderEmail">Sender email</label>
+                <input id="senderEmail" type="email" value="admin-messages@ibrecruitment.com">
+              </div>
+            </div>
+
+            <div class="field-block">
+              <label for="messageSubject">Subject</label>
+              <input id="messageSubject" type="text" maxlength="200" placeholder="New message from admin" required>
+            </div>
+
+            <div class="field-block">
+              <label for="messageBody">Message</label>
+              <textarea id="messageBody" placeholder="Enter message content" required></textarea>
+            </div>
+
+            <div class="field-block">
+              <label for="htmlBody">Optional HTML body</label>
+              <textarea id="htmlBody" placeholder="<p>Optional HTML version...</p>"></textarea>
+            </div>
+
+            <div class="compose-actions">
+              <button type="submit" class="btn btn-primary" id="sendBtn">Send via HTTP</button>
+              <a class="btn btn-outline" href="/messages.html">View Inbox</a>
+            </div>
+            <div id="composeStatus" class="compose-status" style="display:none"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer class="resource-footer" role="contentinfo">
+      <div class="container" style="text-align:center">
+        <div style="margin:12px 0;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;">
+          <a href="/terms.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Terms of Service</a>
+          <span style="color:var(--muted)">|</span>
+          <a href="/privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Privacy Policy</a>
+          <span style="color:var(--muted)">|</span>
+          <a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
+        </div>
+        <div>
+          <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="/firebase-config.js"></script>
+
+  <script>
+    window.addEventListener('load', function () {
+      if (!window.firebase || !window.firebaseConfig) {
+        console.warn('Firebase not available; protected UI will remain hidden');
+        return;
+      }
+      try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
+
+      const auth = firebase.auth();
+      const protectedMain = document.getElementById('protected-content');
+      const loginSection = document.getElementById('login-section');
+      const signOutBtn = document.getElementById('signOutBtn');
+      const signInLink = document.getElementById('signInLink');
+      const topNavMenu = document.getElementById('topNavMenu');
+      const senderIdentity = document.getElementById('senderIdentity');
+
+      const composeForm = document.getElementById('composeForm');
+      const webhookUrlInput = document.getElementById('webhookUrl');
+      const webhookSecretInput = document.getElementById('webhookSecret');
+      const recipientEmailInput = document.getElementById('recipientEmail');
+      const senderEmailInput = document.getElementById('senderEmail');
+      const messageSubjectInput = document.getElementById('messageSubject');
+      const messageBodyInput = document.getElementById('messageBody');
+      const htmlBodyInput = document.getElementById('htmlBody');
+      const composeStatus = document.getElementById('composeStatus');
+      const sendBtn = document.getElementById('sendBtn');
+
+      function setStatus(message, type) {
+        if (!composeStatus) return;
+        composeStatus.style.display = 'block';
+        composeStatus.className = 'compose-status' + (type ? ' ' + type : '');
+        composeStatus.textContent = message;
+      }
+
+      function showAuthenticated(user) {
+        if (loginSection) loginSection.style.display = 'none';
+        if (protectedMain) protectedMain.style.display = 'block';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+        if (signInLink) signInLink.style.display = 'none';
+        if (topNavMenu) topNavMenu.style.display = 'flex';
+        if (senderIdentity) senderIdentity.textContent = (user && user.email) ? user.email : 'Unknown user';
+      }
+
+      function showSignedOut() {
+        if (loginSection) loginSection.style.display = 'block';
+        if (protectedMain) protectedMain.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+        if (signInLink) signInLink.style.display = 'inline-flex';
+        if (topNavMenu) topNavMenu.style.display = 'none';
+      }
+
+      auth.onAuthStateChanged(function (user) {
+        if (user) showAuthenticated(user);
+        else showSignedOut();
+      });
+
+      if (signOutBtn) {
+        signOutBtn.addEventListener('click', function () {
+          auth.signOut().then(function () {
+            showSignedOut();
+            window.location.replace('/login.html');
+          });
+        });
+      }
+
+      if (composeForm) {
+        composeForm.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const currentUser = auth.currentUser;
+          if (!currentUser) {
+            setStatus('Please sign in before sending messages.', 'error');
+            return;
+          }
+
+          const webhookUrl = (webhookUrlInput && webhookUrlInput.value || '').trim();
+          const webhookSecret = (webhookSecretInput && webhookSecretInput.value || '').trim();
+          const recipientEmail = (recipientEmailInput && recipientEmailInput.value || '').trim();
+          const senderEmail = (senderEmailInput && senderEmailInput.value || '').trim();
+          const subject = (messageSubjectInput && messageSubjectInput.value || '').trim();
+          const body = (messageBodyInput && messageBodyInput.value || '').trim();
+          const htmlBody = (htmlBodyInput && htmlBodyInput.value || '').trim();
+
+          if (!webhookUrl || !recipientEmail || !subject || !body) {
+            setStatus('Webhook URL, recipient, subject and message are required.', 'error');
+            return;
+          }
+
+          const payload = {
+            recipientEmail,
+            senderEmail: senderEmail || 'admin-messages@ibrecruitment.com',
+            subject,
+            body,
+            htmlBody
+          };
+
+          try {
+            if (sendBtn) sendBtn.disabled = true;
+            setStatus('Sending message via HTTP...', '');
+
+            const headers = { 'Content-Type': 'application/json' };
+            if (webhookSecret) headers['x-webhook-secret'] = webhookSecret;
+
+            const response = await fetch(webhookUrl, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify(payload)
+            });
+
+            let data = null;
+            try { data = await response.json(); } catch (e) { }
+
+            if (!response.ok) {
+              const message = data && (data.error || data.message) ? (data.error || data.message) : ('HTTP ' + response.status);
+              throw new Error(message);
+            }
+
+            const messageId = data && data.messageId ? data.messageId : 'created';
+            setStatus('Message sent. Record ID: ' + messageId, 'success');
+            if (messageBodyInput) messageBodyInput.value = '';
+            if (htmlBodyInput) htmlBodyInput.value = '';
+          } catch (err) {
+            setStatus('Send failed: ' + (err && err.message ? err.message : 'Unknown error'), 'error');
+          } finally {
+            if (sendBtn) sendBtn.disabled = false;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

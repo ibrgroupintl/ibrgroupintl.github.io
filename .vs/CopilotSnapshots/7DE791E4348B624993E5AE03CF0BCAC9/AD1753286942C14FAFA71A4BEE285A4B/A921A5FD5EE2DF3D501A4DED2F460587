@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -126,8 +126,6 @@
             <button class="dropdown-btn">☰ Menu</button>
             <div class="dropdown-content">
               <a href="/index.html">Members Area</a>
-              <a href="/messages.html">Messages Inbox</a>
-              <a href="/compose.html">Compose Message</a>
               <a href="/insights.html">Insights Archive</a>
               <a href="/uploads.html">Resume Uploads</a>
               <a href="/settings.html">Account Settings</a>

@@ -1,6 +1,5 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const {defineJsonSecret} = require('firebase-functions/params');
 const {Storage} = require('@google-cloud/storage');
 const nodemailer = require('nodemailer');
 
@@ -9,26 +8,9 @@ const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
 const db = admin.firestore();
-const functionsConfig = defineJsonSecret('FUNCTIONS_CONFIG_EXPORT');
-
-function getMailConfig() {
-  try {
-    const config = functionsConfig.value();
-    return config && typeof config === 'object' && config.mail && typeof config.mail === 'object'
-      ? config.mail
-      : {};
-  } catch (err) {
-    return {};
-  }
-}
 
 function getEnv(name) {
-  const envValue = process.env[name];
-  if (envValue !== undefined && envValue !== null && String(envValue).trim() !== '') return envValue;
-
-  const mailConfig = getMailConfig();
-  const key = String(name || '').toLowerCase();
-  return mailConfig[key] || '';
+  return process.env[name] || (functions.config() && functions.config().mail && functions.config().mail[name.toLowerCase()]) || '';
 }
 
 function normalizeEmail(value) {
@@ -116,7 +98,7 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   }
 });
 
-exports.adminMessageWebhook = functions.runWith({ secrets: [functionsConfig] }).https.onRequest(async (req, res) => {
+exports.adminMessageWebhook = functions.https.onRequest(async (req, res) => {
   try {
     if (req.method === 'GET') {
       return res.status(200).json({ ok: true, service: 'adminMessageWebhook' });
@@ -152,65 +134,31 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [functionsConfig] }).
       originalMessageId,
       source: 'admin-messages@ibrecruitment.com',
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      deliveryStatus: 'queued',
-      notificationProvider: 'mailgun'
+      deliveryStatus: 'queued'
     };
 
     const docRef = await db.collection('messages').add(messageRecord);
+
+    let emailResult = { sent: false, reason: 'not_attempted' };
+    try {
+      emailResult = await sendForwardedEmail(messageRecord);
+      await docRef.update({
+        deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
+        deliveredAt: emailResult.sent ? admin.firestore.FieldValue.serverTimestamp() : null
+      });
+    } catch (mailErr) {
+      console.error('Email forward failed', mailErr);
+      await docRef.update({ deliveryStatus: 'stored_only' });
+    }
 
     return res.status(200).json({
       ok: true,
       messageId: docRef.id,
       recipientEmail,
-      notificationQueued: true,
-      provider: 'mailgun'
+      forwarded: Boolean(emailResult && emailResult.sent)
     });
   } catch (err) {
     console.error('adminMessageWebhook failed', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-});
-
-exports.notifyMessageRecipient = functions.runWith({ secrets: [functionsConfig] }).firestore.document('messages/{messageId}').onCreate(async (snap) => {
-  const data = snap.data() || {};
-  const recipientEmail = normalizeEmail(data.recipientEmail);
-
-  if (!recipientEmail) {
-    await snap.ref.update({
-      deliveryStatus: 'stored_only',
-      notificationError: 'missing_recipient_email'
-    });
-    return null;
-  }
-
-  if (normalizeText(data.deliveryStatus) === 'delivered') {
-    return null;
-  }
-
-  const messageRecord = {
-    recipientEmail,
-    senderEmail: normalizeEmail(data.senderEmail) || 'admin-messages@ibrecruitment.com',
-    subject: normalizeText(data.subject || data.title) || 'New message from admin',
-    body: normalizeText(data.body || data.message),
-    htmlBody: normalizeText(data.htmlBody || data.html)
-  };
-
-  try {
-    const emailResult = await sendForwardedEmail(messageRecord);
-    await snap.ref.update({
-      deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
-      deliveredAt: emailResult.sent ? admin.firestore.FieldValue.serverTimestamp() : null,
-      notificationProvider: 'mailgun',
-      notificationError: emailResult.sent ? null : (emailResult.reason || 'not_sent')
-    });
-  } catch (mailErr) {
-    console.error('notifyMessageRecipient failed', mailErr);
-    await snap.ref.update({
-      deliveryStatus: 'stored_only',
-      notificationProvider: 'mailgun',
-      notificationError: 'send_failed'
-    });
-  }
-
-  return null;
 });
