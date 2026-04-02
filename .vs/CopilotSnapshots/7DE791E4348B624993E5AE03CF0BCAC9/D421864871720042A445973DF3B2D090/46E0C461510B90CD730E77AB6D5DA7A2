@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "functions",
   "description": "Firebase Functions for IBR Group Intl",
   "scripts": {
@@ -6,7 +6,7 @@
     "deploy": "firebase deploy --only functions"
   },
   "engines": {
-    "node": "24"
+    "node": ">=24"
   },
   "dependencies": {
     "firebase-admin": "^11.10.0",
