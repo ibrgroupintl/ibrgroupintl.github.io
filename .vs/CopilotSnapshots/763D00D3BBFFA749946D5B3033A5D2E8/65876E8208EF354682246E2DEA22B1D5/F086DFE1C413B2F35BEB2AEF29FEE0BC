@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -93,12 +93,6 @@
     .settings-row:last-child { border-bottom: none; }
     .settings-label { color: var(--muted); font-weight: 600; }
     .settings-value { color: var(--text); word-break: break-word; }
-    .profile-section { margin: 1.25rem auto 0; max-width: 760px; text-align: left; }
-    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .profile-field label { display: block; margin-bottom: 6px; color: var(--muted); font-weight: 600; }
-    .profile-field input { width: 100%; padding: 10px 12px; border: 1px solid #d0d7de; border-radius: 8px; box-sizing: border-box; }
-    .profile-actions { margin-top: 12px; display: flex; gap: 12px; align-items: center; }
-    .profile-status { color: var(--muted); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -177,24 +171,6 @@
         </div>
       </section>
 
-      <section class="settings-card profile-section" aria-labelledby="profileDetailsHeading">
-        <h2 id="profileDetailsHeading" style="margin-top:0">Profile Details</h2>
-        <div class="profile-grid">
-          <div class="profile-field">
-            <label for="jobTitleInput">Job Title</label>
-            <input id="jobTitleInput" type="text" maxlength="30" placeholder="Enter job title" />
-          </div>
-          <div class="profile-field">
-            <label for="organizationInput">Organization</label>
-            <input id="organizationInput" type="text" maxlength="30" placeholder="Enter organization" />
-          </div>
-        </div>
-        <div class="profile-actions">
-          <button class="btn btn-primary" id="saveProfileBtn" type="button">Save Profile</button>
-          <span id="profileSaveStatus" class="profile-status" role="status" aria-live="polite"></span>
-        </div>
-      </section>
-
       <div style="margin:1.25rem auto 0;max-width:760px;text-align:right;">
         <button class="btn btn-outline" id="deleteAccountBtn" style="border-color:#ef4444;color:#ef4444">Delete Your Account</button>
       </div>
@@ -245,17 +221,10 @@
       const settingsUserEmail = document.getElementById('settingsUserEmail');
       const settingsUserId = document.getElementById('settingsUserId');
       const settingsLastLogin = document.getElementById('settingsLastLogin');
-      const jobTitleInput = document.getElementById('jobTitleInput');
-      const organizationInput = document.getElementById('organizationInput');
-      const saveProfileBtn = document.getElementById('saveProfileBtn');
-      const profileSaveStatus = document.getElementById('profileSaveStatus');
-
-      let currentUserId = null;
 
       const USER_ID_PREFIX = 'IB';
       const USER_ID_TOTAL_LENGTH = 8;
       const USER_ID_SUFFIX_LENGTH = USER_ID_TOTAL_LENGTH - USER_ID_PREFIX.length;
-      const PROFILE_FIELD_MAX_LENGTH = 30;
 
       function toBase36Padded(num, len) {
         return (num >>> 0).toString(36).toUpperCase().padStart(len, '0').slice(-len);
@@ -346,109 +315,25 @@
         return createUniqueUserIdForUser(user);
       }
 
+      async function loadUserId(user) {
+        if (settingsUserId) settingsUserId.textContent = 'Generating...';
+        try {
+          const userId = await getOrCreateUserId(user);
+          if (settingsUserId) settingsUserId.textContent = userId;
+        } catch (err) {
+          console.error('User ID load failed', err);
+          const fallbackId = generateDeterministicUserId(user && user.uid, 0);
+          if (settingsUserId) settingsUserId.textContent = fallbackId;
+        }
+      }
+
       function setAccountDetails(user) {
         if (settingsUserName) settingsUserName.textContent = user.displayName || 'Not set';
         if (settingsUserEmail) settingsUserEmail.textContent = user.email || 'Not available';
         if (settingsLastLogin) settingsLastLogin.textContent = (user.metadata && user.metadata.lastSignInTime) ? user.metadata.lastSignInTime : 'Not available';
       }
 
-      function cleanProfileValue(value) {
-        return (value || '').toString().trim().slice(0, PROFILE_FIELD_MAX_LENGTH);
-      }
-
-      function setProfileStatus(message) {
-        if (profileSaveStatus) profileSaveStatus.textContent = message || '';
-      }
-
-      async function loadProfileDetailsByUserId(userId) {
-        if (!db || !userId) {
-          if (jobTitleInput) jobTitleInput.value = '';
-          if (organizationInput) organizationInput.value = '';
-          return;
-        }
-
-        try {
-          const docRef = db.collection('userProfileByUserId').doc(userId);
-          const snap = await docRef.get();
-          if (snap.exists) {
-            const data = snap.data() || {};
-            if (jobTitleInput) jobTitleInput.value = cleanProfileValue(data.jobTitle || '');
-            if (organizationInput) organizationInput.value = cleanProfileValue(data.organization || '');
-          } else {
-            if (jobTitleInput) jobTitleInput.value = '';
-            if (organizationInput) organizationInput.value = '';
-          }
-        } catch (err) {
-          console.error('Profile load failed', err);
-          if (jobTitleInput) jobTitleInput.value = '';
-          if (organizationInput) organizationInput.value = '';
-          setProfileStatus('Unable to load profile details.');
-        }
-      }
-
-      async function saveProfileDetails() {
-        const user = auth.currentUser;
-        if (!user) {
-          setProfileStatus('Please sign in first.');
-          return;
-        }
-        if (!currentUserId) {
-          setProfileStatus('User ID unavailable.');
-          return;
-        }
-        if (!db) {
-          setProfileStatus('Profile save unavailable right now.');
-          return;
-        }
-
-        const jobTitle = cleanProfileValue(jobTitleInput && jobTitleInput.value);
-        const organization = cleanProfileValue(organizationInput && organizationInput.value);
-
-        if (jobTitleInput) jobTitleInput.value = jobTitle;
-        if (organizationInput) organizationInput.value = organization;
-
-        setProfileStatus('Saving...');
-
-        try {
-          await db.collection('userProfileByUserId').doc(currentUserId).set({
-            userId: currentUserId,
-            uid: user.uid,
-            email: user.email || '',
-            jobTitle: jobTitle,
-            organization: organization,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
-
-          await db.collection('userProfiles').doc(user.uid).set({
-            userId: currentUserId,
-            email: user.email || '',
-            jobTitle: jobTitle,
-            organization: organization,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
-
-          setProfileStatus('Profile saved.');
-        } catch (err) {
-          console.error('Profile save failed', err);
-          setProfileStatus('Save failed. Please try again.');
-        }
-      }
-
-      async function loadUserId(user) {
-        if (settingsUserId) settingsUserId.textContent = 'Generating...';
-        try {
-          const userId = await getOrCreateUserId(user);
-          if (settingsUserId) settingsUserId.textContent = userId;
-          return userId;
-        } catch (err) {
-          console.error('User ID load failed', err);
-          const fallbackId = generateDeterministicUserId(user && user.uid, 0);
-          if (settingsUserId) settingsUserId.textContent = fallbackId;
-          return fallbackId;
-        }
-      }
-
-      async function showAuthenticated(user) {
+      function showAuthenticated(user) {
         if (loginSection) loginSection.style.display = 'none';
         if (protectedMain) protectedMain.style.display = 'block';
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
@@ -456,8 +341,7 @@
         if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         setAccountDetails(user);
-        currentUserId = await loadUserId(user);
-        await loadProfileDetailsByUserId(currentUserId);
+        loadUserId(user);
       }
 
       function showSignedOut() {
@@ -468,10 +352,6 @@
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (settingsUserId) settingsUserId.textContent = '-';
-        if (jobTitleInput) jobTitleInput.value = '';
-        if (organizationInput) organizationInput.value = '';
-        setProfileStatus('');
-        currentUserId = null;
       }
 
       auth.onAuthStateChanged(function (user) {
@@ -518,12 +398,6 @@
               alert('Account deletion failed: ' + (err && err.message ? err.message : 'unknown error'));
             }
           }
-        });
-      }
-
-      if (saveProfileBtn) {
-        saveProfileBtn.addEventListener('click', function () {
-          saveProfileDetails();
         });
       }
 
