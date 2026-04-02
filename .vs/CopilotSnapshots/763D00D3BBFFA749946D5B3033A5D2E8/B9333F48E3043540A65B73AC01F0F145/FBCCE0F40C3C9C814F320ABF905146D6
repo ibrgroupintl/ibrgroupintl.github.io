@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -361,27 +361,23 @@
       }
 
       async function loadProfileDetailsByUserId(userId) {
-        const user = auth.currentUser;
-        if (!db || !user) {
+        if (!db || !userId) {
           if (jobTitleInput) jobTitleInput.value = '';
           if (organizationInput) organizationInput.value = '';
           return;
         }
 
         try {
-          // Primary source: per-user profile doc (typically allowed by rules)
-          const userProfileRef = db.collection('userProfiles').doc(user.uid);
-          const userProfileSnap = await userProfileRef.get();
-
-          if (userProfileSnap.exists) {
-            const data = userProfileSnap.data() || {};
+          const docRef = db.collection('userProfileByUserId').doc(userId);
+          const snap = await docRef.get();
+          if (snap.exists) {
+            const data = snap.data() || {};
             if (jobTitleInput) jobTitleInput.value = cleanProfileValue(data.jobTitle || '');
             if (organizationInput) organizationInput.value = cleanProfileValue(data.organization || '');
-            return;
+          } else {
+            if (jobTitleInput) jobTitleInput.value = '';
+            if (organizationInput) organizationInput.value = '';
           }
-
-          if (jobTitleInput) jobTitleInput.value = '';
-          if (organizationInput) organizationInput.value = '';
         } catch (err) {
           console.error('Profile load failed', err);
           if (jobTitleInput) jobTitleInput.value = '';
@@ -414,7 +410,15 @@
         setProfileStatus('Saving...');
 
         try {
-          // Primary write: per-user profile doc
+          await db.collection('userProfileByUserId').doc(currentUserId).set({
+            userId: currentUserId,
+            uid: user.uid,
+            email: user.email || '',
+            jobTitle: jobTitle,
+            organization: organization,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+
           await db.collection('userProfiles').doc(user.uid).set({
             userId: currentUserId,
             email: user.email || '',
@@ -422,20 +426,6 @@
             organization: organization,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true });
-
-          // Best-effort secondary index by UserID
-          try {
-            await db.collection('userProfileByUserId').doc(currentUserId).set({
-              userId: currentUserId,
-              uid: user.uid,
-              email: user.email || '',
-              jobTitle: jobTitle,
-              organization: organization,
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-          } catch (indexErr) {
-            console.warn('UserID profile index write skipped', indexErr);
-          }
 
           setProfileStatus('Profile saved.');
         } catch (err) {
