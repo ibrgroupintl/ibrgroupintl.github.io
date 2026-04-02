@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Import function triggers from their respective submodules:
  *
  * import {onCall} from "firebase-functions/v2/https";
@@ -34,9 +34,9 @@ const SESSION_EXPIRES = 14 * 24 * 60 * 60 * 1000;
 
 /**
  * Serves a file from the public directory with a mapped content type.
- * @param {express.Response} res Express response.
- * @param {string} filepath Relative public path.
- * @return {express.Response} Response result.
+ * @param res Express response.
+ * @param filepath Relative public path.
+ * @return Response result.
  */
 function serveStatic(res: express.Response, filepath: string) {
   const root = join(__dirname, "..", "public");

@@ -1,4 +1,4 @@
-{
+﻿{
   "hosting": {
     "public": "public",
     "ignore": [
@@ -63,8 +63,8 @@
       "codebase": "default",
       "disallowLegacyRuntimeConfig": true,
       "predeploy": [
-        "cmd /c npm --prefix functions run lint",
-        "cmd /c npm --prefix functions run build"
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
       ],
       "source": "functions"
     },
