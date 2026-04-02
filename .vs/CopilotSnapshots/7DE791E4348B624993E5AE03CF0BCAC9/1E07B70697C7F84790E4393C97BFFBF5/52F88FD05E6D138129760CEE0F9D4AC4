@@ -1,13 +1,8 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {defineJsonSecret} = require('firebase-functions/params');
 const {Storage} = require('@google-cloud/storage');
-let nodemailer = null;
-try {
-  nodemailer = require('nodemailer');
-} catch (err) {
-  console.warn('nodemailer not installed in local environment; email forwarding disabled until dependencies are installed');
-}
+const nodemailer = require('nodemailer');
 
 admin.initializeApp();
 const storage = new Storage();
@@ -55,11 +50,6 @@ function pickPayloadField(body, keys) {
 }
 
 async function sendForwardedEmail(message) {
-  if (!nodemailer) {
-    console.warn('nodemailer unavailable; skipping email forward', { recipientEmail: message.recipientEmail });
-    return { sent: false, reason: 'nodemailer_not_installed' };
-  }
-
   const host = getEnv('SMTP_HOST');
   const port = Number(getEnv('SMTP_PORT') || 587);
   const user = getEnv('SMTP_USER');
