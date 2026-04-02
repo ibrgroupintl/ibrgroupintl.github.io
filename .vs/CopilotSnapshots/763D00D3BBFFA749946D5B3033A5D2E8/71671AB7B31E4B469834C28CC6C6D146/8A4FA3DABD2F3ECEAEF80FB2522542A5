@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -315,27 +315,10 @@
         return createUniqueUserIdForUser(user);
       }
 
-      function formatLastLoginLondon(lastSignInTime) {
-        if (!lastSignInTime) return 'Not available';
-        const date = new Date(lastSignInTime);
-        if (isNaN(date.getTime())) return String(lastSignInTime);
-        return new Intl.DateTimeFormat('en-GB', {
-          timeZone: 'Europe/London',
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false,
-          timeZoneName: 'short'
-        }).format(date);
-      }
-
       function setAccountDetails(user) {
         if (settingsUserName) settingsUserName.textContent = user.displayName || 'Not set';
         if (settingsUserEmail) settingsUserEmail.textContent = user.email || 'Not available';
-        if (settingsLastLogin) settingsLastLogin.textContent = formatLastLoginLondon(user.metadata && user.metadata.lastSignInTime);
+        if (settingsLastLogin) settingsLastLogin.textContent = (user.metadata && user.metadata.lastSignInTime) ? user.metadata.lastSignInTime : 'Not available';
       }
 
       async function loadUserId(user) {
