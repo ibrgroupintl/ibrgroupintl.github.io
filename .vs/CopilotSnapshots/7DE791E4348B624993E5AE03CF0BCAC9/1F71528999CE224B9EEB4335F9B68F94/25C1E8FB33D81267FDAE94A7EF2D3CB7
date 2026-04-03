@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -349,19 +349,18 @@
 
       function loadInbox(user) {
         const email = (user && user.email) ? String(user.email).trim().toLowerCase() : '';
-        const uid = (user && user.uid) ? String(user.uid).trim() : '';
         if (userEmailDisplay) userEmailDisplay.textContent = email || 'Not available';
 
         clearInboxListener();
 
-        if (!db || !uid) {
+        if (!db || !email) {
           if (messagesStatus) messagesStatus.textContent = 'Messages will appear here when the Mailgun workflow is connected.';
           if (messagesList) messagesList.innerHTML = '';
           return;
         }
 
         if (messagesStatus) messagesStatus.textContent = 'Loading your inbox...';
-        unsubscribeInbox = db.collection('messages').where('recipientUid', '==', uid).onSnapshot(function (snapshot) {
+        unsubscribeInbox = db.collection('messages').where('recipientEmail', '==', email).onSnapshot(function (snapshot) {
           const items = [];
           snapshot.forEach(function (doc) {
             const data = doc.data() || {};

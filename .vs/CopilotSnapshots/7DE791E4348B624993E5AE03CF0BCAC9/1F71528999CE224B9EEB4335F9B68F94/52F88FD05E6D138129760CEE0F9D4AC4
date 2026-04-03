@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -174,48 +174,20 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
       return res.status(403).json({ error: 'Forbidden' });
     }
 
-    const recipientUidInput = normalizeText(pickPayloadField(req.body, ['recipientUid', 'userUid', 'uid']));
-    const recipientLoginEmailInput = normalizeEmail(pickPayloadField(req.body, ['recipientLoginEmail', 'recipientAccountEmail', 'loginEmail', 'userEmail']));
-    const recipientEmailInput = normalizeEmail(pickPayloadField(req.body, ['recipientEmail', 'toEmail', 'forwardTo', 'deliveryEmail']));
-
-    let recipientUid = recipientUidInput;
-    let recipientLoginEmail = recipientLoginEmailInput;
-
-    if (!recipientUid && recipientLoginEmail) {
-      try {
-        const userRecord = await admin.auth().getUserByEmail(recipientLoginEmail);
-        recipientUid = userRecord.uid;
-        recipientLoginEmail = normalizeEmail(userRecord.email || recipientLoginEmail);
-      } catch (lookupErr) {
-        return res.status(400).json({ error: 'recipientLoginEmail does not match an existing user' });
-      }
-    }
-
-    if (recipientUid && !recipientLoginEmail) {
-      try {
-        const userRecord = await admin.auth().getUser(recipientUid);
-        recipientLoginEmail = normalizeEmail(userRecord.email || '');
-      } catch (lookupErr) {
-        recipientLoginEmail = '';
-      }
-    }
-
-    if (!recipientUid) {
-      return res.status(400).json({ error: 'recipientUid or recipientLoginEmail is required' });
-    }
-
-    const recipientEmail = recipientEmailInput || recipientLoginEmail;
-    const senderEmail = normalizeEmail(pickPayloadField(req.body, ['senderEmail', 'fromEmail', 'from'])) || tokenEmail || AUTHORIZED_ADMIN_EMAIL;
+    const recipientEmail = normalizeEmail(pickPayloadField(req.body, ['recipientEmail', 'toEmail', 'forwardTo', 'userEmail']));
+    const senderEmail = normalizeEmail(pickPayloadField(req.body, ['senderEmail', 'fromEmail', 'from']));
     const subject = normalizeText(pickPayloadField(req.body, ['subject', 'title'])) || 'New message from admin';
     const body = normalizeText(pickPayloadField(req.body, ['body', 'text', 'message']));
     const htmlBody = normalizeText(pickPayloadField(req.body, ['html', 'htmlBody']));
     const originalMessageId = normalizeText(pickPayloadField(req.body, ['messageId', 'emailId', 'id']));
 
+    if (!recipientEmail) {
+      return res.status(400).json({ error: 'recipientEmail is required' });
+    }
+
     const messageRecord = {
-      recipientUid,
-      recipientLoginEmail,
       recipientEmail,
-      senderEmail,
+      senderEmail: senderEmail || tokenEmail || AUTHORIZED_ADMIN_EMAIL,
       subject,
       body,
       htmlBody,
@@ -231,8 +203,6 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
     return res.status(200).json({
       ok: true,
       messageId: docRef.id,
-      recipientUid,
-      recipientLoginEmail,
       recipientEmail,
       notificationQueued: true,
       provider: 'mailgun'

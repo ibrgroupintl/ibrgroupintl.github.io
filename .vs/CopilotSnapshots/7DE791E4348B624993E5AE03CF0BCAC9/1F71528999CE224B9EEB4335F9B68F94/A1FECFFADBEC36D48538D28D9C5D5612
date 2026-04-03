@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -267,15 +267,8 @@
 
           <form id="composeForm" class="compose-form">
             <div class="form-group">
-              <label for="recipientLoginEmail">Recipient Account Login Email <span style="color:#e74c3c">*</span></label>
-              <input type="email" id="recipientLoginEmail" name="recipientLoginEmail" placeholder="user-login@example.com" required aria-required="true">
-              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">Used to match the in-app inbox account.</p>
-            </div>
-
-            <div class="form-group">
-              <label for="recipientEmail">Delivery Email Address (Optional)</label>
-              <input type="email" id="recipientEmail" name="recipientEmail" placeholder="recipient@example.com">
-              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">If empty, delivery email defaults to the recipient account login email.</p>
+              <label for="recipientEmail">Recipient Email Address <span style="color:#e74c3c">*</span></label>
+              <input type="email" id="recipientEmail" name="recipientEmail" placeholder="recipient@example.com" required aria-required="true">
             </div>
 
             <div class="form-group">
@@ -424,15 +417,13 @@
           e.preventDefault();
           hideAlert();
 
-          const recipientLoginEmail = document.getElementById('recipientLoginEmail').value.trim().toLowerCase();
-          const recipientEmailRaw = document.getElementById('recipientEmail').value.trim().toLowerCase();
-          const recipientEmail = recipientEmailRaw || recipientLoginEmail;
+          const recipientEmail = document.getElementById('recipientEmail').value.trim();
           const senderEmail = document.getElementById('senderEmail').value.trim();
           const subject = document.getElementById('subject').value.trim();
           const body = document.getElementById('body').value.trim();
 
-          if (!recipientLoginEmail || !senderEmail || !subject || !body) {
-            showAlert('Recipient account login email, sender email, subject, and body are required.', 'error');
+          if (!recipientEmail || !senderEmail || !subject || !body) {
+            showAlert('All fields are required.', 'error');
             return;
           }
 
@@ -454,7 +445,6 @@
                 'Authorization': 'Bearer ' + idToken
               },
               body: JSON.stringify({
-                recipientLoginEmail: recipientLoginEmail,
                 recipientEmail: recipientEmail,
                 senderEmail: senderEmail,
                 subject: subject,
@@ -478,7 +468,7 @@
 
             showAlert('Message sent successfully! Message ID: ' + (data.messageId || 'N/A'), 'success');
             composeForm.reset();
-            document.getElementById('recipientLoginEmail').focus();
+            document.getElementById('recipientEmail').focus();
 
             // Re-enable form
             submitBtn.disabled = false;
