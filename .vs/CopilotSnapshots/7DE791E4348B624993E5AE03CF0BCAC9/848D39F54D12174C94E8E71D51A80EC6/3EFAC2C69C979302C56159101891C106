@@ -1,4 +1,4 @@
-{
+﻿{
     "mail": {
         "smtp_port": "465",
         "smtp_from": "admin@mac.ibrecruitment.com",
