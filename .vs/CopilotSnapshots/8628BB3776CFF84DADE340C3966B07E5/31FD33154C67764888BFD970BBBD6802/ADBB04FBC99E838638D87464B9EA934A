@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -260,13 +260,6 @@
           <p style="color:var(--muted);font-size:0.95rem">Published: 30 March 2026 | Open Access</p>
           <p>Authored by Liang, Aroles &amp; Li. This article from the Human Resource Management Journal (Special Issue) explores the latest advances in AI applications for capturing textual and visual elements in HRM contexts. Essential reading for HR professionals and researchers.</p>
           <a href="https://doi.org/10.1111/1748-8583.70035" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>
-        </article>
-
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
-          <h2 style="margin-top:0">The Ethics of Robin Hoodism: When Managers Take Injustice into Their Own Hands</h2>
-          <p style="color:var(--muted);font-size:0.95rem">Published: 23 March 2026 | Journal of Business Ethics</p>
-          <p>Authored by Dodson &amp; Skarlicki. This Journal of Business Ethics article examines how coworkers evaluate the ethicality of managerial “Robin Hoodism” when leaders compensate employees they perceive as having been treated unjustly.</p>
-          <a href="https://doi.org/10.1007/s10551-026-06273-0" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
         <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
