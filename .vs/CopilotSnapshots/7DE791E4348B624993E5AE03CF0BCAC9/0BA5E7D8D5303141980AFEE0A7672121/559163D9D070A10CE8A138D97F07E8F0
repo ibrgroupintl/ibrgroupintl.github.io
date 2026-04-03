@@ -1,9 +1,6 @@
-{
+﻿{
   "functions": {
     "source": "functions"
-  },
-  "firestore": {
-    "database": "(default)"
   },
   "hosting": {
     "public": ".",
@@ -16,7 +13,7 @@
     "trailingSlash": false,
     "rewrites": [
       { "source": "/login", "destination": "/login.html" },
-      { "source": "/index", "destination": "/index.html" }
+      { "source": "/resource-centre", "destination": "/resource-centre.html" }
     ],
     "headers": [
       {
