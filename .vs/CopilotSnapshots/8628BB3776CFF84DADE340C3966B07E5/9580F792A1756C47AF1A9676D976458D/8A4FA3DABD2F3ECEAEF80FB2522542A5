@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -456,8 +456,6 @@
         if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (loginStatus) loginStatus.textContent = 'Signed in';
-        setAccountDetails(user);
-        await loadUserId(user);
         watchUnreadMessages(user && user.uid ? user.uid : '');
       }
 
@@ -471,24 +469,12 @@
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (loginStatus) loginStatus.textContent = 'Not signed in';
-        if (settingsUserName) settingsUserName.textContent = '-';
-        if (settingsUserEmail) settingsUserEmail.textContent = '-';
-        if (settingsUserId) settingsUserId.textContent = '-';
-        if (settingsLastLogin) settingsLastLogin.textContent = '-';
         clearUnreadListener();
       }
 
-      auth.onAuthStateChanged(async function (user) {
-        if (user) {
-          try {
-            await showAuthenticated(user);
-          } catch (err) {
-            console.error('Failed to load account details', err);
-            showSignedOut();
-          }
-        } else {
-          showSignedOut();
-        }
+      auth.onAuthStateChanged(function (user) {
+        if (user) showAuthenticated(user);
+        else showSignedOut();
       });
 
       if (signOutBtn) {
