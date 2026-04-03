@@ -168,6 +168,7 @@
       color: #092a4b;
       text-decoration: none;
       flex: 0 0 auto;
+      position: relative;
     }
     .message-icon-link:hover,
     .message-icon-link:focus {
@@ -188,6 +189,27 @@
     .access-denied h2 {
       margin-top: 0;
       color: #991b1b;
+    }
+    .message-unread-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: #22c55e;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px rgba(2, 42, 75, 0.12);
+      display: none;
+      pointer-events: none;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 12px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
   </style>
 </head>
@@ -228,6 +250,7 @@
               <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
               <path d="M6 8l6 4 6-4"></path>
             </svg>
+            <span id="messagesUnreadDot" class="message-unread-dot" aria-hidden="true"></span>
           </a>
           <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
           <button class="btn btn-outline" id="signOutBtn" style="display:none">Sign Out</button>
@@ -316,6 +339,7 @@
 
   <script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer="" src="/firebase-config.js"></script>
 
   <script>
@@ -340,7 +364,47 @@
       const messageAlert = document.getElementById('messageAlert');
       const composeSectionEl = document.getElementById('compose-section');
       const accessDeniedSectionEl = document.getElementById('access-denied-section');
+      const messagesUnreadDot = document.getElementById('messagesUnreadDot');
+      const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
+      let unreadUnsubscribe = null;
       let currentUser = null;
+
+      function clearUnreadListener() {
+        if (typeof unreadUnsubscribe === 'function') {
+          unreadUnsubscribe();
+          unreadUnsubscribe = null;
+        }
+        if (messagesUnreadDot) {
+          messagesUnreadDot.style.display = 'none';
+          messagesUnreadDot.textContent = '';
+        }
+      }
+
+      function watchUnreadMessages(uid) {
+        clearUnreadListener();
+        if (!db || !uid) return;
+        unreadUnsubscribe = db.collection('messages').where('recipientUid', '==', uid).onSnapshot(function (snapshot) {
+          let unreadCount = 0;
+          snapshot.forEach(function (doc) {
+            const data = doc.data() || {};
+            if (data.isOpened !== true) unreadCount += 1;
+          });
+          if (messagesUnreadDot) {
+            if (unreadCount > 0) {
+              messagesUnreadDot.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+              messagesUnreadDot.style.display = 'inline-flex';
+            } else {
+              messagesUnreadDot.style.display = 'none';
+              messagesUnreadDot.textContent = '';
+            }
+          }
+        }, function () {
+          if (messagesUnreadDot) {
+            messagesUnreadDot.style.display = 'none';
+            messagesUnreadDot.textContent = '';
+          }
+        });
+      }
 
       function showAlert(message, type = 'info') {
         messageAlert.textContent = message;
@@ -363,6 +427,7 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'block';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'none';
+        if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
 
       function showAuthenticatedDenied() {
@@ -374,6 +439,7 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'none';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'block';
+        if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
 
       function showSignedOut() {
@@ -383,6 +449,7 @@
         if (signInLink) signInLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
+        clearUnreadListener();
       }
 
       auth.onAuthStateChanged(function (user) {

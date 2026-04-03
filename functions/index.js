@@ -133,7 +133,10 @@ exports.adminMessageWebhook = functions.https.onRequest(async (req, res) => {
       originalMessageId,
       source: AUTHORIZED_ADMIN_EMAIL,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      messageState: 'available'
+      messageState: 'available',
+      isOpened: false,
+      openedAt: null,
+      openedByUid: null
     };
 
     const docRef = await db.collection('messages').add(messageRecord);

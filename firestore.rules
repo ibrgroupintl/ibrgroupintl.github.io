@@ -7,7 +7,14 @@ service cloud.firestore {
         resource.data.recipientUid == request.auth.uid ||
         request.auth.token.email == 'developers@ibrecruitment.com'
       );
-      allow create, update, delete: if false;
+      
+      allow update: if request.auth != null &&
+        resource.data.recipientUid == request.auth.uid &&
+        request.resource.data.diff(resource.data).changedKeys().hasOnly(['isOpened', 'openedAt', 'openedByUid']) &&
+        request.resource.data.isOpened == true &&
+        request.resource.data.openedByUid == request.auth.uid;
+
+      allow create, delete: if false;
     }
 
     match /{document=**} {
