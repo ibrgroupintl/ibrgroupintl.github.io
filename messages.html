@@ -442,7 +442,10 @@
 
         <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
+          <div class="auth-profile-chip" data-auth-profile>
+            <img class="auth-profile-photo" data-auth-photo src="/160.jpg" alt="Profile photo">
+            <span class="auth-profile-name" data-auth-name></span>
+          </div>
           <a class="message-icon-link" href="/compose.html" id="composeLink" aria-label="Compose secure message" title="Compose message" style="display:none">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 20h9"></path>
@@ -550,6 +553,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
+  <script defer src="/header-profile.js"></script>
   <script defer src="/mobile-compat.js"></script>
   <script defer src="/page-transition.js"></script>
 

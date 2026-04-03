@@ -20,7 +20,10 @@
       </div>
       <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
       <div class="user-menu">
-        <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
+        <div class="auth-profile-chip" data-auth-profile>
+          <img class="auth-profile-photo" data-auth-photo src="/160.jpg" alt="Profile photo">
+          <span class="auth-profile-name" data-auth-name></span>
+        </div>
         <a class="btn btn-outline nav-login" href="/login.html" id="signInLink">Sign In</a>
         <button class="btn btn-outline" id="signOutBtn" style="display:none">Sign Out</button>
       </div>
@@ -62,6 +65,10 @@
     </div>
   </footer>
 
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="/firebase-config.js"></script>
+  <script defer src="/header-profile.js"></script>
   <script defer src="/mobile-compat.js"></script>
   <script>
     // Mobile nav toggle
