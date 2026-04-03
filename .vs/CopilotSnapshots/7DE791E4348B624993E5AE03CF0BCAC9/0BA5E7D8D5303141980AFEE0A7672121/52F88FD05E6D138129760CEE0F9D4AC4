@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -218,7 +218,7 @@ exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_
       notificationError: emailResult.sent ? null : (emailResult.reason || 'not_sent')
     });
   } catch (mailErr) {
-    console.error('notifyMessageRecipient failed with error:', mailErr);
+    console.error('notifyMessageRecipient failed', mailErr);
     await snap.ref.update({
       deliveryStatus: 'stored_only',
       notificationProvider: 'mailgun',
