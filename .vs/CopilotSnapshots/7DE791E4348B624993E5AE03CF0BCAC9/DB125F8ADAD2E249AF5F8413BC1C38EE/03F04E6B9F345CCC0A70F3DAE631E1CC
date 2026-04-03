@@ -1,7 +1,6 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
-const {Firestore} = require('@google-cloud/firestore');
 let nodemailer = null;
 try {
   nodemailer = require('nodemailer');
@@ -13,11 +12,15 @@ admin.initializeApp();
 const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
-// Use Google Cloud Firestore client directly for named database support
-const db = new Firestore({
-  projectId: 'wale-491803',
-  databaseId: 'ibusername'
-});
+// Reference the 'ibusername' database
+const db = admin.firestore('ibusername');
+let dbInitialized = false; 
+function getDb() {
+  if (!dbInitialized) {
+    dbInitialized = true;
+  }
+  return db;
+}
 const FUNCTIONS_CONFIG_SECRET_NAME = 'FUNCTIONS_CONFIG_EXPORT';
 
 function getFunctionsConfigExport() {
