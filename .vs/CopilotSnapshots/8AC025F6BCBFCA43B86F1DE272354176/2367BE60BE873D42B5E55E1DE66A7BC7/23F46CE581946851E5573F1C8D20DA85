@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -16,9 +16,9 @@
       --bg: #060b17;
       --bg-soft: #0e172a;
       --card: #0f1c33;
-      --muted: #b7c6dc;
-      --text: #f2f7ff;
-      --line: #2b3f62;
+      --muted: #9fb0ca;
+      --text: #e7edf8;
+      --line: #243552;
       --brand: #2f7bff;
       --brand-2: #00b7ff;
       --accent: #24d3a5;
@@ -153,7 +153,7 @@
 
     .hero p {
       margin: 0;
-      color: #d7e4f8;
+      color: var(--muted);
       max-width: 62ch;
     }
 
@@ -175,12 +175,12 @@
 
     .metric {
       border: 1px solid rgba(159,176,202,.2);
-      background: rgba(9, 18, 35, 0.95);
+      background: rgba(15, 28, 51, 0.75);
       border-radius: 12px;
       padding: 10px 12px;
     }
     .metric strong { font-size: 1.18rem; color: #fff; display: block; }
-    .metric span { color: #d7e4f8; font-size: .9rem; }
+    .metric span { color: var(--muted); font-size: .9rem; }
 
     .section {
       padding: 36px 0;
@@ -189,9 +189,8 @@
     .section h2 {
       margin: 0 0 10px;
       font-size: clamp(1.35rem, 2.5vw, 2rem);
-      color: #ffffff;
     }
-    .section .lead { color: #d7e4f8; margin: 0 0 18px; }
+    .section .lead { color: var(--muted); margin: 0 0 18px; }
 
     .feature-grid {
       display: grid;
@@ -202,12 +201,12 @@
     .feature-card {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: linear-gradient(160deg, rgba(12,23,43,.98), rgba(9,17,34,.98));
+      background: linear-gradient(160deg, rgba(15,28,51,.96), rgba(11,20,36,.94));
       padding: 18px;
       box-shadow: var(--shadow);
     }
-    .feature-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: #fff; }
-    .feature-card p { margin: 0; color: #d7e4f8; }
+    .feature-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .feature-card p { margin: 0; color: var(--muted); }
 
     .feature-card .cta-link {
       margin-top: 14px;
@@ -215,33 +214,6 @@
       color: #d6f4ff;
       text-decoration: none;
       font-weight: 700;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      align-items: stretch;
-    }
-
-    .pricing-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(160deg, rgba(12,23,43,.98), rgba(9,17,34,.98));
-      padding: 20px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .pricing-card h3 { margin: 0; color: #fff; }
-    .price { font-size: 1.9rem; font-weight: 800; color: #fff; line-height: 1; }
-    .price small { font-size: .9rem; font-weight: 600; color: #d7e4f8; }
-    .pricing-card ul { margin: 0; padding-left: 18px; color: #d7e4f8; }
-    .pricing-card li + li { margin-top: 6px; }
-    .pricing-card.featured {
-      border-color: rgba(36, 211, 165, 0.65);
-      box-shadow: 0 20px 44px rgba(36, 211, 165, 0.18);
     }
 
     .workflow {
@@ -253,11 +225,9 @@
     .step {
       border: 1px solid var(--line);
       border-radius: 14px;
-      background: rgba(9, 18, 35, 0.95);
+      background: rgba(15, 28, 51, .75);
       padding: 16px;
     }
-    .step h3 { margin: 0 0 8px; color: #fff; }
-    .step p { margin: 0; color: #d7e4f8; }
 
     .step-number {
       width: 30px;
@@ -278,10 +248,10 @@
       border-radius: 20px;
       padding: 22px;
       text-align: center;
-      background: linear-gradient(145deg, rgba(36,211,165,.18), rgba(11,20,36,.94));
+      background: linear-gradient(145deg, rgba(36,211,165,.12), rgba(15,28,51,.76));
     }
 
-    .final-cta p { color: #d7e4f8; margin: 0 0 14px; }
+    .final-cta p { color: var(--muted); margin: 0 0 14px; }
 
     .site-footer {
       margin-top: 24px;
@@ -339,7 +309,6 @@
     @media (max-width: 960px) {
       .hero-grid,
       .feature-grid,
-      .pricing-grid,
       .workflow {
         grid-template-columns: 1fr;
       }
@@ -414,45 +383,6 @@
       </div>
     </section>
 
-    <section class="section" id="pricing">
-      <div class="container">
-        <h2>Simple pricing for every stage</h2>
-        <p class="lead">Choose a plan that matches your recruitment goals. Upgrade or cancel at any time.</p>
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <h3>Starter</h3>
-            <div class="price">£0 <small>/ month</small></div>
-            <ul>
-              <li>Public insights access</li>
-              <li>Monthly highlights newsletter</li>
-              <li>Basic hiring trend snapshots</li>
-            </ul>
-            <a class="btn btn-ghost" href="/login.html">Create Free Account</a>
-          </article>
-          <article class="pricing-card featured">
-            <h3>Professional</h3>
-            <div class="price">£29 <small>/ month</small></div>
-            <ul>
-              <li>Full reports and insights archive</li>
-              <li>Executive moves tracker</li>
-              <li>Priority member messaging</li>
-            </ul>
-            <a class="btn btn-primary" href="/login.html">Start Professional</a>
-          </article>
-          <article class="pricing-card">
-            <h3>Founding</h3>
-            <div class="price">£99 <small>/ month</small></div>
-            <ul>
-              <li>Everything in Professional</li>
-              <li>Premium subscriber tools</li>
-              <li>Early access to new features</li>
-            </ul>
-            <a class="btn btn-ghost" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Talk to Sales</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section">
       <div class="container">
         <h2>How teams use the platform</h2>
@@ -480,7 +410,6 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer" role="contentinfo">
