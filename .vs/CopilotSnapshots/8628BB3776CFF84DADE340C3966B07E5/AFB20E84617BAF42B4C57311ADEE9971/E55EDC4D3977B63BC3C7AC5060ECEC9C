@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -104,19 +104,13 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   text-overflow:ellipsis;
 }
 
-/* Subtitle presentation: avoid boxing subtitles — make the font itself a deep dark royal blue and center aligned */
-.container article > p:first-of-type,
-.lead,
-.section .lead,
-.feature-card p,
-.pricing-card p,
-.step p {
+/* Subtitle presentation: avoid boxing subtitles — make the font itself darker */
+.container article > p:first-of-type {
   background: transparent !important;
-  color: #0B2A6F !important; /* deep dark royal blue */
+  color: rgba(26,30,41,0.85) !important; /* darker than --muted */
   font-weight: 600;
   margin: 0 0 0.75rem;
   padding: 0 !important;
-  text-align: center;
 }
 
 /* Hero */
