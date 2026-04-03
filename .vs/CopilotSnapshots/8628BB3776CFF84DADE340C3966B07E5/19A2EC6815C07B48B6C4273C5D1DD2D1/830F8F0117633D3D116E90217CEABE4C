@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -502,7 +502,7 @@
 
     <section class="section">
       <div class="container">
-        <h2 class="heading-dark-chip subtitle-royal">How teams use the platform</h2>
+        <h2 class="heading-dark-chip">How teams use the platform</h2>
         <div class="workflow">
           <article class="step">
             <span class="step-number">1</span>

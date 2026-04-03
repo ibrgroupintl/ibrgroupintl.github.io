@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -117,12 +117,6 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   margin: 0 0 0.75rem;
   padding: 0 !important;
   text-align: center;
-}
-
-/* subtitle-royal helper for headings and their leads */
-.subtitle-royal {
-  color: #0B2A6F !important;
-  text-align: center !important;
 }
 
 /* Hero */

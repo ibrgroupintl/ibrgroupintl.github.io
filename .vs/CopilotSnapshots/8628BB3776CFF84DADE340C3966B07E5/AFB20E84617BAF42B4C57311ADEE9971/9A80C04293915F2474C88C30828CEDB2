@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -463,8 +463,8 @@
 
     <section class="section" id="pricing">
       <div class="container">
-        <h2 class="heading-dark-chip subtitle-royal">Simple pricing for every stage</h2>
-        <p class="lead lead-dark-chip subtitle-royal">Choose a plan that matches your recruitment goals. Upgrade or cancel at any time.</p>
+        <h2 class="heading-dark-chip">Simple pricing for every stage</h2>
+        <p class="lead lead-dark-chip">Choose a plan that matches your recruitment goals. Upgrade or cancel at any time.</p>
         <div class="pricing-grid">
           <article class="pricing-card">
             <h3>Starter</h3>
@@ -502,7 +502,7 @@
 
     <section class="section">
       <div class="container">
-        <h2 class="heading-dark-chip subtitle-royal">How teams use the platform</h2>
+        <h2 class="heading-dark-chip">How teams use the platform</h2>
         <div class="workflow">
           <article class="step">
             <span class="step-number">1</span>
