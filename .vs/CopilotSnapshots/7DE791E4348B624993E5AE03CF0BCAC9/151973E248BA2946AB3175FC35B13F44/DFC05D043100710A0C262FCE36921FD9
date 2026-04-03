@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -567,12 +567,6 @@
         return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
       }
 
-      function trunc(v, max) {
-        const s = String(v || '');
-        if (s.length <= max) return s;
-        return s.slice(0, Math.max(0, max - 1)) + '…';
-      }
-
       function toMillis(v) {
         if (!v) return 0;
         if (typeof v === 'number') return v;
@@ -656,17 +650,12 @@
         messagesList.innerHTML = items.map(item => {
           const d = delivery(item.deliveryStatus);
           const active = item.id === selectedMessageId ? ' active' : '';
-          const isSent = currentFolder === 'sent';
-          const titleText = trunc(item.subject || 'No subject', isSent ? 48 : 72);
-          const snippetText = trunc((item.body || '') || '(No message content)', isSent ? 72 : 120);
-          const docIdMeta = isSent ? '<span><strong>ID:</strong> ' + esc(item.id) + '</span>' : '';
           return '<button type="button" class="thread-item' + active + '" data-id="' + esc(item.id) + '">' +
-            '<p class="thread-title">' + esc(titleText) + '</p>' +
-            '<p class="thread-snippet">' + esc(snippetText) + '</p>' +
+            '<p class="thread-title">' + esc(item.subject || 'No subject') + '</p>' +
+            '<p class="thread-snippet">' + esc((item.body || '').slice(0, 120) || '(No message content)') + '</p>' +
             '<div class="thread-meta">' +
-            '<span>' + esc(isSent ? ('To: ' + trunc(item.recipientLabel || 'Unknown recipient', 36)) : (item.senderEmail || 'admin')) + '</span>' +
+            '<span>' + esc(currentFolder === 'sent' ? ('To: ' + (item.recipientLabel || 'Unknown recipient')) : (item.senderEmail || 'admin')) + '</span>' +
             '<span>' + esc(d.label) + '</span>' +
-            docIdMeta +
             '</div>' +
             '</button>';
         }).join('');
