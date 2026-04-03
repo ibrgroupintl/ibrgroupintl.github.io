@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -185,80 +185,46 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
   }
 });
 
-// HTTP endpoint to process and send email notifications for messages
-exports.notifyMessageRecipient = functions.https.onRequest(async (req, res) => {
-  // Only accept POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+exports.notifyMessageRecipient = functions.firestore.onDocumentCreated({ document: 'messages/{messageId}', database: 'ibusername' }, async (event) => {
+  const data = event.data.data();
+  const recipientEmail = normalizeEmail(data.recipientEmail);
+
+  if (!recipientEmail) {
+    await event.data.ref.update({
+      deliveryStatus: 'stored_only',
+      notificationError: 'missing_recipient_email'
+    });
+    return null;
   }
+
+  if (normalizeText(data.deliveryStatus) === 'delivered') {
+    return null;
+  }
+
+  const messageRecord = {
+    recipientEmail,
+    senderEmail: normalizeEmail(data.senderEmail) || 'admin-messages@ibrecruitment.com',
+    subject: normalizeText(data.subject || data.title) || 'New message from admin',
+    body: normalizeText(data.body || data.message),
+    htmlBody: normalizeText(data.htmlBody || data.html)
+  };
 
   try {
-    const { messageId, recipientEmail } = req.body;
-
-    if (!messageId || !recipientEmail) {
-      return res.status(400).json({ error: 'Missing messageId or recipientEmail' });
-    }
-
-    // Retrieve the message from Firestore (ibusername database)
-    const docRef = db.collection('messages').doc(messageId);
-    const docSnap = await docRef.get();
-
-    if (!docSnap.exists) {
-      return res.status(404).json({ error: 'Message not found' });
-    }
-
-    const data = docSnap.data();
-
-    // Validate recipient email matches
-    if (normalizeEmail(data.recipientEmail) !== normalizeEmail(recipientEmail)) {
-      return res.status(403).json({ error: 'Recipient email mismatch' });
-    }
-
-    // Skip if already delivered
-    if (normalizeText(data.deliveryStatus) === 'delivered') {
-      return res.status(200).json({ message: 'Already delivered', messageId });
-    }
-
-    const messageRecord = {
-      recipientEmail: data.recipientEmail,
-      senderEmail: normalizeEmail(data.senderEmail) || 'admin-messages@ibrecruitment.com',
-      subject: normalizeText(data.subject || data.title) || 'New message from admin',
-      body: normalizeText(data.body || data.message),
-      htmlBody: normalizeText(data.htmlBody || data.html)
-    };
-
-    try {
-      const emailResult = await sendForwardedEmail(messageRecord);
-      await docRef.update({
-        deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
-        deliveredAt: emailResult.sent ? admin.firestore.FieldValue.serverTimestamp() : null,
-        notificationProvider: 'mailgun',
-        notificationError: emailResult.sent ? null : (emailResult.reason || 'not_sent')
-      });
-
-      return res.status(200).json({
-        ok: true,
-        messageId,
-        deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
-        notificationSent: emailResult.sent
-      });
-    } catch (mailErr) {
-      console.error('Email send failed:', mailErr);
-      await docRef.update({
-        deliveryStatus: 'stored_only',
-        notificationProvider: 'mailgun',
-        notificationError: 'send_failed'
-      });
-
-      return res.status(500).json({
-        ok: false,
-        messageId,
-        error: 'Email delivery failed',
-        details: mailErr.message
-      });
-    }
-  } catch (err) {
-    console.error('notifyMessageRecipient error:', err);
-    return res.status(500).json({ error: 'Internal server error', details: err.message });
+    const emailResult = await sendForwardedEmail(messageRecord);
+    await event.data.ref.update({
+      deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
+      deliveredAt: emailResult.sent ? admin.firestore.FieldValue.serverTimestamp() : null,
+      notificationProvider: 'mailgun',
+      notificationError: emailResult.sent ? null : (emailResult.reason || 'not_sent')
+    });
+  } catch (mailErr) {
+    console.error('notifyMessageRecipient failed with error:', mailErr);
+    await event.data.ref.update({
+      deliveryStatus: 'stored_only',
+      notificationProvider: 'mailgun',
+      notificationError: 'send_failed'
+    });
   }
+
+  return null;
 });
