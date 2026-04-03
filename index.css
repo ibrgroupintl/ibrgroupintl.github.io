@@ -104,6 +104,15 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   text-overflow:ellipsis;
 }
 
+/* Subtitle presentation: avoid boxing subtitles — make the font itself darker */
+.container article > p:first-of-type {
+  background: transparent !important;
+  color: rgba(26,30,41,0.85) !important; /* darker than --muted */
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  padding: 0 !important;
+}
+
 /* Hero */
 .hub-main .container{padding:4.5rem 0}
 .hub-main h1{font-size:2rem;margin:0 0 0.5rem}
