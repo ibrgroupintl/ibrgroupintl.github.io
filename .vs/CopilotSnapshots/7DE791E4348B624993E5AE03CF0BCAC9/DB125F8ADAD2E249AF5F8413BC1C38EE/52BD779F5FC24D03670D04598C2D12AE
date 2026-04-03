@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 const {Firestore} = require('@google-cloud/firestore');
@@ -190,7 +190,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
   }
 });
 
-exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).firestore.document('messages/{messageId}', { database: 'ibusername' }).onCreate(async (snap) => {
+exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).firestore.document('messages/{messageId}').onCreate(async (snap) => {
   const data = snap.data() || {};
   const recipientEmail = normalizeEmail(data.recipientEmail);
 
