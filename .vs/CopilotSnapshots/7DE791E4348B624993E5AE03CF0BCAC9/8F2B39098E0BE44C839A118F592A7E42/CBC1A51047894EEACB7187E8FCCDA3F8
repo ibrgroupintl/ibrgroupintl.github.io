@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -12,9 +12,7 @@ admin.initializeApp();
 const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
-// For firebase-admin 11.x, use getFirestore from firebase-admin/firestore
-const { getFirestore } = require('firebase-admin/firestore');
-const db = getFirestore('ibusername');
+const db = admin.firestore('ibusername');
 const FUNCTIONS_CONFIG_SECRET_NAME = 'FUNCTIONS_CONFIG_EXPORT';
 
 function getFunctionsConfigExport() {
