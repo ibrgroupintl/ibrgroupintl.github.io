@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -41,37 +41,39 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      padding: 0 12px;
+      padding: 0;
       height: 40px;
       border-radius: 4px;
-      border: 1px solid #dadce0;
-      background: #fff;
-      color: #3c4043;
+      border: none;
+      background: #4285f4;
+      color: #fff;
       font-family: 'Roboto', Arial, sans-serif;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: none;
+      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
       width: 100%;
     }
     .google-btn:hover {
-      background: #f8f9fa;
-      box-shadow: 0 1px 2px rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+      background: #357ae8;
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,.3);
     }
     .google-btn:active {
-      background: #f1f3f4;
+      background: #2c5dd4;
     }
     .google-btn-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
+      background: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 2px 0 0 2px;
       flex-shrink: 0;
     }
     .google-btn-text {
-      padding-right: 0;
+      padding-right: 12px;
       flex: 1;
       text-align: center;
     }
