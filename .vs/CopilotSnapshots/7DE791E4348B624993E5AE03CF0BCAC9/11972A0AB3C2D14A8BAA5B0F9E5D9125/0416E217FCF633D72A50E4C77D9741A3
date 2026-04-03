@@ -1,9 +1,6 @@
-{
+﻿{
   "functions": {
     "source": "functions"
-  },
-  "firestore": {
-    "database": "ibusername"
   },
   "hosting": {
     "public": ".",
