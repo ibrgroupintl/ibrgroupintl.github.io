@@ -1,4 +1,4 @@
-
+﻿
 <!doctype html>
 <html lang="en">
 <head>
@@ -202,45 +202,35 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
-  // --- GOOGLE OAUTH CLIENT_ID REQUIRED ---
-  // Replace the CLIENT_ID below with your real Google OAuth Client ID from Google Cloud Console.
-  // If not set, Google sign-in will not work.
+  // initialize after firebase is ready
   const CLIENT_ID = 'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com';
 
-  // Wait for Firebase and Google SDKs to be loaded
-  function initGsi() {
-	if (!window.google || !window.firebase || !firebase.auth) return false;
-	const tokenClient = google.accounts.oauth2.initTokenClient({
-	  client_id: CLIENT_ID,
-	  scope: 'openid email profile',
-	  callback: async (tokenResponse) => {
-		if (tokenResponse.error) {
-		  console.error('GSI token error', tokenResponse);
-		  return;
-		}
-		// use access token to sign into Firebase
-		const accessToken = tokenResponse.access_token;
-		const credential = firebase.auth.GoogleAuthProvider.credential(null, accessToken);
-		try {
-		  const userCred = await firebase.auth().signInWithCredential(credential);
-		  console.log('Signed in via GSI -> Firebase:', userCred.user);
-		} catch (err) {
-		  console.error('Firebase signInWithCredential failed', err);
-		}
-	  }
-	});
-	// call this to start sign-in (e.g. wire to your Sign In button)
-	function signInWithGoogleGSI() {
-	  tokenClient.requestAccessToken(); // opens accounts.google.com popup (no firebaseapp.com)
-	}
-	document.getElementById('signInBtn')?.addEventListener('click', signInWithGoogleGSI);
-	return true;
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: 'openid email profile',
+    callback: async (tokenResponse) => {
+      if (tokenResponse.error) {
+        console.error('GSI token error', tokenResponse);
+        return;
+      }
+      // use access token to sign into Firebase
+      const accessToken = tokenResponse.access_token;
+      const credential = firebase.auth.GoogleAuthProvider.credential(null, accessToken);
+      try {
+        const userCred = await firebase.auth().signInWithCredential(credential);
+        console.log('Signed in via GSI -> Firebase:', userCred.user);
+      } catch (err) {
+        console.error('Firebase signInWithCredential failed', err);
+      }
+    }
+  });
+  // call this to start sign-in (e.g. wire to your Sign In button)
+  function signInWithGoogleGSI() {
+    tokenClient.requestAccessToken(); // opens accounts.google.com popup (no firebaseapp.com)
   }
-  // Wait for SDKs
-  var gsiInterval = setInterval(function () {
-	if (initGsi()) clearInterval(gsiInterval);
-  }, 60);
-  setTimeout(function () { clearInterval(gsiInterval); }, 5000);
+
+  // example: attach to click
+  document.getElementById('signInBtn')?.addEventListener('click', signInWithGoogleGSI);
 </script>
 
 	<br>  
