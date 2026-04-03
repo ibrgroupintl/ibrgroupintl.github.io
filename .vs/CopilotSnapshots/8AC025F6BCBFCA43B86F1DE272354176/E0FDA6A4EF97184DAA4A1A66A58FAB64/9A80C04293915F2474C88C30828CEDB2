@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -22,94 +22,22 @@
       margin: 0 auto;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-    .hero-parallax {
-      position: relative;
-      margin: 1rem auto 0;
-      width: min(1120px, calc(100% - 2rem));
-      min-height: 320px;
-      border-radius: 18px;
-      overflow: hidden;
-      background-image:
-        linear-gradient(135deg, rgba(2, 42, 75, 0.9) 0%, rgba(2, 132, 199, 0.8) 50%, rgba(56, 189, 248, 0.65) 100%),
-        url('/160.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.2);
-      display: flex;
-      align-items: center;
-    }
-    .hero-content {
-      width: min(760px, 92%);
-      margin: 0 auto;
-      text-align: center;
-      color: #fff;
-      padding: 2.5rem 1rem;
-    }
-    .hero-content h1 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3.8vw, 2.9rem);
-      line-height: 1.12;
-      color: #fff;
-    }
-    .hero-content p {
-      margin: 1rem auto 0;
-      max-width: 64ch;
-      color: rgba(255,255,255,0.95);
-      font-size: clamp(0.98rem, 1.5vw, 1.08rem);
-    }
-    .hero-cta-row {
-      margin-top: 1.4rem;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .hero-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.93rem;
-      border: 1px solid rgba(255,255,255,0.35);
-      color: #fff;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(2px);
-      transition: transform .2s ease, background .2s ease;
-    }
-    .hero-chip:hover {
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.24);
-    }
     /* Unified resource CTA styling */
 	.resource-cta {
-	  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-	  border: none;
-	  color: #fff;
-	  padding: 10px 16px;
-	  border-radius: 10px;
+	  background: #afb8e9;
+	  border: 1px solid #afb8e9;
+	  color: #000;
+	  padding: 8px 14px;
+	  border-radius: 6px;
 	  cursor: pointer;
 	  display: inline-block;
-	  min-width: 220px;
+	  min-width: 150px;
 	  text-align: center;
-	  font-weight: 700;
-	  font-size: 0.93rem;
-	  line-height: 1.25;
+	  font-weight: 600;
+	  font-size: 0.95rem;
+	  line-height: 1.2;
 	  text-decoration: none;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 	}
-    .resource-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
-      filter: saturate(1.08);
-    }
-    .resource-cta--report { background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); }
-    .resource-cta--moves { background: linear-gradient(135deg, #f97316 0%, #ef4444 100%); }
-    .resource-cta--insights { background: linear-gradient(135deg, #14b8a6 0%, #10b981 100%); }
 
 	/* Contact code uses Arial for clarity */
 	.contact-code {
@@ -196,43 +124,6 @@
       justify-content: center;
       text-align: center;
     }
-    @media (max-width: 900px) {
-      .hero-parallax {
-        min-height: 280px;
-        border-radius: 14px;
-        background-attachment: scroll;
-      }
-      .hero-content {
-        padding: 2rem 0.9rem;
-      }
-      #login-section,
-      #protected-content {
-        width: min(96%, 900px);
-      }
-      .resource-cta {
-        min-width: 100%;
-      }
-    }
-    @media (max-width: 640px) {
-      .hero-cta-row {
-        flex-direction: column;
-      }
-      .hero-chip {
-        width: 100%;
-      }
-      .user-menu {
-        gap: 8px !important;
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-parallax {
-        background-attachment: scroll;
-      }
-      .resource-cta,
-      .hero-chip {
-        transition: none;
-      }
-    }
   </style>
 </head>
 	<body>
@@ -318,24 +209,12 @@
   document.getElementById('signInBtn')?.addEventListener('click', signInWithGoogleGSI);
 </script>
 
+	<br>  
 		<!-- Login section (shown when not authenticated) -->
 		<div id="login-section" style="max-width:820px;margin:1.5rem auto;text-align:center">
 			<div class="signin-card">
 				<p class="intro-note">Please sign in to access account settings.</p>
 				<div class="divider"></div>
-
-		<!-- Responsive parallax hero section -->
-		<section class="hero-parallax" aria-label="Members area overview">
-		  <div class="hero-content">
-		    <h1>Recruitment Intelligence for Faster Hiring Decisions</h1>
-		    <p>Access premium market reports, executive movement tracking, and subscriber-only insights built to support strategic HR and talent acquisition planning.</p>
-		    <div class="hero-cta-row">
-		      <a class="hero-chip" href="/login.html">Secure Sign In</a>
-		      <a class="hero-chip" href="#protected-content">Explore Member Resources</a>
-		      <a class="hero-chip" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Talk to Our Team</a>
-		    </div>
-		  </div>
-		</section>
 
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
 
@@ -359,7 +238,7 @@
 						<h3>Market Reports</h3>
                  <p>Download annual hiring trends and sector analysis to inform hiring strategy.</p>
                     <div style="margin-top:8px">
-                      <button id="downloadPostsBtn" class="resource-cta resource-cta--report">Download Hiring Trends Dataset (CSV)</button>
+                      <button id="downloadPostsBtn" class="resource-cta">Download posts.csv</button>
 					</div>
 					</article>
 					<article class="resource-card">
@@ -367,7 +246,7 @@
 						<h3>Executive Moves</h3>
                  <p>Monitor senior hires and leadership transitions across the industry.</p>
 					<div style="margin-top:8px">
-                      <a class="resource-cta resource-cta--moves" href="https://www.ibrecruitment.com/exec-appointments/" target="_blank" rel="noopener noreferrer">Explore Executive Moves</a>
+                      <a class="resource-cta" href="https://www.ibrecruitment.com/exec-appointments/" target="_blank" rel="noopener noreferrer">People Moves</a>
 					</div>
 					</article>
 					<article class="resource-card">
@@ -375,7 +254,7 @@
 						<h3>Insights Archive</h3>
                     <p>Access past research and editorial content for reference and benchmarking.</p>
 					<div style="margin-top:8px">
-                  <a class="resource-cta resource-cta--insights" href="https://www.ibrecruitment.com/news-insights" target="_blank" rel="noopener noreferrer">Read Research &amp; Insights Archive</a>
+                  <a class="resource-cta" href="https://www.ibrecruitment.com/news-insights" target="_blank" rel="noopener noreferrer">News &amp; Insights</a>
 					</div>
 
 				</div>
@@ -677,20 +556,5 @@
 	});
   })();
 </script>
-
-<!-- include this once -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-
-<section class="hero-parallax" aria-label="Members area overview">
-  <div class="hero-content">
-    <h1>Recruitment Intelligence for Faster Hiring Decisions</h1>
-    <p>Access premium market reports, executive movement tracking, and subscriber-only insights built to support strategic HR and talent acquisition planning.</p>
-    <div class="hero-cta-row">
-      <a class="hero-chip" href="/login.html">Secure Sign In</a>
-      <a class="hero-chip" href="#protected-content">Explore Member Resources</a>
-      <a class="hero-chip" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Talk to Our Team</a>
-    </div>
-  </div>
-</section>
-
-<script>
+</body>
+</html>

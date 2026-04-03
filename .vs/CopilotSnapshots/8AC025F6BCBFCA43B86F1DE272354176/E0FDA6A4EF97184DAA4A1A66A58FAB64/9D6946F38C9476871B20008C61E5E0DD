@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -323,19 +323,6 @@
 			<div class="signin-card">
 				<p class="intro-note">Please sign in to access account settings.</p>
 				<div class="divider"></div>
-
-		<!-- Responsive parallax hero section -->
-		<section class="hero-parallax" aria-label="Members area overview">
-		  <div class="hero-content">
-		    <h1>Recruitment Intelligence for Faster Hiring Decisions</h1>
-		    <p>Access premium market reports, executive movement tracking, and subscriber-only insights built to support strategic HR and talent acquisition planning.</p>
-		    <div class="hero-cta-row">
-		      <a class="hero-chip" href="/login.html">Secure Sign In</a>
-		      <a class="hero-chip" href="#protected-content">Explore Member Resources</a>
-		      <a class="hero-chip" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Talk to Our Team</a>
-		    </div>
-		  </div>
-		</section>
 
 		<main id="protected-content" class="container" role="main" style="padding:3rem 0;max-width:900px;text-align:center;display:none">
 
