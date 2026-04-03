@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -286,6 +286,12 @@
               <textarea id="body" name="body" placeholder="Write your message here..." required aria-required="true"></textarea>
             </div>
 
+            <div class="form-group">
+              <label for="webhookSecret">Webhook Secret <span style="color:#e74c3c">*</span></label>
+              <input type="password" id="webhookSecret" name="webhookSecret" placeholder="Enter webhook secret" required aria-required="true">
+              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">The webhook secret is required to authenticate the message submission.</p>
+            </div>
+
             <div class="form-actions">
               <button type="submit" class="btn btn-primary" id="submitBtn">
                 <span id="submitBtnText">Send Message</span>
@@ -339,7 +345,6 @@
       const messageAlert = document.getElementById('messageAlert');
       const composeSectionEl = document.getElementById('compose-section');
       const accessDeniedSectionEl = document.getElementById('access-denied-section');
-      let currentUser = null;
 
       function showAlert(message, type = 'info') {
         messageAlert.textContent = message;
@@ -386,7 +391,6 @@
 
       auth.onAuthStateChanged(function (user) {
         if (!user) {
-          currentUser = null;
           showSignedOut();
           return;
         }
@@ -395,10 +399,8 @@
         const authorizedEmail = AUTHORIZED_EMAIL.toLowerCase().trim();
 
         if (userEmail === authorizedEmail) {
-          currentUser = user;
           showAuthenticatedWithAccess();
         } else {
-          currentUser = null;
           showAuthenticatedDenied();
         }
       });
@@ -421,14 +423,10 @@
           const senderEmail = document.getElementById('senderEmail').value.trim();
           const subject = document.getElementById('subject').value.trim();
           const body = document.getElementById('body').value.trim();
+          const webhookSecret = document.getElementById('webhookSecret').value.trim();
 
-          if (!recipientEmail || !senderEmail || !subject || !body) {
+          if (!recipientEmail || !senderEmail || !subject || !body || !webhookSecret) {
             showAlert('All fields are required.', 'error');
-            return;
-          }
-
-          if (!currentUser) {
-            showAlert('You must be signed in as an authorized administrator.', 'error');
             return;
           }
 
@@ -437,12 +435,11 @@
           submitBtnText.innerHTML = '<span class="loading-spinner"></span>Sending...';
 
           try {
-            const idToken = await currentUser.getIdToken();
             const response = await fetch('https://us-central1-wale-491803.cloudfunctions.net/adminMessageWebhook', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + idToken
+                'x-webhook-secret': webhookSecret
               },
               body: JSON.stringify({
                 recipientEmail: recipientEmail,
@@ -452,12 +449,7 @@
               })
             });
 
-            let data = {};
-            try {
-              data = await response.json();
-            } catch (parseErr) {
-              data = {};
-            }
+            const data = await response.json();
 
             if (!response.ok) {
               showAlert('Error: ' + (data.error || 'Failed to send message'), 'error');
@@ -468,7 +460,7 @@
 
             showAlert('Message sent successfully! Message ID: ' + (data.messageId || 'N/A'), 'success');
             composeForm.reset();
-            document.getElementById('recipientEmail').focus();
+            document.getElementById('webhookSecret').focus();
 
             // Re-enable form
             submitBtn.disabled = false;

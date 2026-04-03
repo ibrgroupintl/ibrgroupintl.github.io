@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -14,7 +14,6 @@ const storage = new Storage();
 const BUCKET = 'wale-491803.firebasestorage.app';
 const db = admin.firestore();
 const FUNCTIONS_CONFIG_SECRET_NAME = 'FUNCTIONS_CONFIG_EXPORT';
-const AUTHORIZED_ADMIN_EMAIL = 'developers@ibrecruitment.com';
 
 function getFunctionsConfigExport() {
   try {
@@ -135,7 +134,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
   // Enable CORS
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD, DELETE, PUT');
-  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-webhook-secret');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, x-webhook-secret');
   res.set('Access-Control-Max-Age', '3600');
 
   // Handle preflight OPTIONS requests
@@ -152,26 +151,10 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
       return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const authHeader = normalizeText(req.get('authorization'));
-    if (!authHeader.toLowerCase().startsWith('bearer ')) {
+    const expectedSecret = normalizeText(getEnv('MESSAGE_WEBHOOK_SECRET'));
+    const providedSecret = normalizeText(req.get('x-webhook-secret') || req.body && req.body.secret);
+    if (expectedSecret && providedSecret !== expectedSecret) {
       return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    const idToken = normalizeText(authHeader.slice(7));
-    if (!idToken) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    let decodedToken;
-    try {
-      decodedToken = await admin.auth().verifyIdToken(idToken);
-    } catch (verifyErr) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    const tokenEmail = normalizeEmail(decodedToken && decodedToken.email);
-    if (tokenEmail !== AUTHORIZED_ADMIN_EMAIL) {
-      return res.status(403).json({ error: 'Forbidden' });
     }
 
     const recipientEmail = normalizeEmail(pickPayloadField(req.body, ['recipientEmail', 'toEmail', 'forwardTo', 'userEmail']));
@@ -187,12 +170,12 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
 
     const messageRecord = {
       recipientEmail,
-      senderEmail: senderEmail || tokenEmail || AUTHORIZED_ADMIN_EMAIL,
+      senderEmail: senderEmail || 'admin-messages@ibrecruitment.com',
       subject,
       body,
       htmlBody,
       originalMessageId,
-      source: AUTHORIZED_ADMIN_EMAIL,
+      source: 'admin-messages@ibrecruitment.com',
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       deliveryStatus: 'queued',
       notificationProvider: 'mailgun'
