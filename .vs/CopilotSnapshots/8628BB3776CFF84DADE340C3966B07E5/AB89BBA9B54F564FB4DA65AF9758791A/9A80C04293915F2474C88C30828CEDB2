@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -406,10 +406,10 @@
         <img src="/160.jpg" alt="Impact logo" />
         <span>Impact in Business Recruitment</span>
       </a>
-  <nav class="nav-links" aria-label="Primary navigation">
-    <a class="btn btn-ghost" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-    <a class="btn btn-primary" id="authBtn" href="/login.html">Sign In</a>
-  </nav>
+		<nav class="nav-links" aria-label="Primary navigation">
+			<a class="btn btn-ghost" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
+			<a class="btn btn-primary" href="/login.html">Sign In</a>
+		</nav>
     </div>
   </header>
 

@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
 
   const PROTECTED_PATHS = new Set([
@@ -97,8 +97,6 @@
 
     const href = anchor.getAttribute('href') || '';
     if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return false;
-    // Prevent overlay for login page navigation
-    if (href === '/login.html' || href.endsWith('/login.html')) return false;
 
     let targetUrl;
     try {
