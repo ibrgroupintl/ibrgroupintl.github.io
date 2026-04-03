@@ -341,3 +341,91 @@
 [debug] [2026-04-03T01:43:15.407Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvZ2V0UG9zdHNDc3YvODJDN0pkMHh1LXc {"name":"operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvZ2V0UG9zdHNDc3YvODJDN0pkMHh1LXc","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/wale-491803/locations/us-central1/functions/getPostsCsv","type":"UPDATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/wale-491803/locations/us-central1/functions/getPostsCsv","httpsTrigger":{"url":"https://us-central1-wale-491803.cloudfunctions.net/getPostsCsv","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"getPostsCsv","updateTime":"2026-04-03T01:28:30.088Z","versionId":"15","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"81dc16fe26a2362accea90d97a237b148e898f19"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-730803098609.us-central1.cloudfunctions.appspot.com/57328264-22e7-45c6-8015-5f1f3ae75235.zip?GoogleAccessId=service-916707769747@gcf-admin-robot.iam.gserviceaccount.com&Expires=1775182326&Signature=TiNUau3Jy3i4mrFO0SJT2VU4gsYJw2hkNfDR9v2g7qajDVT1dgrwyCdxJXXF2I9%2FVXxEwJgQozwH8d%2BLBv3zs2EkjeGvz4YpIYJXlJd4akZVHuYZyaOuI596s%2Bn%2FkeYYjJ4hHuU2XVgxwQjUms4jC8ZlyWVknPxXnd13LcqEXKuoQUpNhF%2Bz2bjavAtL3BNplxXaIKxzsnW3ac%2FWWGFAAnDLsmQXdTAwHLSxfJApPhBYoA%2FOkmFytRLbxcZkeiJTCzk3fK%2FpmB9VTmF2evowQ8vYNPJzc0IGrsyydnqDMBHlKyfSiv36phtcL0JCTpTFjHHrseH6eYDI32A2XEBr8A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"wale-491803\",\"databaseURL\":\"https://wale-491803-default-rtdb.firebaseio.com\",\"storageBucket\":\"wale-491803.firebasestorage.app\"}","GCLOUD_PROJECT":"wale-491803","EVENTARC_CLOUD_EVENT_SOURCE":"projects/wale-491803/locations/us-central1/functions/getPostsCsv"},"runtime":"nodejs22","buildId":"e68afde6-714e-482d-96ad-d0eb230e9e2e","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"buildName":"projects/916707769747/locations/us-central1/builds/e68afde6-714e-482d-96ad-d0eb230e9e2e","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/wale-491803/serviceAccounts/916707769747-compute@developer.gserviceaccount.com"},"versionId":"17","updateTime":"2026-04-03T01:43:09Z","buildId":"dcdf8f04-2304-4560-b6aa-de1da0c0b3da","sourceToken":"210d1475-8207-406d-9963-0631d6fd1b50","buildName":"projects/916707769747/locations/us-central1/builds/dcdf8f04-2304-4560-b6aa-de1da0c0b3da"},"done":true,"response":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/wale-491803/locations/us-central1/functions/getPostsCsv","httpsTrigger":{"url":"https://us-central1-wale-491803.cloudfunctions.net/getPostsCsv","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"getPostsCsv","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"wale-491803@appspot.gserviceaccount.com","updateTime":"2026-04-03T01:43:09.654Z","versionId":"17","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"81dc16fe26a2362accea90d97a237b148e898f19"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-730803098609.us-central1.cloudfunctions.appspot.com/57328264-22e7-45c6-8015-5f1f3ae75235.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"wale-491803\",\"databaseURL\":\"https://wale-491803-default-rtdb.firebaseio.com\",\"storageBucket\":\"wale-491803.firebasestorage.app\"}","GCLOUD_PROJECT":"wale-491803","EVENTARC_CLOUD_EVENT_SOURCE":"projects/wale-491803/locations/us-central1/functions/getPostsCsv"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"dcdf8f04-2304-4560-b6aa-de1da0c0b3da","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"buildName":"projects/916707769747/locations/us-central1/builds/dcdf8f04-2304-4560-b6aa-de1da0c0b3da","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/wale-491803/serviceAccounts/916707769747-compute@developer.gserviceaccount.com"}}
 [debug] [2026-04-03T01:43:15.407Z] Got source token 210d1475-8207-406d-9963-0631d6fd1b50 for region us-central1
 [info] +  functions[getPostsCsv(us-central1)] Successful update operation. 
+[debug] [2026-04-03T01:43:23.232Z] [update-default-us-central1-adminMessageWebhook] Retrying task index 0
+[debug] [2026-04-03T01:43:23.234Z] Checked if tokens are valid: true, expires at: 1775182234199
+[debug] [2026-04-03T01:43:23.234Z] Checked if tokens are valid: true, expires at: 1775182234199
+[debug] [2026-04-03T01:43:23.235Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvYWRtaW5NZXNzYWdlV2ViaG9vay9RVjRiVUZja0xNVQ [none]
+[debug] [2026-04-03T01:43:23.772Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvYWRtaW5NZXNzYWdlV2ViaG9vay9RVjRiVUZja0xNVQ 200
+[debug] [2026-04-03T01:43:23.773Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvYWRtaW5NZXNzYWdlV2ViaG9vay9RVjRiVUZja0xNVQ {"name":"operations/d2FsZS00OTE4MDMvdXMtY2VudHJhbDEvYWRtaW5NZXNzYWdlV2ViaG9vay9RVjRiVUZja0xNVQ","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/wale-491803/locations/us-central1/functions/adminMessageWebhook","type":"UPDATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/wale-491803/locations/us-central1/functions/adminMessageWebhook","httpsTrigger":{"url":"https://us-central1-wale-491803.cloudfunctions.net/adminMessageWebhook","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"adminMessageWebhook","updateTime":"2026-04-03T01:28:35.869Z","versionId":"15","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"a2eba99883a7f9de648bf948e2974caabb679b7c"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-730803098609.us-central1.cloudfunctions.appspot.com/57328264-22e7-45c6-8015-5f1f3ae75235.zip?GoogleAccessId=service-916707769747@gcf-admin-robot.iam.gserviceaccount.com&Expires=1775182326&Signature=TiNUau3Jy3i4mrFO0SJT2VU4gsYJw2hkNfDR9v2g7qajDVT1dgrwyCdxJXXF2I9%2FVXxEwJgQozwH8d%2BLBv3zs2EkjeGvz4YpIYJXlJd4akZVHuYZyaOuI596s%2Bn%2FkeYYjJ4hHuU2XVgxwQjUms4jC8ZlyWVknPxXnd13LcqEXKuoQUpNhF%2Bz2bjavAtL3BNplxXaIKxzsnW3ac%2FWWGFAAnDLsmQXdTAwHLSxfJApPhBYoA%2FOkmFytRLbxcZkeiJTCzk3fK%2FpmB9VTmF2evowQ8vYNPJzc0IGrsyydnqDMBHlKyfSiv36phtcL0JCTpTFjHHrseH6eYDI32A2XEBr8A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"wale-491803\",\"databaseURL\":\"https://wale-491803-default-rtdb.firebaseio.com\",\"storageBucket\":\"wale-491803.firebasestorage.app\"}","GCLOUD_PROJECT":"wale-491803","EVENTARC_CLOUD_EVENT_SOURCE":"projects/wale-491803/locations/us-central1/functions/adminMessageWebhook"},"runtime":"nodejs22","buildId":"e68afde6-714e-482d-96ad-d0eb230e9e2e","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"secretEnvironmentVariables":[{"key":"FUNCTIONS_CONFIG_EXPORT","projectId":"wale-491803","secret":"FUNCTIONS_CONFIG_EXPORT","version":"4"}],"sourceToken":"210d1475-8207-406d-9963-0631d6fd1b50","buildName":"projects/916707769747/locations/us-central1/builds/e68afde6-714e-482d-96ad-d0eb230e9e2e","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/wale-491803/serviceAccounts/916707769747-compute@developer.gserviceaccount.com"},"versionId":"17","updateTime":"2026-04-03T01:43:14Z","buildId":"dcdf8f04-2304-4560-b6aa-de1da0c0b3da","sourceToken":"210d1475-8207-406d-9963-0631d6fd1b50","buildName":"projects/916707769747/locations/us-central1/builds/dcdf8f04-2304-4560-b6aa-de1da0c0b3da"},"done":true,"response":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/wale-491803/locations/us-central1/functions/adminMessageWebhook","httpsTrigger":{"url":"https://us-central1-wale-491803.cloudfunctions.net/adminMessageWebhook","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"adminMessageWebhook","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"wale-491803@appspot.gserviceaccount.com","updateTime":"2026-04-03T01:43:14.911Z","versionId":"17","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"a2eba99883a7f9de648bf948e2974caabb679b7c"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-730803098609.us-central1.cloudfunctions.appspot.com/57328264-22e7-45c6-8015-5f1f3ae75235.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"wale-491803\",\"databaseURL\":\"https://wale-491803-default-rtdb.firebaseio.com\",\"storageBucket\":\"wale-491803.firebasestorage.app\"}","GCLOUD_PROJECT":"wale-491803","EVENTARC_CLOUD_EVENT_SOURCE":"projects/wale-491803/locations/us-central1/functions/adminMessageWebhook"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"dcdf8f04-2304-4560-b6aa-de1da0c0b3da","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"secretEnvironmentVariables":[{"key":"FUNCTIONS_CONFIG_EXPORT","projectId":"916707769747","secret":"FUNCTIONS_CONFIG_EXPORT","version":"4"}],"buildName":"projects/916707769747/locations/us-central1/builds/dcdf8f04-2304-4560-b6aa-de1da0c0b3da","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/wale-491803/serviceAccounts/916707769747-compute@developer.gserviceaccount.com"}}
+[debug] [2026-04-03T01:43:23.773Z] Got source token 210d1475-8207-406d-9963-0631d6fd1b50 for region us-central1
+[info] +  functions[adminMessageWebhook(us-central1)] Successful update operation. 
+[debug] [2026-04-03T01:43:23.904Z] Total Function Deployment time: 77675
+[debug] [2026-04-03T01:43:23.905Z] 3 Functions Deployed
+[debug] [2026-04-03T01:43:23.905Z] 1 Functions Errored
+[debug] [2026-04-03T01:43:23.905Z] 0 Function Deployments Aborted
+[debug] [2026-04-03T01:43:23.905Z] Average Function Deployment time: 71207.66666666667
+[info] 
+[info] Functions deploy had errors with the following functions:
+	notifyMessageRecipient(us-central1)
+[info] Function URL (adminMessageWebhook(us-central1)): https://us-central1-wale-491803.cloudfunctions.net/adminMessageWebhook
+[debug] [2026-04-03T01:43:24.344Z] Checked if tokens are valid: true, expires at: 1775182234199
+[debug] [2026-04-03T01:43:24.345Z] Checked if tokens are valid: true, expires at: 1775182234199
+[debug] [2026-04-03T01:43:24.345Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/wale-491803/locations/us-central1/repositories/gcf-artifacts [none]
+[debug] [2026-04-03T01:43:25.400Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/wale-491803/locations/us-central1/repositories/gcf-artifacts 200
+[debug] [2026-04-03T01:43:25.401Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/wale-491803/locations/us-central1/repositories/gcf-artifacts {"name":"projects/wale-491803/locations/us-central1/repositories/gcf-artifacts","format":"DOCKER","description":"This repository is created and used by Cloud Functions for storing function docker images.","labels":{"goog-managed-by":"cloudfunctions"},"createTime":"2026-04-02T19:29:27.015342Z","updateTime":"2026-04-03T01:43:09.791825Z","mode":"STANDARD_REPOSITORY","cleanupPolicies":{"firebase-functions-cleanup":{"id":"firebase-functions-cleanup","action":"DELETE","condition":{"tagState":"ANY","olderThan":"86400s"}}},"sizeBytes":"872791113","vulnerabilityScanningConfig":{"lastEnableTime":"2026-04-02T19:29:17.453195524Z","enablementState":"SCANNING_DISABLED","enablementStateReason":"API containerscanning.googleapis.com is not enabled."},"satisfiesPzi":true,"registryUri":"us-central1-docker.pkg.dev/wale-491803/gcf-artifacts"}
+[debug] [2026-04-03T01:43:25.402Z] Functions deploy failed.
+[debug] [2026-04-03T01:43:25.402Z] {
+  "endpoint": {
+    "id": "notifyMessageRecipient",
+    "project": "wale-491803",
+    "region": "us-central1",
+    "entryPoint": "notifyMessageRecipient",
+    "platform": "gcfv1",
+    "runtime": "nodejs22",
+    "eventTrigger": {
+      "eventType": "providers/cloud.firestore/eventTypes/document.create",
+      "retry": false,
+      "eventFilters": {
+        "resource": "projects/wale-491803/databases/(default)/documents/messages/{messageId}"
+      }
+    },
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "secretEnvironmentVariables": [
+      {
+        "key": "FUNCTIONS_CONFIG_EXPORT",
+        "secret": "FUNCTIONS_CONFIG_EXPORT",
+        "projectId": "wale-491803",
+        "version": "4"
+      }
+    ],
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"wale-491803\",\"databaseURL\":\"https://wale-491803-default-rtdb.firebaseio.com\",\"storageBucket\":\"wale-491803.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "wale-491803",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/wale-491803/locations/us-central1/functions/notifyMessageRecipient"
+    },
+    "codebase": "default",
+    "securityLevel": "SECURE_ALWAYS",
+    "targetedByOnly": false,
+    "hash": "a2eba99883a7f9de648bf948e2974caabb679b7c"
+  },
+  "op": "update",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "exit": 1,
+    "message": "Firestore database 'projects/wale-491803/databases/(default)' does not exist. Please create a \"(default)\" Firestore Native database first.",
+    "original": {
+      "code": 5,
+      "message": "Firestore database 'projects/wale-491803/databases/(default)' does not exist. Please create a \"(default)\" Firestore Native database first."
+    },
+    "status": 5,
+    "code": 5
+  }
+}
+[debug] [2026-04-03T01:43:25.445Z] Error: Failed to update function notifyMessageRecipient in region us-central1
+    at C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:54:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Fabricator.updateV1Function (C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:385:32)
+    at async Fabricator.updateEndpoint (C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:158:13)
+    at async handle (C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:92:17)
+[error] 
+[error] Error: There was an error deploying functions

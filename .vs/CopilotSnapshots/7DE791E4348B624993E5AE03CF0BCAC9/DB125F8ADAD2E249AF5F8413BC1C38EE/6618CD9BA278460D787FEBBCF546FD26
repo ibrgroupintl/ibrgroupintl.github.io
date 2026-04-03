@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -185,12 +185,12 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
   }
 });
 
-exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).firestore.onDocumentCreated({ document: 'messages/{messageId}', database: 'ibusername' }, async (event) => {
-  const data = event.data.data();
+exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SECRET_NAME] }).firestore.document('messages/{messageId}', { database: 'ibusername' }).onCreate(async (snap) => {
+  const data = snap.data() || {};
   const recipientEmail = normalizeEmail(data.recipientEmail);
 
   if (!recipientEmail) {
-    await event.data.ref.update({
+    await snap.ref.update({
       deliveryStatus: 'stored_only',
       notificationError: 'missing_recipient_email'
     });
@@ -211,7 +211,7 @@ exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_
 
   try {
     const emailResult = await sendForwardedEmail(messageRecord);
-    await event.data.ref.update({
+    await snap.ref.update({
       deliveryStatus: emailResult.sent ? 'delivered' : 'stored_only',
       deliveredAt: emailResult.sent ? admin.firestore.FieldValue.serverTimestamp() : null,
       notificationProvider: 'mailgun',
@@ -219,7 +219,7 @@ exports.notifyMessageRecipient = functions.runWith({ secrets: [FUNCTIONS_CONFIG_
     });
   } catch (mailErr) {
     console.error('notifyMessageRecipient failed with error:', mailErr);
-    await event.data.ref.update({
+    await snap.ref.update({
       deliveryStatus: 'stored_only',
       notificationProvider: 'mailgun',
       notificationError: 'send_failed'
