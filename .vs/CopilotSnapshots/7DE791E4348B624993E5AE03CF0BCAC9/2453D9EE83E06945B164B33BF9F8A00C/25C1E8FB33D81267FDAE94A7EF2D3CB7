@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -465,7 +465,7 @@
             <p class="stat-value" id="statDelivered">0</p>
           </article>
           <article class="stat-card">
-            <p class="stat-label">Delivered</p>
+            <p class="stat-label">Pending</p>
             <p class="stat-value" id="statQueued">0</p>
           </article>
           <article class="stat-card">
@@ -601,7 +601,7 @@
       function delivery(s) {
         s = String(s || '').toLowerCase();
         if (s === 'available' || s === 'delivered') return { label: 'Available', cls: 'delivered' };
-        if (s === 'pending' || s === 'queued') return { label: 'Delivered', cls: 'delivered' };
+        if (s === 'pending' || s === 'queued') return { label: 'Pending', cls: 'queued' };
         return { label: 'Stored', cls: 'stored' };
       }
 
