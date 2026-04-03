@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -12,7 +12,14 @@ admin.initializeApp();
 const storage = new Storage();
 // Use the bucket name you confirmed in Console
 const BUCKET = 'wale-491803.firebasestorage.app';
-const db = admin.firestore();
+// Lazy-load Firestore to avoid initialization timeout
+let db = null;
+function getDb() {
+  if (!db) {
+    db = admin.firestore('ibusername');
+  }
+  return db;
+}
 const FUNCTIONS_CONFIG_SECRET_NAME = 'FUNCTIONS_CONFIG_EXPORT';
 
 function getFunctionsConfigExport() {
@@ -170,7 +177,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
       notificationProvider: 'mailgun'
     };
 
-    const docRef = await db.collection('messages').add(messageRecord);
+    const docRef = await getDb().collection('messages').add(messageRecord);
 
     return res.status(200).json({
       ok: true,

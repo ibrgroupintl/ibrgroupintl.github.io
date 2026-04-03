@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const {Storage} = require('@google-cloud/storage');
 let nodemailer = null;
@@ -170,7 +170,7 @@ exports.adminMessageWebhook = functions.runWith({ secrets: [FUNCTIONS_CONFIG_SEC
       notificationProvider: 'mailgun'
     };
 
-    const docRef = await db.collection('messages').add(messageRecord);
+    const docRef = await getDb().collection('messages').add(messageRecord);
 
     return res.status(200).json({
       ok: true,
