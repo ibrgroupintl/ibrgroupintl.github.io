@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -188,42 +188,42 @@
       flex-wrap: wrap;
     }
 
-    .folder-tabs {
-      display: inline-flex;
-      border: 1px solid #dbe3ee;
+    .panel-head h2 {
+      margin: 0;
+      color: #092a4b;
       font-size: 1rem;
     }
 
-    }
+    .panel-body { padding: 0.9rem 1rem 1rem; }
 
     .search-input {
       width: 100%;
       border-radius: 10px;
       border: 1px solid #d0d7de;
       padding: 10px 12px;
-      padding: 7px 12px;
-      cursor: pointer;
-      font-size: 0.86rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .search-input:focus {
-      border-left: 1px solid #e2e8f0;
-    }
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
     }
 
     .inbox-status {
       margin: 0.75rem 0 0;
-    }
+      color: var(--muted);
       font-size: 0.9rem;
     }
 
     .thread-list {
-      color: #0c4a6e;
+      margin-top: 0.85rem;
       display: grid;
       gap: 8px;
       max-height: 620px;
       overflow: auto;
-    .search-input {
+      padding-right: 4px;
     }
 
     .thread-item {
@@ -235,95 +235,95 @@
       background: #fff;
     }
 
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
-    }
-
-    .inbox-status {
+    .thread-item:hover {
+      border-color: #9dd6f2;
+      background: #f8fcff;
+      transform: translateY(-1px);
     }
 
     .thread-item.active {
-    }
-
+      border-color: #0284c7;
+      background: #eff9ff;
       box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.2);
     }
 
-      gap: 8px;
-      max-height: 620px;
+    .thread-title {
+      margin: 0;
       color: #092a4b;
       font-size: 0.95rem;
       font-weight: 700;
-
-    .thread-item {
-
-    .thread-snippet {
-      margin: 0.35rem 0 0;
-      cursor: pointer;
-      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
       line-height: 1.35;
     }
 
-    .thread-item:hover {
-      border-color: #9dd6f2;
+    .thread-snippet {
+      margin: 0.35rem 0 0;
+      color: #4d5b6d;
+      font-size: 0.88rem;
+      line-height: 1.35;
+    }
+
+    .thread-meta {
+      margin-top: 0.5rem;
       display: flex;
       justify-content: space-between;
       gap: 8px;
-
-    .thread-item.active {
+      color: #64748b;
+      font-size: 0.79rem;
       flex-wrap: wrap;
     }
 
-    }
-
+    .message-viewer {
+      min-height: 520px;
       display: flex;
       flex-direction: column;
     }
-      font-size: 0.95rem;
-      font-weight: 700;
+
+    .message-empty {
       margin: auto;
       max-width: 440px;
       text-align: center;
-    .thread-snippet {
-      margin: 0.35rem 0 0;
+      color: var(--muted);
+    }
 
     .message-card {
       border: 1px solid #e6edf5;
-    }
-
+      border-radius: 12px;
+      padding: 1rem;
       background: #fff;
     }
 
-      justify-content: space-between;
-      gap: 8px;
+    .message-head {
+      display: grid;
       gap: 8px;
       margin-bottom: 0.95rem;
       padding-bottom: 0.8rem;
+      border-bottom: 1px solid #eef2f7;
     }
-
 
     .message-subject {
       margin: 0;
-      flex-direction: column;
-    }
+      color: #092a4b;
+      font-size: 1.2rem;
     }
 
     .pill {
-      max-width: 440px;
-      text-align: center;
+      display: inline-flex;
+      align-items: center;
       border-radius: 999px;
       padding: 3px 9px;
       font-size: 0.75rem;
-    .message-card {
-      border: 1px solid #e6edf5;
+      font-weight: 600;
+    }
 
     .pill.delivered { background: #dcfce7; color: #166534; }
     .pill.queued { background: #dbeafe; color: #1e40af; }
-    }
+    .pill.stored { background: #f1f5f9; color: #334155; }
 
     .message-body {
       margin: 0;
       white-space: pre-wrap;
-      margin-bottom: 0.95rem;
-      padding-bottom: 0.8rem;
+      word-break: break-word;
+      line-height: 1.5;
       color: #1f2937;
     }
 
@@ -332,8 +332,8 @@
       .message-viewer { min-height: 360px; }
       .thread-list { max-height: 360px; }
     }
-
-    .pill {
+  </style>
+</head>
 <body>
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
@@ -460,14 +460,14 @@
   </div>
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-        <article class="panel message-viewer">
-          <div class="panel-head">
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
 
   <script>
-          <div class="panel-body" id="messagePreviewBody">
-            <div class="message-empty">
-              <h3 style="margin:0 0 0.5rem;color:#092a4b">No message selected</h3>
+    window.addEventListener('load', function () {
+      if (!window.firebase || !window.firebaseConfig) {
+        console.warn('Firebase not available; inbox UI disabled');
         return;
       }
 
@@ -475,23 +475,21 @@
 
       const AUTHORIZED_COMPOSE_EMAIL = 'developers@ibrecruitment.com';
       const auth = firebase.auth();
-    <footer class="resource-footer" role="contentinfo">
-      <div class="container" style="text-align:center">
-        <div style="margin:12px 0;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;">
-          <a href="/terms.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Terms of Service</a>
+      const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
+
+      const loginSection = document.getElementById('login-section');
+      const dashboard = document.getElementById('dashboard');
       const signOutBtn = document.getElementById('signOutBtn');
-          <a href="/privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Privacy Policy</a>
-          <span style="color:var(--muted)">|</span>
-          <a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
-        </div>
+      const signInLink = document.getElementById('signInLink');
+      const topNavMenu = document.getElementById('topNavMenu');
+      const composeLink = document.getElementById('composeLink');
+
       const userEmailDisplay = document.getElementById('userEmailDisplay');
       const messageSearchInput = document.getElementById('messageSearchInput');
       const messagesStatus = document.getElementById('messagesStatus');
       const messagesList = document.getElementById('messagesList');
       const messagePreviewBody = document.getElementById('messagePreviewBody');
       const previewHint = document.getElementById('previewHint');
-      const folderInboxBtn = document.getElementById('folderInboxBtn');
-      const folderSentBtn = document.getElementById('folderSentBtn');
 
       const statTotal = document.getElementById('statTotal');
       const statDelivered = document.getElementById('statDelivered');
@@ -502,10 +500,6 @@
       let allMessages = [];
       let filteredMessages = [];
       let selectedMessageId = '';
-      let currentFolder = 'inbox';
-      let currentUserUid = '';
-      let currentUserEmail = '';
-      let isAdminUser = false;
 
       function escapeHtml(value) {
         return String(value || '').replace(/[&<>"']/g, function (c) {
@@ -584,7 +578,7 @@
             '<div class="message-head">' +
               '<h3 class="message-subject">' + escapeHtml(item.subject || 'No subject') + '</h3>' +
               '<div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:#475569;font-size:0.9rem">' +
-                '<span><strong>' + (currentFolder === 'sent' ? 'To' : 'From') + ':</strong> ' + escapeHtml(currentFolder === 'sent' ? (item.recipientLabel || 'Unknown recipient') : (item.senderEmail || 'admin-messages@ibrecruitment.com')) + '</span>' +
+                '<span><strong>From:</strong> ' + escapeHtml(item.senderEmail || 'admin-messages@ibrecruitment.com') + '</span>' +
                 '<span><strong>Received:</strong> ' + escapeHtml(item.receivedAtText) + '</span>' +
                 '<span class="pill ' + delivery.className + '">' + escapeHtml(delivery.label) + '</span>' +
               '</div>' +
@@ -595,14 +589,13 @@
 
       function renderList(items) {
         if (!items.length) {
-          messagesStatus.textContent = currentFolder === 'sent' ? 'No sent messages found.' : 'No messages found.';
+          messagesStatus.textContent = 'No messages found.';
           messagesList.innerHTML = '';
           renderPreview(null);
           return;
         }
 
-        const folderLabel = currentFolder === 'sent' ? 'sent message' : 'message';
-        messagesStatus.textContent = items.length + ' ' + folderLabel + (items.length === 1 ? '' : 's') + ' loaded.';
+        messagesStatus.textContent = items.length + ' message' + (items.length === 1 ? '' : 's') + ' loaded.';
         messagesList.innerHTML = items.map(function (item) {
           const active = item.id === selectedMessageId ? ' active' : '';
           const delivery = getDeliveryState(item.deliveryStatus);
@@ -611,7 +604,7 @@
             '<p class="thread-title">' + escapeHtml(item.subject || 'No subject') + '</p>' +
             '<p class="thread-snippet">' + escapeHtml(snippet || '(No message content)') + '</p>' +
             '<div class="thread-meta">' +
-              '<span>' + escapeHtml(currentFolder === 'sent' ? ('To: ' + (item.recipientLabel || 'Unknown recipient')) : (item.senderEmail || 'admin')) + '</span>' +
+              '<span>' + escapeHtml(item.senderEmail || 'admin') + '</span>' +
               '<span>' + escapeHtml(delivery.label) + '</span>' +
             '</div>' +
           '</button>';
@@ -659,33 +652,10 @@
         }
       }
 
-      function setFolder(folder) {
-        if (folder !== 'inbox' && folder !== 'sent') return;
-        if (folder === 'sent' && !isAdminUser) return;
-        currentFolder = folder;
-        if (folderInboxBtn) folderInboxBtn.classList.toggle('active', currentFolder === 'inbox');
-        if (folderSentBtn) folderSentBtn.classList.toggle('active', currentFolder === 'sent');
-        selectedMessageId = '';
-        subscribeToMessages();
-      }
+      function showAuthenticated(user) {
+        const email = String((user && user.email) || '').trim().toLowerCase();
+        const uid = String((user && user.uid) || '').trim();
 
-      function subscribeToMessages() {
-        clearInboxListener();
-
-        if (!db || !currentUserUid) {
-          allMessages = [];
-          filteredMessages = [];
-          selectedMessageId = '';
-          resetStats();
-          messagesStatus.textContent = 'Inbox is unavailable right now.';
-          messagesList.innerHTML = '';
-          renderPreview(null);
-          return;
-        }
-
-        messagesStatus.textContent = currentFolder === 'sent' ? 'Loading sent messages...' : 'Loading inbox...';
-
-/*
         if (userEmailDisplay) userEmailDisplay.textContent = email || 'Not available';
         if (loginSection) loginSection.style.display = 'none';
         if (dashboard) dashboard.style.display = 'block';
@@ -738,39 +708,21 @@
           messagesList.innerHTML = '';
           renderPreview(null);
         });
-        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
-        if (signInLink) signInLink.style.display = 'none';
-        if (topNavMenu) topNavMenu.style.display = 'flex';
-        if (composeLink) composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
-        if (folderSentBtn) folderSentBtn.style.display = isAdminUser ? 'inline-flex' : 'none';
-
-        if (!isAdminUser && currentFolder === 'sent') {
-          currentFolder = 'inbox';
-        }
-        if (folderInboxBtn) folderInboxBtn.classList.toggle('active', currentFolder === 'inbox');
-        if (folderSentBtn) folderSentBtn.classList.toggle('active', currentFolder === 'sent');
-
-        subscribeToMessages();
       }
 
       function showSignedOut() {
         if (loginSection) loginSection.style.display = 'block';
         if (dashboard) dashboard.style.display = 'none';
         if (signOutBtn) signOutBtn.style.display = 'none';
-          auth.signOut().then(function () {
-            showSignedOut();
-            window.location.replace('/login.html');
-          });
-        });
+        if (signInLink) signInLink.style.display = 'inline-flex';
+        if (topNavMenu) topNavMenu.style.display = 'none';
+        if (composeLink) composeLink.style.display = 'none';
+        clearInboxListener();
       }
 
-      if (messageSearchInput) {
-        messageSearchInput.addEventListener('input', applySearch);
-      }
-    });
-  </script>
-</body>
-</html>
+      auth.onAuthStateChanged(function (user) {
+        if (user) showAuthenticated(user);
+        else showSignedOut();
       });
 
       if (signOutBtn) {
@@ -784,13 +736,6 @@
 
       if (messageSearchInput) {
         messageSearchInput.addEventListener('input', applySearch);
-      }
-
-      if (folderInboxBtn) {
-        folderInboxBtn.addEventListener('click', function () { setFolder('inbox'); });
-      }
-      if (folderSentBtn) {
-        folderSentBtn.addEventListener('click', function () { setFolder('sent'); });
       }
     });
   </script>
