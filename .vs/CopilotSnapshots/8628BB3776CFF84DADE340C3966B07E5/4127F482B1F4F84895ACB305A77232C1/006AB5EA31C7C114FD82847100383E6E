@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -240,21 +240,6 @@
     }
     .feature-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: #fff; }
     .feature-card p { margin: 0; color: #d7e4f8; }
-
-    /* Fix: ensure first 3 and last 3 cards use white text for visibility on dark backgrounds */
-    .feature-card,
-    .feature-card h3,
-    .feature-card p,
-    .pricing-card,
-    .pricing-card h3,
-    .pricing-card p,
-    .pricing-card ul,
-    .pricing-card li,
-    .step,
-    .step h3,
-    .step p {
-      color: #ffffff !important;
-    }
 
     .feature-card .cta-link {
       margin-top: 14px;
