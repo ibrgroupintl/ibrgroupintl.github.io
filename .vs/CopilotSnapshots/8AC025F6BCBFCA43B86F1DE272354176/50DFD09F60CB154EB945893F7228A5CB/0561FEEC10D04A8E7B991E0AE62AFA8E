@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -256,26 +256,6 @@
       }
       body.public-view #cookieConsentBar > div {
         width: 100%;
-      }
-    }
-    @media (max-width: 640px) {
-      .hero-cta-row {
-        flex-direction: column;
-      }
-      .hero-chip {
-        width: 100%;
-      }
-      .user-menu {
-        gap: 8px !important;
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-parallax {
-        background-attachment: scroll;
-      }
-      .resource-cta,
-      .hero-chip {
-        transition: none;
       }
     }
     </style>

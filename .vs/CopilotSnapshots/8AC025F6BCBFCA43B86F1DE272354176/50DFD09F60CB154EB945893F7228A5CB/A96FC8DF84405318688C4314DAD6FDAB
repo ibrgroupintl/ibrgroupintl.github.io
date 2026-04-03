@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -258,26 +258,6 @@
         width: 100%;
       }
     }
-    @media (max-width: 640px) {
-      .hero-cta-row {
-        flex-direction: column;
-      }
-      .hero-chip {
-        width: 100%;
-      }
-      .user-menu {
-        gap: 8px !important;
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-parallax {
-        background-attachment: scroll;
-      }
-      .resource-cta,
-      .hero-chip {
-        transition: none;
-      }
-    }
     </style>
 </head>
 	<body>
@@ -518,7 +498,6 @@
 	  }
 	  try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 	  const auth = firebase.auth();
-      const bodyEl = document.body;
 	  const protectedMain = document.getElementById('protected-content');
 	  const loginSection = document.getElementById('login-section');
 	  const userNameEl = document.getElementById('userName');
@@ -534,7 +513,7 @@
       const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
       let unreadUnsubscribe = null;
 
-	  function clearUnreadListener() {
+      function clearUnreadListener() {
         if (typeof unreadUnsubscribe === 'function') {
           unreadUnsubscribe();
           unreadUnsubscribe = null;
@@ -572,10 +551,6 @@
       }
 
 	  function showAuthenticated(user) {
-        if (bodyEl) {
-          bodyEl.classList.remove('public-view');
-          bodyEl.classList.add('authenticated-view');
-        }
 		if (loginSection) loginSection.style.display = 'none';
 		if (protectedMain) protectedMain.style.display = 'block';
 		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
@@ -588,10 +563,6 @@
         watchUnreadMessages(user && user.uid ? user.uid : '');
 	  }
 	  function showSignedOut() {
-        if (bodyEl) {
-          bodyEl.classList.remove('authenticated-view');
-          bodyEl.classList.add('public-view');
-        }
 		if (loginSection) loginSection.style.display = 'block';
 		if (protectedMain) protectedMain.style.display = 'none';
 		if (userNameEl) userNameEl.textContent = 'Member';

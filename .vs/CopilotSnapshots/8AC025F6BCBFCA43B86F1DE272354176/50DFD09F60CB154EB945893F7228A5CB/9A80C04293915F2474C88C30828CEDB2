@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -196,48 +196,6 @@
       justify-content: center;
       text-align: center;
     }
-
-    body.public-view .container-nav {
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    body.public-view .logo {
-      justify-content: center;
-      width: 100%;
-      text-align: center;
-    }
-    body.public-view .user-menu {
-      margin-left: 0 !important;
-      justify-content: center;
-      width: 100%;
-    }
-    body.public-view #login-section,
-    body.public-view .signin-card,
-    body.public-view .hero-content,
-    body.public-view .resource-footer,
-    body.public-view .resource-footer .container {
-      text-align: center;
-    }
-    body.public-view #cookieConsentBar {
-      justify-content: center !important;
-      text-align: center;
-    }
-    body.public-view #cookieConsentBar > div:first-child {
-      text-align: center;
-    }
-    body.public-view #cookieConsentBar > div:last-child {
-      justify-content: center;
-      width: 100%;
-    }
-    body.public-view .intro-note {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    body.public-view .hero-parallax {
-      margin-left: auto;
-      margin-right: auto;
-    }
     @media (max-width: 900px) {
       .hero-parallax {
         min-height: 280px;
@@ -253,9 +211,6 @@
       }
       .resource-cta {
         min-width: 100%;
-      }
-      body.public-view #cookieConsentBar > div {
-        width: 100%;
       }
     }
     @media (max-width: 640px) {
@@ -278,7 +233,7 @@
         transition: none;
       }
     }
-    </style>
+  </style>
 </head>
 	<body>
 		<div class="page-wrapper">
@@ -518,7 +473,6 @@
 	  }
 	  try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
 	  const auth = firebase.auth();
-      const bodyEl = document.body;
 	  const protectedMain = document.getElementById('protected-content');
 	  const loginSection = document.getElementById('login-section');
 	  const userNameEl = document.getElementById('userName');
@@ -534,7 +488,7 @@
       const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
       let unreadUnsubscribe = null;
 
-	  function clearUnreadListener() {
+      function clearUnreadListener() {
         if (typeof unreadUnsubscribe === 'function') {
           unreadUnsubscribe();
           unreadUnsubscribe = null;
@@ -572,10 +526,6 @@
       }
 
 	  function showAuthenticated(user) {
-        if (bodyEl) {
-          bodyEl.classList.remove('public-view');
-          bodyEl.classList.add('authenticated-view');
-        }
 		if (loginSection) loginSection.style.display = 'none';
 		if (protectedMain) protectedMain.style.display = 'block';
 		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
@@ -588,10 +538,6 @@
         watchUnreadMessages(user && user.uid ? user.uid : '');
 	  }
 	  function showSignedOut() {
-        if (bodyEl) {
-          bodyEl.classList.remove('authenticated-view');
-          bodyEl.classList.add('public-view');
-        }
 		if (loginSection) loginSection.style.display = 'block';
 		if (protectedMain) protectedMain.style.display = 'none';
 		if (userNameEl) userNameEl.textContent = 'Member';
