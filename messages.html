@@ -447,7 +447,7 @@
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path>
             </svg>
           </a>
-          <a class="message-icon-link" href="/messages.html" aria-label="Open secure messages inbox" title="Messages inbox">
+          <a class="message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox" style="display:none">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
               <path d="M6 8l6 4 6-4"></path>
@@ -564,6 +564,7 @@
       const dashboard = document.getElementById('dashboard');
       const signOutBtn = document.getElementById('signOutBtn');
       const signInLink = document.getElementById('signInLink');
+      const messagesLink = document.getElementById('messagesLink');
       const topNavMenu = document.getElementById('topNavMenu');
       const composeLink = document.getElementById('composeLink');
       const userEmailDisplay = document.getElementById('userEmailDisplay');
@@ -840,6 +841,7 @@
         dashboard.style.display = 'block';
         signOutBtn.style.display = 'inline-flex';
         signInLink.style.display = 'none';
+        if (messagesLink) messagesLink.style.display = 'inline-flex';
         topNavMenu.style.display = 'flex';
 
         composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
@@ -855,6 +857,7 @@
         dashboard.style.display = 'none';
         signOutBtn.style.display = 'none';
         signInLink.style.display = 'inline-flex';
+        if (messagesLink) messagesLink.style.display = 'none';
         topNavMenu.style.display = 'none';
         composeLink.style.display = 'none';
         folderSentBtn.style.display = 'none';

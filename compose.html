@@ -245,7 +245,7 @@
         <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <code class="contact-code"><b>Enquiries:</b> 07940916731</code>
-          <a class="message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox">
+          <a class="message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox" style="display:none">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
               <path d="M6 8l6 4 6-4"></path>
@@ -356,6 +356,7 @@
       const loginSection = document.getElementById('login-section');
       const signOutBtn = document.getElementById('signOutBtn');
       const signInLink = document.getElementById('signInLink');
+      const messagesLink = document.getElementById('messagesLink');
       const topNavMenu = document.getElementById('topNavMenu');
       const topNavSearch = document.getElementById('topNavSearch');
       const composeForm = document.getElementById('composeForm');
@@ -423,6 +424,7 @@
         if (protectedMain) protectedMain.style.display = 'block';
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
+        if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'block';
@@ -435,6 +437,7 @@
         if (protectedMain) protectedMain.style.display = 'block';
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
+        if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'none';
@@ -447,6 +450,7 @@
         if (protectedMain) protectedMain.style.display = 'none';
         if (signOutBtn) signOutBtn.style.display = 'none';
         if (signInLink) signInLink.style.display = 'inline-flex';
+        if (messagesLink) messagesLink.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         clearUnreadListener();
@@ -461,12 +465,11 @@
 
         const userEmail = (user.email || '').toLowerCase().trim();
         const authorizedEmail = AUTHORIZED_EMAIL.toLowerCase().trim();
+        currentUser = user;
 
         if (userEmail === authorizedEmail) {
-          currentUser = user;
           showAuthenticatedWithAccess();
         } else {
-          currentUser = null;
           showAuthenticatedDenied();
         }
       });

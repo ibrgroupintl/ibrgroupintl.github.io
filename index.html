@@ -158,7 +158,7 @@
 					<code class="contact-code">
 						<b>Enquiries:</b> 07940916731
 					</code>
-             <a class="btn btn-outline nav-login message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox" style="display:inline-flex;align-items:center;justify-content:center;width:42px;padding:0">
+             <a class="btn btn-outline nav-login message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox" style="display:none;align-items:center;justify-content:center;width:42px;padding:0">
                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                  <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
                  <path d="M6 8l6 4 6-4"></path>
@@ -355,6 +355,7 @@
 	  const userNameEl = document.getElementById('userName');
 	  const signOutBtn = document.getElementById('signOutBtn');
 	  const signInLink = document.getElementById('signInLink');
+      const messagesLink = document.getElementById('messagesLink');
 	  const topNavSearch = document.getElementById('topNavSearch');
 	  const topNavMenu = document.getElementById('topNavMenu');
 	  const siteSearchInput = document.getElementById('siteSearchInput');
@@ -407,6 +408,7 @@
 		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
+        if (messagesLink) messagesLink.style.display = 'inline-flex';
     if (topNavSearch) topNavSearch.style.display = 'flex';
     if (topNavMenu) topNavMenu.style.display = 'flex';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
@@ -418,6 +420,7 @@
 		if (userNameEl) userNameEl.textContent = 'Member';
 		if (signOutBtn) signOutBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
+        if (messagesLink) messagesLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
