@@ -1,17 +1,10 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
-  "firestore": [
-    {
-      "database": "(default)",
-      "rules": "firestore.rules"
-    },
-    {
-      "database": "ibusername",
-      "rules": "firestore.rules"
-    }
-  ],
+  "firestore": {
+    "database": "ibusername"
+  },
   "hosting": {
     "public": ".",
     "ignore": [
