@@ -461,15 +461,15 @@
             <p class="stat-value" id="statTotal">0</p>
           </article>
           <article class="stat-card">
-            <p class="stat-label">Delivered</p>
+            <p class="stat-label">Available</p>
             <p class="stat-value" id="statDelivered">0</p>
           </article>
           <article class="stat-card">
-            <p class="stat-label">Queued</p>
+            <p class="stat-label">Pending</p>
             <p class="stat-value" id="statQueued">0</p>
           </article>
           <article class="stat-card">
-            <p class="stat-label">Stored only</p>
+            <p class="stat-label">Stored</p>
             <p class="stat-value" id="statStored">0</p>
           </article>
         </div>
@@ -600,9 +600,9 @@
 
       function delivery(s) {
         s = String(s || '').toLowerCase();
-        if (s === 'delivered') return { label: 'Sent via Mailgun', cls: 'delivered' };
-        if (s === 'queued') return { label: 'Queued for Mailgun', cls: 'queued' };
-        return { label: 'Stored only', cls: 'stored' };
+        if (s === 'available' || s === 'delivered') return { label: 'Available', cls: 'delivered' };
+        if (s === 'pending' || s === 'queued') return { label: 'Pending', cls: 'queued' };
+        return { label: 'Stored', cls: 'stored' };
       }
 
       function resetStats() {
@@ -614,7 +614,12 @@
 
       function updateStats(items) {
         let d = 0, q = 0, s = 0;
-        items.forEach(i => { const n = String(i.deliveryStatus || '').toLowerCase(); if (n === 'delivered') d++; else if (n === 'queued') q++; else s++; });
+        items.forEach(i => {
+          const n = String(i.messageState || i.deliveryStatus || '').toLowerCase();
+          if (n === 'available' || n === 'delivered') d++;
+          else if (n === 'pending' || n === 'queued') q++;
+          else s++;
+        });
         statTotal.textContent = String(items.length);
         statDelivered.textContent = String(d);
         statQueued.textContent = String(q);
@@ -628,7 +633,7 @@
           return;
         }
 
-        const d = delivery(item.deliveryStatus);
+        const d = delivery(item.messageState || item.deliveryStatus);
         previewHint.textContent = item.receivedAtText;
         messagePreviewBody.innerHTML =
           '<article class="message-card">' +
@@ -654,7 +659,7 @@
 
         messagesStatus.textContent = items.length + ' ' + (currentFolder === 'sent' ? 'sent message' : 'message') + (items.length === 1 ? '' : 's') + ' loaded.';
         messagesList.innerHTML = items.map(item => {
-          const d = delivery(item.deliveryStatus);
+          const d = delivery(item.messageState || item.deliveryStatus);
           const active = item.id === selectedMessageId ? ' active' : '';
           const isSent = currentFolder === 'sent';
           const titleText = trunc(item.subject || 'No subject', isSent ? 48 : 72);
@@ -730,7 +735,8 @@
               recipientLabel: data.recipientLoginEmail || data.recipientEmail || '',
               receivedAtText: formatDate(receivedAt),
               receivedAtSort: toMillis(receivedAt),
-              deliveryStatus: data.deliveryStatus || ''
+              deliveryStatus: data.deliveryStatus || '',
+              messageState: data.messageState || data.deliveryStatus || 'stored'
             });
           });
 

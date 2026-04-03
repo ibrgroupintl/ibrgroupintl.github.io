@@ -259,7 +259,7 @@
       <div id="compose-section" style="display:none">
         <div class="container" style="max-width:900px;text-align:center;padding:0 1rem">
           <h1>Compose Message</h1>
-          <p class="lead">Send a message to a recipient. The message will be stored securely and a notification email will be sent via Mailgun.</p>
+          <p class="lead">Send a secure in-app message to a recipient account.</p>
         </div>
 
         <div class="compose-shell">
@@ -269,13 +269,7 @@
             <div class="form-group">
               <label for="recipientLoginEmail">Recipient Account Login Email <span style="color:#e74c3c">*</span></label>
               <input type="email" id="recipientLoginEmail" name="recipientLoginEmail" placeholder="user-login@example.com" required aria-required="true">
-              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">Used to match the in-app inbox account.</p>
-            </div>
-
-            <div class="form-group">
-              <label for="recipientEmail">Delivery Email Address (Optional)</label>
-              <input type="email" id="recipientEmail" name="recipientEmail" placeholder="recipient@example.com">
-              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">If empty, delivery email defaults to the recipient account login email.</p>
+              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted)">Used to match the recipient's in-app inbox account.</p>
             </div>
 
             <div class="form-group">
@@ -425,8 +419,6 @@
           hideAlert();
 
           const recipientLoginEmail = document.getElementById('recipientLoginEmail').value.trim().toLowerCase();
-          const recipientEmailRaw = document.getElementById('recipientEmail').value.trim().toLowerCase();
-          const recipientEmail = recipientEmailRaw || recipientLoginEmail;
           const senderEmail = document.getElementById('senderEmail').value.trim();
           const subject = document.getElementById('subject').value.trim();
           const body = document.getElementById('body').value.trim();
@@ -455,7 +447,6 @@
               },
               body: JSON.stringify({
                 recipientLoginEmail: recipientLoginEmail,
-                recipientEmail: recipientEmail,
                 senderEmail: senderEmail,
                 subject: subject,
                 body: body
