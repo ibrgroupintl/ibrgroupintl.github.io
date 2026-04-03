@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -253,8 +253,8 @@
         function redirectToPortal() {
           if (redirectTimer) return;
           redirectTimer = setTimeout(function () {
-            window.location.replace('/members.html');
-          }, 300);
+            window.location.replace('/index.html');
+          }, 500);
         }
 
         // Monitor auth state changes
