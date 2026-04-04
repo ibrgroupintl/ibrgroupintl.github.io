@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -419,7 +419,6 @@
 	  const siteSearchInput = document.getElementById('siteSearchInput');
 	  const searchResultsEl = document.getElementById('searchResults');
 	  const downloadPostsBtn = document.getElementById('downloadPostsBtn');
-	  const subscriberBadge = document.getElementById('subscriberBadge');
 
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
@@ -430,9 +429,6 @@
     if (topNavSearch) topNavSearch.style.display = 'flex';
     if (topNavMenu) topNavMenu.style.display = 'flex';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
-	
-	// Fetch subscriber type from Stripe
-	fetchSubscriberType();
 	  }
 	  function showSignedOut() {
 		if (loginSection) loginSection.style.display = 'block';
@@ -443,36 +439,6 @@
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
-	if (subscriberBadge) subscriberBadge.style.display = 'none';
-	  }
-
-	  // Function to fetch subscriber type from Firebase Cloud Function
-	  async function fetchSubscriberType() {
-		const user = auth.currentUser;
-		if (!user) return;
-
-		try {
-		  const callable = firebase.functions().httpsCallable('getSubscriberType');
-		  const result = await callable({});
-		  
-		  if (subscriberBadge && result.data.subscriberType) {
-			const badgeText = result.data.subscriberType
-			  .replace(/_/g, ' ')
-			  .split(' ')
-			  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-			  .join(' ');
-			
-			subscriberBadge.textContent = badgeText;
-			subscriberBadge.className = `subscriber-badge ${result.data.subscriberType.toLowerCase()}`;
-			
-			if (result.data.subscriberType !== 'none') {
-			  subscriberBadge.style.display = 'inline-block';
-			}
-		  }
-		} catch (err) {
-		  console.error('Failed to fetch subscriber type:', err);
-		  // Silently fail; badge will not display
-		}
 	  }
 
 	  auth.onAuthStateChanged(function (user) {

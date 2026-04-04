@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Import function triggers from their respective submodules:
  *
  * import {onCall} from "firebase-functions/v2/https";
@@ -151,82 +151,3 @@ app.get("*", async (req, res) => {
 });
 
 export const authProxy = onRequest(app);
-
-import {onCall} from "firebase-functions/v2/https";
-
-// Initialize Stripe with the API key from environment variables
-// Set via: firebase functions:config:set stripe.secret_key="sk_..."
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY || "");
-
-/**
- * Cloud Function to fetch subscriber type from Stripe by email
- * Call this function after user authentication to get their subscription status
- */
-export const getSubscriberType = onCall(async (request) => {
-  // Verify user is authenticated
-  if (!request.auth) {
-    throw new Error("Unauthenticated request");
-  }
-
-  const userEmail = request.auth.token.email;
-  if (!userEmail) {
-    throw new Error("User email not found");
-  }
-
-  try {
-    // Search for Stripe customer by email
-    const customers = await stripe.customers.list({
-      email: userEmail,
-      limit: 1,
-    });
-
-    if (!customers.data || customers.data.length === 0) {
-      return {
-        subscriberType: "none",
-        status: "no_subscription",
-      };
-    }
-
-    const customer = customers.data[0];
-
-    // Retrieve customer's subscriptions
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customer.id,
-      status: "active",
-      limit: 1,
-    });
-
-    if (!subscriptions.data || subscriptions.data.length === 0) {
-      return {
-        subscriberType: "none",
-        status: "no_active_subscription",
-      };
-    }
-
-    const subscription = subscriptions.data[0];
-    const priceId = subscription.items.data[0]?.price?.id;
-    const productId = subscription.items.data[0]?.price?.product;
-
-    // Determine subscriber type based on product/price
-    // You can customize the logic here based on your product setup
-    let subscriberType = "founding_subscriber"; // Default to founding_subscriber
-
-    // Optional: Query product metadata to determine type
-    if (productId) {
-      const product = await stripe.products.retrieve(productId);
-      if (product.metadata && product.metadata.subscriber_type) {
-        subscriberType = product.metadata.subscriber_type;
-      }
-    }
-
-    return {
-      subscriberType: subscriberType,
-      status: "active",
-      subscriptionId: subscription.id,
-      customerId: customer.id,
-    };
-  } catch (err) {
-    logger.error("getSubscriberType error:", err);
-    throw new Error("Failed to fetch subscriber type");
-  }
-});
