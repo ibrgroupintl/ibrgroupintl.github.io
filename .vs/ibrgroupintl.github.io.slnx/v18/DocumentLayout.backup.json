@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\login.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:login.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:insights.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:members.html||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -19,8 +19,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:messages.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:members.html||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\login.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:login.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\VISUAL_GUIDE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
@@ -53,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\STRIPE_INTEGRATION_SETUP.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:STRIPE_INTEGRATION_SETUP.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:insights.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\index.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -185,9 +185,10 @@
               "RelativeDocumentMoniker": "messages.html",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\messages.html",
               "RelativeToolTip": "messages.html",
-              "ViewState": "AgIAAKcDAAAAAAAAAAAAALQCAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADYBAAAAAAAAAAAAAPUBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-02T12:24:40.042Z"
+              "WhenOpened": "2026-04-02T12:24:40.042Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -197,7 +198,7 @@
               "RelativeDocumentMoniker": "settings.html",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
               "RelativeToolTip": "settings.html",
-              "ViewState": "AgIAAFsCAAAAAAAAAABBwF0CAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKcAAAAAAAAAAAAAALoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-04-02T14:28:51.609Z",
               "EditorCaption": ""
@@ -205,19 +206,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "uploads.html",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
-              "RelativeDocumentMoniker": "uploads.html",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
-              "RelativeToolTip": "uploads.html",
-              "ViewState": "AgIAALgAAAAAAAAAAAAAAOYAAAAAAAAAAAAAAA==",
+              "Title": "members.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html",
+              "RelativeDocumentMoniker": "members.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html",
+              "RelativeToolTip": "members.html",
+              "ViewState": "AgIAAO8BAAAAAAAAAAAgwAgCAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-02T14:28:52.877Z",
+              "WhenOpened": "2026-04-03T20:43:20.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "insights.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
+              "RelativeDocumentMoniker": "insights.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
+              "RelativeToolTip": "insights.html",
+              "ViewState": "AgIAAIQCAAAAAAAAAAApwJECAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-04-02T14:28:54.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "login.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\login.html",
               "RelativeDocumentMoniker": "login.html",
@@ -230,19 +244,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "members.html",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html",
-              "RelativeDocumentMoniker": "members.html",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html",
-              "RelativeToolTip": "members.html",
-              "ViewState": "AgIAAFwCAAAAAAAAAAAAAHIBAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "uploads.html",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
+              "RelativeDocumentMoniker": "uploads.html",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
+              "RelativeToolTip": "uploads.html",
+              "ViewState": "AgIAALgAAAAAAAAAAAAAAOYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-03T20:43:20.962Z"
+              "WhenOpened": "2026-04-02T14:28:52.877Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "VISUAL_GUIDE.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\VISUAL_GUIDE.md",
               "RelativeDocumentMoniker": "VISUAL_GUIDE.md",
@@ -254,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "index.ts",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\src\\index.ts",
               "RelativeDocumentMoniker": "functions\\src\\index.ts",
@@ -266,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DEPLOYMENT_READY.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\DEPLOYMENT_READY.md",
               "RelativeDocumentMoniker": "DEPLOYMENT_READY.md",
@@ -278,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "QUICK_START.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\QUICK_START.md",
               "RelativeDocumentMoniker": "QUICK_START.md",
@@ -290,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "COMPLETION_CHECKLIST.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\COMPLETION_CHECKLIST.md",
               "RelativeDocumentMoniker": "COMPLETION_CHECKLIST.md",
@@ -302,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "STRIPE_API_REFERENCE.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\STRIPE_API_REFERENCE.md",
               "RelativeDocumentMoniker": "STRIPE_API_REFERENCE.md",
@@ -314,7 +329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "IMPLEMENTATION_SUMMARY.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\IMPLEMENTATION_SUMMARY.md",
               "RelativeDocumentMoniker": "IMPLEMENTATION_SUMMARY.md",
@@ -338,7 +353,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "STRIPE_INTEGRATION_SETUP.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\STRIPE_INTEGRATION_SETUP.md",
               "RelativeDocumentMoniker": "STRIPE_INTEGRATION_SETUP.md",
@@ -347,19 +362,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
               "WhenOpened": "2026-04-04T03:43:26.571Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "insights.html",
-              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
-              "RelativeDocumentMoniker": "insights.html",
-              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
-              "RelativeToolTip": "insights.html",
-              "ViewState": "AgIAADUCAAAAAAAAAAAgwB0BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-04-02T14:28:54.454Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
