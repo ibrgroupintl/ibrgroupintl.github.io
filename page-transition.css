@@ -5,6 +5,23 @@
   --page-transition-spinner: var(--accent, #0284c7);
 }
 
+body.auth-pending #login-section,
+body.auth-pending #protected-content,
+body.auth-pending #dashboard,
+body.auth-pending #compose-section,
+body.auth-pending #access-denied-section {
+  display: none !important;
+}
+
+body.auth-pending #topNavMenu,
+body.auth-pending #topNavSearch,
+body.auth-pending #signInLink,
+body.auth-pending #signOutBtn,
+body.auth-pending #messagesLink,
+body.auth-pending #composeLink {
+  visibility: hidden;
+}
+
 .page-transition-overlay {
   position: fixed;
   inset: 0;

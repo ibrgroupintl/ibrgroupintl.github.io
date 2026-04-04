@@ -154,7 +154,7 @@
     }
   </style>
 </head>
-<body>
+<body class="auth-pending">
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
@@ -329,6 +329,7 @@
         if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (topNavMenu) topNavMenu.style.display = 'block';
+        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Signed in';
         watchUnreadMessages(user && user.uid ? user.uid : '');
@@ -343,6 +344,7 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
+        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         clearUnreadListener();

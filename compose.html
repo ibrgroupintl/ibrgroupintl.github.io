@@ -210,7 +210,7 @@
     }
   </style>
 </head>
-<body>
+<body class="auth-pending">
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
@@ -428,6 +428,7 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'block';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'none';
+        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
@@ -442,6 +443,7 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'none';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'block';
+        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
@@ -454,6 +456,7 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
+        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         clearUnreadListener();
       }

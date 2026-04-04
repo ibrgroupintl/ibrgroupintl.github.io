@@ -467,7 +467,7 @@
   </style>
 </head>
 
-<body>
+<body class="auth-pending">
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
@@ -898,6 +898,7 @@
         signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
         topNavMenu.style.display = 'block';
+        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
 
         composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
@@ -915,6 +916,7 @@
         signInLink.style.display = 'inline-flex';
         if (messagesLink) messagesLink.style.display = 'none';
         topNavMenu.style.display = 'none';
+        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         composeLink.style.display = 'none';
         folderSentBtn.style.display = 'none';

@@ -142,7 +142,7 @@
     .settings-value { color: var(--text); word-break: break-word; }
   </style>
 </head>
-<body>
+<body class="auth-pending">
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
@@ -469,6 +469,7 @@
         if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavMenu) topNavMenu.style.display = 'block';
         if (topNavSearch) topNavSearch.style.display = 'flex';
+        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Signed in';
         setAccountDetails(user);
@@ -485,6 +486,7 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
+        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         if (settingsUserName) settingsUserName.textContent = '-';

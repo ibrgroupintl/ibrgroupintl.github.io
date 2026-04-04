@@ -157,7 +157,7 @@
 	}
   </style>
 </head>
-	<body>
+	<body class="auth-pending">
 		<div class="page-wrapper">
 		<header class="resource-nav" role="banner">
 			<div class="container container-nav">
@@ -395,6 +395,7 @@
 	  const userNameEl = document.getElementById('userName');
 	  const signOutBtn = document.getElementById('signOutBtn');
 	  const signInLink = document.getElementById('signInLink');
+	  const messagesLink = document.getElementById('messagesLink');
 	  const topNavSearch = document.getElementById('topNavSearch');
 	  const topNavMenu = document.getElementById('topNavMenu');
 	  const siteSearchInput = document.getElementById('siteSearchInput');
@@ -405,13 +406,15 @@
 	  function showAuthenticated(user) {
 		if (loginSection) loginSection.style.display = 'none';
 		if (protectedMain) protectedMain.style.display = 'block';
-		if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
+		if (userNameEl) userNameEl.textContent = user.displayName || user.email || 'Member';
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
-    if (topNavSearch) topNavSearch.style.display = 'flex';
-    if (topNavMenu) topNavMenu.style.display = 'block';
-    if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
+		if (messagesLink) messagesLink.style.display = 'inline-flex';
+		if (topNavSearch) topNavSearch.style.display = 'flex';
+		if (topNavMenu) topNavMenu.style.display = 'block';
+		document.body.classList.remove('auth-pending');
 		document.body.classList.add('has-sidebar');
+		if (subscriberBadge) subscriberBadge.style.display = 'none';
 	
 	// Fetch subscriber type from Stripe
 	fetchSubscriberType();
@@ -424,8 +427,8 @@
 		if (signInLink) signInLink.style.display = 'inline-flex';
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
-    if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
-		document.body.classList.remove('has-sidebar');
+    document.body.classList.remove('auth-pending');
+    document.body.classList.remove('has-sidebar');
 	if (subscriberBadge) subscriberBadge.style.display = 'none';
 	  }
 
