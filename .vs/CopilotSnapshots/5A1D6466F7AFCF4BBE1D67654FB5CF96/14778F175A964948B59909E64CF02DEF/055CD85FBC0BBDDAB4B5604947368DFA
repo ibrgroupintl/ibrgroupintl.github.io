@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -327,8 +327,7 @@
         if (signInLink) signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
-        if (topNavMenu) topNavMenu.style.display = 'block';
-        document.body.classList.add('has-sidebar');
+        if (topNavMenu) topNavMenu.style.display = 'flex';
         if (loginStatus) loginStatus.textContent = 'Signed in';
         watchUnreadMessages(user && user.uid ? user.uid : '');
       }
@@ -342,7 +341,6 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         clearUnreadListener();
       }

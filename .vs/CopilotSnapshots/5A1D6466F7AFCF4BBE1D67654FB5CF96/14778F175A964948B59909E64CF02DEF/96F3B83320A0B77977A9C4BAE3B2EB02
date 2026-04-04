@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -896,8 +896,7 @@
         signOutBtn.style.display = 'inline-flex';
         signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        topNavMenu.style.display = 'block';
-        document.body.classList.add('has-sidebar');
+        topNavMenu.style.display = 'flex';
 
         composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
         folderSentBtn.style.display = isAdminUser ? 'inline-flex' : 'none';
@@ -914,7 +913,6 @@
         signInLink.style.display = 'inline-flex';
         if (messagesLink) messagesLink.style.display = 'none';
         topNavMenu.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         composeLink.style.display = 'none';
         folderSentBtn.style.display = 'none';
         currentFolder = 'inbox';

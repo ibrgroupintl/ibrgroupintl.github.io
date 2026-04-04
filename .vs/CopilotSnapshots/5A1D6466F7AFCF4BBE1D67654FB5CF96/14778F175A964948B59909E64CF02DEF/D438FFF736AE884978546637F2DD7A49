@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -469,9 +469,8 @@
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        if (topNavMenu) topNavMenu.style.display = 'block';
+        if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
-        document.body.classList.add('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Signed in';
         setAccountDetails(user);
         await loadUserId(user);
@@ -487,7 +486,6 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         if (settingsUserName) settingsUserName.textContent = '-';
         if (settingsUserEmail) settingsUserEmail.textContent = '-';

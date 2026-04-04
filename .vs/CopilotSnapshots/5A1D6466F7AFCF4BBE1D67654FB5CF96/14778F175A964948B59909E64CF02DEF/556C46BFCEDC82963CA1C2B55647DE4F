@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -190,15 +190,6 @@
         </div>
       </div>
     </header>
-
-    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
-      <a class="sidebar-menu-link" href="/members.html">Members Area</a>
-      <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-      <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-      <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-      <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-    </nav>
 
     <div id="login-section" style="max-width:820px;margin:1.5rem auto;text-align:center">
       <div class="signin-card">
@@ -469,9 +460,8 @@
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        if (topNavMenu) topNavMenu.style.display = 'block';
+        if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
-        document.body.classList.add('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Signed in';
         setAccountDetails(user);
         await loadUserId(user);
@@ -487,7 +477,6 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         if (settingsUserName) settingsUserName.textContent = '-';
         if (settingsUserEmail) settingsUserEmail.textContent = '-';

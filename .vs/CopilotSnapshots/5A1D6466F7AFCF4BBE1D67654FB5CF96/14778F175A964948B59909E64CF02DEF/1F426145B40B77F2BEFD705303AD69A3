@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -476,6 +476,20 @@
           <span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
         </div>
 
+        <div style="flex:1;display:none;align-items:center;margin-left:24px" id="topNavMenu">
+          <div class="nav-dropdown">
+            <button class="dropdown-btn">☰ Menu</button>
+            <div class="dropdown-content">
+              <a href="/members.html">Members Area</a>
+              <a href="/messages.html">Messages Inbox</a>
+              <a href="/insights.html">Insights Archive</a>
+              <a href="/uploads.html">Resume Uploads</a>
+              <a href="/settings.html">Account Settings</a>
+              <a href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
+            </div>
+          </div>
+        </div>
+
         <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <div class="auth-profile-chip" data-auth-profile>
@@ -501,14 +515,14 @@
       </div>
     </header>
 
-    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
+    <div class="sidebar-menu-shell" id="sidebarMenu">
       <a class="sidebar-menu-link" href="/members.html">Members Area</a>
       <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
       <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
       <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-    </nav>
+    </div>
 
     <section id="login-section" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Secure Messages</h1>
@@ -896,8 +910,7 @@
         signOutBtn.style.display = 'inline-flex';
         signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        topNavMenu.style.display = 'block';
-        document.body.classList.add('has-sidebar');
+        topNavMenu.style.display = 'flex';
 
         composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
         folderSentBtn.style.display = isAdminUser ? 'inline-flex' : 'none';
@@ -914,7 +927,6 @@
         signInLink.style.display = 'inline-flex';
         if (messagesLink) messagesLink.style.display = 'none';
         topNavMenu.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         composeLink.style.display = 'none';
         folderSentBtn.style.display = 'none';
         currentFolder = 'inbox';
