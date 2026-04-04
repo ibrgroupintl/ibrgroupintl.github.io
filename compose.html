@@ -210,13 +210,13 @@
     }
   </style>
 </head>
-<body class="auth-pending">
+<body>
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
         <div class="logo" style="display:flex;align-items:center;gap:12px">
           <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
-          <span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
+          <span class="site-title" style="color:lightgrey">Premium</span>
         </div>
 
         <div id="topNavSearch" class="top-nav-search" style="flex:0 1 auto;display:none;align-items:center;justify-content:center;margin:0 24px">
@@ -428,7 +428,6 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'block';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'none';
-        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
@@ -443,7 +442,6 @@
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'none';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'block';
-        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
@@ -456,7 +454,6 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
-        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         clearUnreadListener();
       }
