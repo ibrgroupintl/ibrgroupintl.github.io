@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -219,6 +219,20 @@
           <span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
         </div>
 
+        <div style="flex:1;display:none;align-items:center;margin-left:24px" id="topNavMenu">
+          <div class="nav-dropdown">
+            <button class="dropdown-btn">☰ Menu</button>
+            <div class="dropdown-content">
+              <a href="/index.html">Members Area</a>
+              <a href="/messages.html">Messages Inbox</a>
+              <a href="/insights.html">Insights Archive</a>
+              <a href="/uploads.html">Resume Uploads</a>
+              <a href="/settings.html">Account Settings</a>
+              <a href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
+            </div>
+          </div>
+        </div>
+
         <div id="topNavSearch" class="top-nav-search" style="flex:0 1 auto;display:none;align-items:center;justify-content:center;margin:0 24px">
           <div style="position:relative;max-width:480px;width:100%">
             <input id="siteSearchInput" type="search" placeholder="Search" aria-label="Search" style="width:100%;padding:8px 12px 8px 34px;border-radius:6px;border:1px solid #d0d7de;outline:none;box-sizing:border-box;background-color:#fff;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%227%22/%3E%3Cline x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:10px center;background-size:14px 14px;" />
@@ -243,15 +257,6 @@
         </div>
       </div>
     </header>
-
-    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
-      <a class="sidebar-menu-link" href="/index.html">Members Area</a>
-      <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-      <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-      <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-      <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-    </nav>
 
     <div id="login-section" style="max-width:680px;margin:2rem auto;text-align:center">
       <div class="signin-card">
@@ -423,12 +428,25 @@
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        if (topNavMenu) topNavMenu.style.display = 'block';
+        if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'block';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'none';
-        document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
+
+        // Show sidebar menu
+        document.body.classList.add('has-sidebar');
+        const sidebarMenuShell = document.createElement('div');
+        sidebarMenuShell.className = 'sidebar-menu-shell';
+        sidebarMenuShell.innerHTML = `
+          <a href="/index.html" class="sidebar-menu-link">🏠 Dashboard</a>
+          <a href="/messages.html" class="sidebar-menu-link">📥 Messages Inbox</a>
+          <a href="/insights.html" class="sidebar-menu-link">📊 Insights Archive</a>
+          <a href="/uploads.html" class="sidebar-menu-link">📎 Resume Uploads</a>
+          <a href="/settings.html" class="sidebar-menu-link">⚙️ Account Settings</a>
+          <a href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer" class="sidebar-menu-link">✉️ Contact</a>
+        `;
+        document.body.appendChild(sidebarMenuShell);
       }
 
       function showAuthenticatedDenied() {
@@ -437,11 +455,10 @@
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
         if (signInLink) signInLink.style.display = 'none';
         if (messagesLink) messagesLink.style.display = 'inline-flex';
-        if (topNavMenu) topNavMenu.style.display = 'block';
+        if (topNavMenu) topNavMenu.style.display = 'flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (composeSectionEl) composeSectionEl.style.display = 'none';
         if (accessDeniedSectionEl) accessDeniedSectionEl.style.display = 'block';
-        document.body.classList.add('has-sidebar');
         if (currentUser && currentUser.uid) watchUnreadMessages(currentUser.uid);
       }
 
@@ -453,8 +470,14 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
-        document.body.classList.remove('has-sidebar');
         clearUnreadListener();
+
+        // Hide sidebar menu
+        document.body.classList.remove('has-sidebar');
+        const sidebarMenuShell = document.querySelector('.sidebar-menu-shell');
+        if (sidebarMenuShell) {
+          sidebarMenuShell.parentNode.removeChild(sidebarMenuShell);
+        }
       }
 
       auth.onAuthStateChanged(function (user) {
