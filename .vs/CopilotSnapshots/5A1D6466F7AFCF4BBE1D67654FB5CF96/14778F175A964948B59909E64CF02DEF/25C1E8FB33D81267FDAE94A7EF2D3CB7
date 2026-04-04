@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,56 +26,6 @@
 
     .contact-code {
       font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .sidebar-menu-shell {
-      display: none;
-      position: fixed;
-      top: 88px;
-      left: 24px;
-      width: 220px;
-      background: #ffffff;
-      border: 1px solid #dbe3ee;
-      border-radius: 12px;
-      box-shadow: 0 10px 24px rgba(2, 6, 23, 0.12);
-      padding: 10px 0;
-      z-index: 950;
-    }
-
-    .sidebar-menu-link {
-      display: block;
-      padding: 11px 14px;
-      margin: 2px 8px;
-      border-radius: 8px;
-      color: #092a4b;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-
-    .sidebar-menu-link:hover,
-    .sidebar-menu-link:focus {
-      background: #092a4b;
-      color: #ffffff;
-      transform: translateX(3px);
-    }
-
-    body.has-sidebar .dashboard {
-      margin-left: 260px;
-    }
-
-    @media (max-width: 980px) {
-      .sidebar-menu-shell {
-        position: static;
-        width: 100%;
-        max-width: 1180px;
-        margin: 12px auto;
-      }
-
-      body.has-sidebar .dashboard {
-        margin-left: auto;
-      }
     }
 
     .nav-dropdown {
@@ -515,15 +465,6 @@
       </div>
     </header>
 
-    <div class="sidebar-menu-shell" id="sidebarMenu">
-      <a class="sidebar-menu-link" href="/members.html">Members Area</a>
-      <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-      <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-      <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-      <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-    </div>
-
     <section id="login-section" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Secure Messages</h1>
       <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to view your inbox and message history.</p>
@@ -647,7 +588,6 @@
       const statQueued = document.getElementById('statQueued');
       const statStored = document.getElementById('statStored');
       const messagesUnreadDot = document.getElementById('messagesUnreadDot');
-      const sidebarMenu = document.getElementById('sidebarMenu');
 
       let unsubscribeInbox = null;
       let allMessages = [];

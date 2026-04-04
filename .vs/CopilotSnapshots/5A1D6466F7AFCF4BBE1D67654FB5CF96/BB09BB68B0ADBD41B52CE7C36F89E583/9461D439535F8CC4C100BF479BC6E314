@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -196,16 +196,6 @@
 				</div>
 			</div>
 		</header>
-
-		<!-- Vertical sidebar menu (visible only to authenticated users) -->
-		<nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
-		  <a class="sidebar-menu-link" href="/members.html">Members Area</a>
-		  <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-		  <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-		  <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-		  <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-		  <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-		</nav>
 
 		<!-- include this once -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -196,16 +196,6 @@
 				</div>
 			</div>
 		</header>
-
-		<!-- Vertical sidebar menu (visible only to authenticated users) -->
-		<nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
-		  <a class="sidebar-menu-link" href="/members.html">Members Area</a>
-		  <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-		  <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-		  <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-		  <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-		  <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-		</nav>
 
 		<!-- include this once -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -414,9 +404,8 @@
 		if (signOutBtn) signOutBtn.style.display = 'inline-flex';
 		if (signInLink) signInLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'flex';
-    if (topNavMenu) topNavMenu.style.display = 'block';
+    if (topNavMenu) topNavMenu.style.display = 'flex';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'inline-block';
-		document.body.classList.add('has-sidebar');
 	
 	// Fetch subscriber type from Stripe
 	fetchSubscriberType();
@@ -430,7 +419,6 @@
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
     if (downloadPostsBtn) downloadPostsBtn.style.display = 'none';
-		document.body.classList.remove('has-sidebar');
 	if (subscriberBadge) subscriberBadge.style.display = 'none';
 	  }
 
@@ -591,14 +579,5 @@
 	});
   })();
 </script>
-		<!-- Vertical sidebar menu (visible only to authenticated users) -->
-	  <div id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
-		<a class="sidebar-menu-link" href="/members.html">Members Area</a>
-		<a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-		<a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-		<a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-		<a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-		<a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
-	  </div>
 </body>
 </html>
