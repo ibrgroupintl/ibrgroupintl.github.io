@@ -39,6 +39,81 @@
       text-decoration: none;
     }
 
+    .topic-tags-panel {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: #f8f9fa;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+    }
+    .topic-tag-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 0.9rem;
+    }
+    .topic-tag-btn {
+      border: 1px solid #c7d2fe;
+      background: #eef2ff;
+      color: #092a4b;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .topic-tag-btn:hover,
+    .topic-tag-btn:focus,
+    .topic-tag-btn.active {
+      background: #092a4b;
+      border-color: #092a4b;
+      color: #fff;
+    }
+    .topic-tag-btn.priority {
+      border-color: #afb8e9;
+      background: #afb8e9;
+      color: #000;
+    }
+    .topic-tag-btn.priority.active,
+    .topic-tag-btn.priority:hover,
+    .topic-tag-btn.priority:focus {
+      background: #092a4b;
+      border-color: #092a4b;
+      color: #fff;
+    }
+    .insight-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0.85rem 0 0.95rem;
+    }
+    .insight-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e8edf7;
+      color: #092a4b;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .insight-tag.priority {
+      background: #dbeafe;
+      color: #0f3d63;
+    }
+    .topic-empty-state {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 8px;
+      background: #fff7ed;
+      color: #7c2d12;
+      border: 1px solid #fed7aa;
+      font-size: 0.95rem;
+    }
+
     /* Contact code uses Arial for clarity */
     .contact-code {
       font-family: Arial, Helvetica, sans-serif;
@@ -255,45 +330,73 @@
         <p>Hello, <strong id="userName">Member</strong></p>
       </div>
 
+      <section class="topic-tags-panel" aria-labelledby="topicTagsHeading">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div>
+            <h2 id="topicTagsHeading" style="margin:0 0 6px;font-size:1.1rem">Browse by topic</h2>
+            <p style="margin:0;color:var(--muted);font-size:0.95rem">Priority tags are shown first: ESG, Energy, and Real Estate.</p>
+          </div>
+          <div id="activeTagLabel" style="color:var(--muted);font-size:0.9rem;font-weight:600">Showing all insights</div>
+        </div>
+        <div id="topicTagFilters" class="topic-tag-filters" role="tablist" aria-label="Topic tag filters">
+          <button type="button" class="topic-tag-btn priority active" data-topic-tag="all">All</button>
+          <button type="button" class="topic-tag-btn priority" data-topic-tag="ESG">ESG</button>
+          <button type="button" class="topic-tag-btn priority" data-topic-tag="Energy">Energy</button>
+          <button type="button" class="topic-tag-btn priority" data-topic-tag="Real Estate">Real Estate</button>
+          <button type="button" class="topic-tag-btn" data-topic-tag="AI">AI</button>
+          <button type="button" class="topic-tag-btn" data-topic-tag="Recruitment">Recruitment</button>
+          <button type="button" class="topic-tag-btn" data-topic-tag="Leadership">Leadership</button>
+          <button type="button" class="topic-tag-btn" data-topic-tag="Workplace">Workplace</button>
+          <button type="button" class="topic-tag-btn" data-topic-tag="Diversity">Diversity</button>
+        </div>
+        <div id="topicEmptyState" class="topic-empty-state">No insights match this topic yet. Please check back for new uploads.</div>
+      </section>
+
       <section class="container" style="padding:2rem 0">
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+        <article data-insight-article="true" data-tags="AI,HRM,Research,Recruitment" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
           <h2 style="margin-top:0">Leveraging AI to Capture Textual and Visual Elements: Insights for HRM Research and Practice</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 30 March 2026 | Open Access</p>
+          <div class="insight-tags"><span class="insight-tag">AI</span><span class="insight-tag">HRM</span><span class="insight-tag">Research</span></div>
           <p>Authored by Liang, Aroles &amp; Li. This article from the Human Resource Management Journal (Special Issue) explores the latest advances in AI applications for capturing textual and visual elements in HRM contexts. Essential reading for HR professionals and researchers.</p>
           <a href="https://doi.org/10.1111/1748-8583.70035" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+        <article data-insight-article="true" data-tags="Ethics,Leadership,HRM" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
           <h2 style="margin-top:0">The Ethics of Robin Hoodism: When Managers Take Injustice into Their Own Hands</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 23 March 2026 | Journal of Business Ethics</p>
+          <div class="insight-tags"><span class="insight-tag">Ethics</span><span class="insight-tag">Leadership</span><span class="insight-tag">HRM</span></div>
           <p>Authored by Dodson &amp; Skarlicki. This Journal of Business Ethics article examines how coworkers evaluate the ethicality of managerial “Robin Hoodism” when leaders compensate employees they perceive as having been treated unjustly.</p>
           <a href="https://doi.org/10.1007/s10551-026-06273-0" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+        <article data-insight-article="true" data-tags="AI,Recruitment,Talent Acquisition" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
           <h2 style="margin-top:0">AI and Talent Acquisition</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 15 February 2026</p>
+          <div class="insight-tags"><span class="insight-tag">AI</span><span class="insight-tag">Recruitment</span><span class="insight-tag">Talent</span></div>
           <p>Explore how artificial intelligence is transforming recruitment processes, from candidate sourcing to performance prediction. This article examines practical applications and ethical considerations.</p>
           <a href="#" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+        <article data-insight-article="true" data-tags="Remote Work,Leadership,Workplace,Energy,Real Estate" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
           <h2 style="margin-top:0">Future of Remote Work in HR</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 08 February 2026</p>
+          <div class="insight-tags"><span class="insight-tag priority">Energy</span><span class="insight-tag priority">Real Estate</span><span class="insight-tag">Workplace</span></div>
           <p>Strategies for managing distributed teams, maintaining company culture, and leveraging technology in a hybrid work environment. Learn from industry leaders on best practices.</p>
           <a href="#" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+        <article data-insight-article="true" data-tags="Upskilling,Workforce Development,Leadership" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
           <h2 style="margin-top:0">Upskilling and Workforce Development</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 01 February 2026</p>
+          <div class="insight-tags"><span class="insight-tag">Upskilling</span><span class="insight-tag">Leadership</span><span class="insight-tag">Development</span></div>
           <p>Comprehensive guide to building effective employee development programs. Discover frameworks for identifying skill gaps and creating pathways for career growth in your organization.</p>
           <a href="#" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
 
-        <article style="background:#f8f9fa;padding:20px;border-radius:8px">
+        <article data-insight-article="true" data-tags="Diversity,Inclusion,Recruitment,ESG" style="background:#f8f9fa;padding:20px;border-radius:8px">
           <h2 style="margin-top:0">Diversity and Inclusion in Recruitment</h2>
           <p style="color:var(--muted);font-size:0.95rem">Published: 25 January 2026</p>
+          <div class="insight-tags"><span class="insight-tag priority">ESG</span><span class="insight-tag">Diversity</span><span class="insight-tag">Inclusion</span></div>
           <p>Building diverse teams through inclusive hiring practices. Explore bias mitigation strategies, legal considerations, and metrics for measuring D&amp;I impact.</p>
           <a href="#" class="resource-cta" style="display:inline-block">Read More</a>
         </article>
@@ -363,6 +466,50 @@
       const topNavSearch = document.getElementById('topNavSearch');
       const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
       let unreadUnsubscribe = null;
+
+      const topicTagButtons = Array.from(document.querySelectorAll('[data-topic-tag]'));
+      const insightArticles = Array.from(document.querySelectorAll('[data-insight-article]'));
+      const activeTagLabel = document.getElementById('activeTagLabel');
+      const topicEmptyState = document.getElementById('topicEmptyState');
+
+      function normalizeTag(value) {
+        return String(value || '').trim().toLowerCase();
+      }
+
+      function setActiveTopicTag(tag) {
+        const normalized = normalizeTag(tag);
+        let visibleCount = 0;
+        const selectedLabel = String(tag || 'all');
+
+        topicTagButtons.forEach(function (button) {
+          const isActive = normalizeTag(button.getAttribute('data-topic-tag')) === normalized;
+          button.classList.toggle('active', isActive);
+        });
+
+        insightArticles.forEach(function (article) {
+          const tags = String(article.getAttribute('data-tags') || '')
+            .split(',')
+            .map(normalizeTag)
+            .filter(Boolean);
+          const isVisible = normalized === 'all' || tags.indexOf(normalized) !== -1;
+          article.style.display = isVisible ? 'block' : 'none';
+          if (isVisible) visibleCount += 1;
+        });
+
+        if (activeTagLabel) {
+          activeTagLabel.textContent = normalized === 'all' ? 'Showing all insights' : 'Filtered by ' + selectedLabel;
+        }
+        if (topicEmptyState) {
+          topicEmptyState.style.display = visibleCount > 0 ? 'none' : 'block';
+        }
+      }
+
+      topicTagButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          setActiveTopicTag(button.getAttribute('data-topic-tag') || 'all');
+        });
+      });
+      setActiveTopicTag('all');
 
       function clearUnreadListener() {
         if (typeof unreadUnsubscribe === 'function') {
