@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const { Storage } = require('@google-cloud/storage');
+const Stripe = require('stripe');
 
 admin.initializeApp();
 const storage = new Storage();
@@ -15,6 +16,43 @@ function normalizeEmail(value) {
 function normalizeText(value) {
   if (value === null || value === undefined) return '';
   return String(value).trim();
+}
+
+function getStripeSecretKey() {
+  const runtimeConfig = typeof functions.config === 'function' ? functions.config() : {};
+  const runtimeSecret = runtimeConfig && runtimeConfig.stripe ? runtimeConfig.stripe.secret_key : '';
+  return normalizeText(process.env.STRIPE_SECRET_KEY || runtimeSecret);
+}
+
+function isSubscriptionActiveLike(status) {
+  return ['active', 'trialing', 'past_due', 'unpaid'].includes(normalizeText(status).toLowerCase());
+}
+
+function inferSubscriberType(subscription) {
+  const candidates = [];
+  const items = subscription && subscription.items && Array.isArray(subscription.items.data)
+    ? subscription.items.data
+    : [];
+
+  items.forEach((item) => {
+    const price = item && item.price ? item.price : {};
+    const product = price && typeof price.product === 'object' && price.product ? price.product : null;
+    candidates.push(
+      normalizeText(price.nickname),
+      normalizeText(price.lookup_key),
+      normalizeText(product && product.name),
+      normalizeText(product && product.description),
+      normalizeText(product && product.metadata && product.metadata.subscriber_type),
+      normalizeText(price && price.metadata && price.metadata.subscriber_type)
+    );
+  });
+
+  const haystack = candidates.join(' ').toLowerCase();
+
+  if (haystack.includes('comp')) return 'comp';
+  if (haystack.includes('founding')) return 'founding';
+  if (isSubscriptionActiveLike(subscription && subscription.status)) return 'paid';
+  return 'none';
 }
 
 function pickPayloadField(body, keys) {
@@ -43,6 +81,63 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   } catch (err) {
     console.error('getPostsCsv: failed to create signed URL', { error: err && err.stack ? err.stack : err });
     throw new functions.https.HttpsError('internal', 'Could not create signed URL');
+  }
+});
+
+exports.getSubscriberType = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be signed in');
+  }
+
+  const email = normalizeEmail(context.auth.token && context.auth.token.email);
+  if (!email) {
+    throw new functions.https.HttpsError('failed-precondition', 'Authenticated email is required');
+  }
+
+  const secretKey = getStripeSecretKey();
+  if (!secretKey) {
+    throw new functions.https.HttpsError('failed-precondition', 'Stripe secret key is not configured');
+  }
+
+  try {
+    const stripe = new Stripe(secretKey);
+    const customers = await stripe.customers.list({ email, limit: 10 });
+
+    if (!customers || !Array.isArray(customers.data) || customers.data.length === 0) {
+      return { subscriberType: 'none', status: 'no_customer' };
+    }
+
+    let resolvedType = 'none';
+
+    for (const customer of customers.data) {
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customer.id,
+        status: 'all',
+        limit: 20,
+        expand: ['data.items.data.price.product'],
+      });
+
+      if (!subscriptions || !Array.isArray(subscriptions.data)) continue;
+
+      for (const subscription of subscriptions.data) {
+        if (!isSubscriptionActiveLike(subscription && subscription.status)) continue;
+
+        const inferredType = inferSubscriberType(subscription);
+        if (inferredType === 'comp') {
+          return { subscriberType: 'comp', status: subscription.status };
+        }
+        if (inferredType === 'founding') {
+          resolvedType = 'founding';
+        } else if (inferredType === 'paid' && resolvedType === 'none') {
+          resolvedType = 'paid';
+        }
+      }
+    }
+
+    return { subscriberType: resolvedType, status: resolvedType === 'none' ? 'no_active_subscription' : 'active' };
+  } catch (err) {
+    console.error('getSubscriberType failed', { email, error: err && err.stack ? err.stack : err });
+    throw new functions.https.HttpsError('internal', 'Could not resolve subscriber type');
   }
 });
 
