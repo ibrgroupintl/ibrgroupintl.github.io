@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,30 +15,24 @@
   <style>
     /* Minimal, neutral login card styling */
     /* Use column layout so footer sits below content; center main area vertically */
-    body{display:flex;flex-direction:column;min-height:100vh;margin:0;background:radial-gradient(1200px 600px at 50% -150px, rgba(2,132,199,0.14), transparent 55%),var(--rc-bg, var(--site-bg));position:relative;color:var(--text)}
-    .login-main{flex:1;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;padding:40px 24px}
-    .card{width:420px;max-width:94vw;background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.98));border-radius:14px;padding:30px;box-shadow:0 24px 48px rgba(2,6,23,0.18);border:1px solid rgba(148,163,184,0.3)}
-    h1{font-size:1.35rem;margin:0 0 8px;color:var(--text);letter-spacing:0.01em}
-    .login-security-chip{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;margin:0 auto 14px;width:fit-content;border-radius:999px;background:rgba(2,132,199,0.09);color:#0f3d63;border:1px solid rgba(2,132,199,0.22);font-size:0.82rem;font-weight:700}
-    .login-lock-icon{font-size:0.92rem;line-height:1}
+    body{display:flex;flex-direction:column;min-height:100vh;margin:0;background:var(--rc-bg, var(--site-bg))}
+    .login-main{flex:1;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;padding:24px}
+    .card{width:380px;max-width:92vw;background:var(--rc-surface, var(--card-bg));border-radius:12px;padding:28px;box-shadow:var(--rc-shadow, var(--shadow));border:1px solid var(--rc-border, var(--border))}
+    h1{font-size:1.25rem;margin:0 0 8px;color:var(--text)}
     /* Center the sign-in heading and lead paragraph for better visual balance */
     #signin-title { text-align: center; }
     .lead { text-align: center; }
-    p.lead{color:var(--rc-text-dim, var(--muted));margin:0 0 20px}
-    .actions{display:flex;flex-direction:column;gap:12px;margin-top:4px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600;transition:transform 0.2s ease,box-shadow 0.2s ease,background-color 0.2s ease}
+    p.lead{color:var(--rc-text-dim, var(--muted));margin:0 0 18px}
+    .actions{display:flex;flex-direction:column;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
     .btn-primary{background:var(--accent);color:#fff}
     .btn-outline{background:transparent;border:1px solid var(--rc-border, var(--border));color:var(--rc-text-dim, var(--muted))}
-    .btn-outline:hover{border-color:#0284c7;color:#0f3d63;background:rgba(2,132,199,0.06)}
-    .note{font-size:0.84rem;color:var(--rc-text-dim, var(--muted));text-align:center;line-height:1.5;margin-top:16px}
-    #error{color:#b00020;font-size:0.92rem;display:none;margin:8px 0 12px;padding:10px 12px;background:rgba(176,0,32,0.08);border:1px solid rgba(176,0,32,0.2);border-radius:8px}
+    .note{font-size:0.85rem;color:var(--rc-text-dim, var(--muted));text-align:center}
+    #error{color:#b00020;font-size:0.95rem;display:none;margin-top:8px}
     /* Page-scoped container centering for login page only */
     .login-page .container{display:flex;flex-direction:column;align-items:center;justify-content:center}
     /* Links block inside the card: horizontal and centered */
     .meta-links{display:flex;flex-direction:row;gap:12px;justify-content:center;align-items:center}
-    .trust-points{margin:14px 0 2px;padding:0;list-style:none;display:grid;gap:7px}
-    .trust-points li{font-size:0.86rem;color:#0f3d63;display:flex;align-items:center;gap:8px}
-    .trust-points li::before{content:'•';color:#0284c7;font-weight:700}
     .contact-code{font-family: Arial, Helvetica, sans-serif;}
     
     /* Google Sign-In Button Styling */
@@ -48,26 +42,25 @@
       justify-content: center;
       gap: 12px;
       padding: 0 12px;
-      height: 42px;
-      border-radius: 8px;
-      border: 1px solid #d0d7de;
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid #dadce0;
       background: #fff;
-      color: #1f2937;
+      color: #3c4043;
       font-family: 'Roboto', Arial, sans-serif;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: none;
       width: 100%;
     }
     .google-btn:hover {
-      background: #f8fafc;
-      border-color: #9fb8d2;
-      box-shadow: 0 4px 12px rgba(2, 42, 75, 0.15);
+      background: #f8f9fa;
+      box-shadow: 0 1px 2px rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
     }
     .google-btn:active {
-      background: #f1f5f9;
+      background: #f1f3f4;
     }
     .google-btn-icon {
       display: flex;
@@ -142,11 +135,10 @@
       .btn{padding:10px;border-radius:10px}
       .actions{gap:10px}
       .note{font-size:0.82rem}
-      .login-security-chip{font-size:0.76rem;padding:7px 10px}
     }
   </style>
 </head>
-<body class="login-page">
+<body>
   <header class="resource-nav" role="banner">
     <div class="container container-nav">
       <div class="logo" style="display:flex;align-items:center;gap:12px">
@@ -164,7 +156,6 @@
 
   <main class="login-main">
     <div class="card" role="main" aria-labelledby="signin-title">
-    <div class="login-security-chip"><span class="login-lock-icon">🔒</span><span>Protected sign-in via Google + Firebase</span></div>
     <h1 id="signin-title">Secure Login</h1>
     <p class="lead">Sign in with your Google account to access the protected portal.</p>
 
@@ -196,12 +187,6 @@
       </button>
       <a class="btn btn-outline" href="/index.html">Return to User Portal</a>
     </div>
-
-    <ul class="trust-points" aria-label="Security highlights">
-      <li>Encrypted authentication session</li>
-      <li>Managed by Google Identity and Firebase Auth</li>
-      <li>No password stored in this portal</li>
-    </ul>
 
     <p class="note">This site uses Firebase Authentication (Google). Your sign-in will be handled by Google and Firebase.</p>
 
