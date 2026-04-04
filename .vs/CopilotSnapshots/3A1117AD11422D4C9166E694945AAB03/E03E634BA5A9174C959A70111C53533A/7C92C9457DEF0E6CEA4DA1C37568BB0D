@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -149,7 +149,10 @@
 <body class="login-page">
   <header class="resource-nav" role="banner">
     <div class="container container-nav">
-      <div class="logo" style="display:flex;align-items:center;gap:12px"></div>
+      <div class="logo" style="display:flex;align-items:center;gap:12px">
+        <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
+        <span class="site-title" style="color:lightgrey">Impact in Business Recruitment</span>
+      </div>
       <div class="user-menu">
         <div class="auth-profile-chip" data-auth-profile>
           <img class="auth-profile-photo" data-auth-photo src="/160.jpg" alt="Profile photo">
