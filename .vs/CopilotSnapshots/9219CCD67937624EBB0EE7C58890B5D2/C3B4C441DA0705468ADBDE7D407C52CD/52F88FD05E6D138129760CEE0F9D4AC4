@@ -1,6 +1,5 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
 const Stripe = require('stripe');
 
@@ -172,7 +171,7 @@ function safeNotificationDocId(postId, uid) {
 function insightDocIdFromLink(link) {
   const raw = normalizeText(link);
   if (!raw) return 'doc_' + Date.now();
-  return 'ins_' + crypto.createHash('sha256').update(raw).digest('hex').slice(0, 32);
+  return Buffer.from(raw, 'utf8').toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 120) || ('doc_' + Date.now());
 }
 
 function decodeXmlEntities(value) {
@@ -330,12 +329,6 @@ exports.syncSubstackRssToFirestore = functions.pubsub.schedule('every 10 minutes
     const ref = db.collection('insightsFeed').doc(docId);
 
     try {
-      const existingByLink = await db.collection('insightsFeed').where('link', '==', post.link).limit(1).get();
-      if (!existingByLink.empty) {
-        skipped += 1;
-        continue;
-      }
-
       await ref.create({
         title: post.title,
         link: post.link,
