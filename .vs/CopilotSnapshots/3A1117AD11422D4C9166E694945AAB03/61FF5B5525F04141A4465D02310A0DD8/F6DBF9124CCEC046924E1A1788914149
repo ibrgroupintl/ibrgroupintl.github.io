@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -73,8 +73,7 @@
 
     .lead {
       margin: 0 0 1rem;
-      color: #facc15 !important;
-      text-align: center;
+      color: #facc15;
     }
 
     .site-footer {
