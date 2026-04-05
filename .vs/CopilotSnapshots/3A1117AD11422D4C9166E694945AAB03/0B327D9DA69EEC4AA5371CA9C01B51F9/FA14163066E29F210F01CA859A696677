@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/page-transition.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     .page-wrapper { background:#fff; max-width:1920px; min-height:100vh; margin:0 auto; box-shadow:0 0 20px rgba(0,0,0,.1); }
     .resource-cta { background:#afb8e9; border:1px solid #afb8e9; color:#000; padding:8px 14px; border-radius:6px; cursor:pointer; display:inline-block; min-width:150px; text-align:center; font-weight:600; font-size:.95rem; line-height:1.2; text-decoration:none; }
@@ -152,7 +152,7 @@
           <span style="color:var(--muted)">|</span>
           <a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
         </div>
-        <p style="margin:0;color:var(--muted)">© 2026 Impact in Business Recruitment. All rights reserved.</p>
+        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
       </div>
     </footer>
   </div>
@@ -166,7 +166,6 @@
   <script defer="defer" src="/page-transition.js"></script>
 
   <script>
-    //<![CDATA[
     window.addEventListener('load', function () {
       if (!window.firebase || !window.firebaseConfig) {
         document.body.classList.remove('auth-pending');
@@ -437,7 +436,6 @@
         });
       }
     });
-    //]]>
   </script>
 </body>
 </html>

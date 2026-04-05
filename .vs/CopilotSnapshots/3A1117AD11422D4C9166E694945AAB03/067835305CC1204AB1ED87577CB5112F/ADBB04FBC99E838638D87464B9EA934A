@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="theme-color" content="#0284c7" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="robots" content="index, follow" />
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="index, follow">
   <title>Insights — Impact in Business Recruitment</title>
-  <link rel="stylesheet" href="/resource-centre.css" />
-  <link rel="stylesheet" href="/index.css" />
-  <link rel="stylesheet" href="/mobile-compat.css" />
-  <link rel="stylesheet" href="/page-transition.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/resource-centre.css">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/mobile-compat.css">
+  <link rel="stylesheet" href="/page-transition.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     .page-wrapper { background:#fff; max-width:1920px; min-height:100vh; margin:0 auto; box-shadow:0 0 20px rgba(0,0,0,.1); }
     .resource-cta { background:#afb8e9; border:1px solid #afb8e9; color:#000; padding:8px 14px; border-radius:6px; cursor:pointer; display:inline-block; min-width:150px; text-align:center; font-weight:600; font-size:.95rem; line-height:1.2; text-decoration:none; }
@@ -28,6 +28,7 @@
     .topic-tag-btn { border:1px solid #c7d2fe; background:#eef2ff; color:#092a4b; padding:8px 12px; border-radius:999px; font-weight:600; font-size:.92rem; cursor:pointer; transition:background-color .2s ease,border-color .2s ease,color .2s ease; }
     .topic-tag-btn:hover,.topic-tag-btn:focus,.topic-tag-btn.active { background:#092a4b; border-color:#092a4b; color:#fff; }
     .topic-tag-btn.priority { border-color:#afb8e9; background:#afb8e9; color:#000; }
+
     .insight-tags { display:flex; flex-wrap:wrap; gap:8px; margin:.85rem 0 .95rem; }
     .insight-tag { display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; background:#e8edf7; color:#092a4b; font-size:.82rem; font-weight:700; letter-spacing:.01em; }
     .insight-tag.priority { background:#dbeafe; color:#0f3d63; }
@@ -55,7 +56,7 @@
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
         <div class="logo" style="display:flex;align-items:center;gap:12px">
-          <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block" />
+          <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
           <span class="site-title" style="color:lightgrey">Premium</span>
         </div>
 
@@ -69,13 +70,13 @@
         <button id="navToggle" class="btn btn-outline" aria-label="Toggle menu" style="display:none">☰</button>
 
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <div class="auth-profile-chip" data-auth-profile="">
-            <img class="auth-profile-photo" data-auth-photo="" src="/160.jpg" alt="Profile photo" />
-            <span class="auth-profile-name" data-auth-name=""></span>
+          <div class="auth-profile-chip" data-auth-profile>
+            <img class="auth-profile-photo" data-auth-photo src="/160.jpg" alt="Profile photo">
+            <span class="auth-profile-name" data-auth-name></span>
           </div>
           <a class="message-icon-link" href="/messages.html" id="messagesLink" aria-label="Open secure messages inbox" title="Messages inbox" style="display:none">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2"></path>
+              <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
               <path d="M6 8l6 4 6-4"></path>
             </svg>
             <span id="messagesUnreadDot" class="message-unread-dot" aria-hidden="true"></span>
@@ -141,6 +142,16 @@
         </div>
         <div id="topicEmptyState" class="topic-empty-state">No insights match this topic yet. Please check back for new uploads.</div>
       </section>
+
+      <section class="container" style="padding:2rem 0" id="fallbackInsights">
+        <article data-insight-article="true" data-tags="AI,Recruitment,Talent" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+          <h2 style="margin-top:0">AI and Talent Acquisition</h2>
+          <p style="color:var(--muted);font-size:0.95rem">Published: 15 February 2026</p>
+          <div class="insight-tags"><span class="insight-tag">AI</span><span class="insight-tag">Recruitment</span><span class="insight-tag">Talent</span></div>
+          <p>Explore how artificial intelligence is transforming recruitment processes, from candidate sourcing to performance prediction.</p>
+          <a href="#" class="resource-cta" style="display:inline-block">Read More</a>
+        </article>
+      </section>
     </main>
 
     <footer class="resource-footer" role="contentinfo">
@@ -152,31 +163,21 @@
           <span style="color:var(--muted)">|</span>
           <a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
         </div>
-        <p style="margin:0;color:var(--muted)">© 2026 Impact in Business Recruitment. All rights reserved.</p>
+        <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
       </div>
     </footer>
   </div>
 
-  <script defer="defer" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script defer="defer" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script defer="defer" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script defer="defer" src="/firebase-config.js"></script>
-  <script defer="defer" src="/header-profile.js"></script>
-  <script defer="defer" src="/mobile-compat.js"></script>
-  <script defer="defer" src="/page-transition.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script defer src="/firebase-config.js"></script>
+  <script defer src="/header-profile.js"></script>
+  <script defer src="/mobile-compat.js"></script>
+  <script defer src="/page-transition.js"></script>
 
   <script>
-    //<![CDATA[
     window.addEventListener('load', function () {
-      if (!window.firebase || !window.firebaseConfig) {
-        document.body.classList.remove('auth-pending');
-        return;
-      }
-      try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
-
-      const auth = firebase.auth();
-      const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
-
       const protectedContent = document.getElementById('protected-content');
       const loginSection = document.getElementById('login-section');
       const userNameEl = document.getElementById('userName');
@@ -191,16 +192,14 @@
       const topicEmptyState = document.getElementById('topicEmptyState');
       const substackFeedStatus = document.getElementById('substackFeedStatus');
       const substackFeedList = document.getElementById('substackFeedList');
-
-      let insightArticles = [];
+      let insightArticles = Array.from(document.querySelectorAll('[data-insight-article]'));
       let unreadUnsubscribe = null;
-      let feedUnsubscribe = null;
       let activeTopicTag = 'all';
-      let feedBootstrapped = false;
+      let substackFeedLoaded = false;
+      const db = (window.firebase && firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
 
       function normalizeTag(value) { return String(value || '').trim().toLowerCase(); }
       function refreshInsightArticles() { insightArticles = Array.from(document.querySelectorAll('[data-insight-article]')); }
-      function esc(text) { return String(text || '').replace(/[&<>"']/g, function (ch) { return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch]; }); }
 
       function setActiveTopicTag(tag) {
         activeTopicTag = String(tag || 'all');
@@ -229,166 +228,113 @@
         clearUnreadListener();
         if (!db || !uid) return;
         unreadUnsubscribe = db.collection('messages').where('recipientUid', '==', uid).onSnapshot(function (snapshot) {
-          let unread = 0;
-          snapshot.forEach(function (doc) { const data = doc.data() || {}; if (data.isOpened !== true) unread += 1; });
-          if (!messagesUnreadDot) return;
-          if (unread > 0) {
-            messagesUnreadDot.textContent = unread > 99 ? '99+' : String(unread);
-            messagesUnreadDot.style.display = 'inline-flex';
-          } else {
-            messagesUnreadDot.style.display = 'none';
-            messagesUnreadDot.textContent = '';
+          let unreadCount = 0;
+          snapshot.forEach(function (doc) { const data = doc.data() || {}; if (data.isOpened !== true) unreadCount += 1; });
+          if (messagesUnreadDot) {
+            if (unreadCount > 0) { messagesUnreadDot.textContent = unreadCount > 99 ? '99+' : String(unreadCount); messagesUnreadDot.style.display = 'inline-flex'; }
+            else { messagesUnreadDot.style.display = 'none'; messagesUnreadDot.textContent = ''; }
           }
         });
       }
 
-      function approvedPost(raw) {
-        const title = String(raw.title || '').trim();
-        const link = String(raw.link || '').trim();
-        if (!title || !link) return false;
-        try {
-          const u = new URL(link);
-          return u.hostname === 'substack.ibrecruitment.com' || u.hostname.endsWith('.substack.com');
-        } catch (e) {
-          return false;
-        }
+      function decodeHtmlEntities(text) { const t = document.createElement('textarea'); t.innerHTML = String(text || ''); return t.value; }
+      function escapeHtml(text) { return String(text || '').replace(/[&<>"']/g, function (ch) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]; }); }
+
+      function getImageUrl(itemNode, contentHtml) {
+        const mediaNode = itemNode.querySelector('media\\:content, content');
+        if (mediaNode && mediaNode.getAttribute('url')) return mediaNode.getAttribute('url');
+        const enclosureNode = itemNode.querySelector('enclosure[url]');
+        if (enclosureNode && /image\//i.test(enclosureNode.getAttribute('type') || '')) return enclosureNode.getAttribute('url');
+        const match = String(contentHtml || '').match(/<img[^>]+src=["']([^"']+)["']/i);
+        return match ? match[1] : '';
       }
 
-      function parseRss(xmlText) {
-        const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
-        if (xml.querySelector('parsererror')) throw new Error('Invalid RSS XML');
-
-        return Array.from(xml.querySelectorAll('item')).map(function (item) {
-          const title = (item.querySelector('title') ? item.querySelector('title').textContent : 'Untitled') || 'Untitled';
-          const link = (item.querySelector('link') ? item.querySelector('link').textContent : '') || '';
-          const pubDateRaw = (item.querySelector('pubDate') ? item.querySelector('pubDate').textContent : '') || '';
+      function xmlRssToJson(xmlText) {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, 'application/xml');
+        if (xml.querySelector('parsererror')) throw new Error('Invalid RSS');
+        const items = Array.from(xml.querySelectorAll('item')).map(function (itemNode) {
+          const title = decodeHtmlEntities(itemNode.querySelector('title') ? itemNode.querySelector('title').textContent : 'Untitled');
+          const link = itemNode.querySelector('link') ? itemNode.querySelector('link').textContent : '#';
+          const pubDateRaw = itemNode.querySelector('pubDate') ? itemNode.querySelector('pubDate').textContent : '';
           const pubDate = new Date(pubDateRaw);
-          const categories = Array.from(item.querySelectorAll('category')).map(function (x) { return String(x.textContent || '').trim(); }).filter(Boolean);
-          const mediaNode = item.querySelector('media\\:content, content');
-          const enclosureNode = item.querySelector('enclosure[url]');
-          const description = (item.querySelector('description') ? item.querySelector('description').textContent : '') || '';
-          const encodedNode = item.querySelector('content\\:encoded, encoded');
-          const contentHtml = encodedNode ? encodedNode.textContent : description;
-          const imgFromContent = String(contentHtml || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-          const imageUrl = (mediaNode && mediaNode.getAttribute('url')) || (enclosureNode ? enclosureNode.getAttribute('url') : '') || (imgFromContent ? imgFromContent[1] : '') || '';
-          const snippet = String(contentHtml || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 240);
+          const formattedDate = isNaN(pubDate.getTime()) ? 'Date unavailable' : new Intl.DateTimeFormat('en-GB', { year:'numeric', month:'long', day:'2-digit' }).format(pubDate);
+          const descriptionRaw = itemNode.querySelector('description') ? itemNode.querySelector('description').textContent : '';
+          const contentNode = itemNode.querySelector('content\\:encoded, encoded');
+          const contentHtml = contentNode ? contentNode.textContent : descriptionRaw;
+          const snippet = decodeHtmlEntities(String(contentHtml || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()).slice(0, 240);
+          const categories = Array.from(itemNode.querySelectorAll('category')).map(function (n) { return decodeHtmlEntities(n.textContent).trim(); }).filter(Boolean);
           return {
             title: title,
             link: link,
-            date: isNaN(pubDate.getTime()) ? 'Date unavailable' : new Intl.DateTimeFormat('en-GB', { year:'numeric', month:'long', day:'2-digit' }).format(pubDate),
+            date: formattedDate,
             timestamp: isNaN(pubDate.getTime()) ? 0 : pubDate.getTime(),
-            tags: categories.length ? categories : ['Insights'],
-            imageUrl: imageUrl,
+            tags: categories,
+            imageUrl: getImageUrl(itemNode, contentHtml),
             snippet: snippet
           };
-        }).filter(approvedPost);
-      }
-
-      function postDocId(link) {
-        try {
-          return btoa(unescape(encodeURIComponent(String(link || '')))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 120);
-        } catch (e) {
-          return String(link || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 120) || ('doc' + Date.now());
-        }
-      }
-
-      async function upsertFeedPosts(posts) {
-        if (!db || !posts.length) return;
-        const batch = db.batch();
-        posts.forEach(function (post) {
-          const ref = db.collection('insightsFeed').doc(postDocId(post.link));
-          batch.set(ref, {
-            title: post.title,
-            link: post.link,
-            date: post.date,
-            timestamp: post.timestamp,
-            tags: post.tags,
-            imageUrl: post.imageUrl,
-            snippet: post.snippet,
-            source: 'substack-rss',
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
         });
-        await batch.commit();
+        return { source: 'substack.ibrecruitment.com', items: items };
       }
 
-      function renderFeedPosts(posts) {
-        if (!substackFeedList || !substackFeedStatus) return;
-        const visible = posts.slice(0, 12);
-        if (!visible.length) {
-          substackFeedStatus.textContent = 'No approved posts available right now.';
-          substackFeedList.innerHTML = '';
-          setActiveTopicTag(activeTopicTag);
-          return;
-        }
-        substackFeedStatus.textContent = visible.length + ' approved posts loaded from Firestore.';
-        substackFeedList.innerHTML = visible.map(function (post) {
-          const tags = Array.isArray(post.tags) && post.tags.length ? post.tags : ['Insights'];
-          const safeTags = tags.map(function (tag) { return esc(tag); });
-          const tagHtml = safeTags.map(function (tag) {
-            const isPriority = ['esg', 'energy', 'real estate'].indexOf(normalizeTag(tag)) !== -1;
-            return '<span class="insight-tag' + (isPriority ? ' priority' : '') + '">' + tag + '</span>';
-          }).join('');
-          const imageHtml = post.imageUrl ? '<img src="' + esc(post.imageUrl) + '" alt="' + esc(post.title) + '" class="substack-image" />' : '';
-          return '<article data-insight-article="true" data-tags="' + safeTags.join(',') + '" style="background:#f8f9fa;padding:20px;border-radius:8px">' +
-            imageHtml +
-            '<h2 style="margin-top:0">' + esc(post.title) + '</h2>' +
-            '<p class="substack-meta">Published: ' + esc(post.date) + ' | Substack</p>' +
-            '<div class="insight-tags">' + tagHtml + '</div>' +
-            '<p class="substack-snippet">' + esc(post.snippet || 'Read the full article for details.') + '</p>' +
-            '<a href="' + esc(post.link) + '" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>' +
-          '</article>';
-        }).join('');
-        setActiveTopicTag(activeTopicTag);
-      }
-
-      function listenToFeedCollection() {
-        if (!db) return;
-        if (typeof feedUnsubscribe === 'function') feedUnsubscribe();
-        feedUnsubscribe = db.collection('insightsFeed').orderBy('timestamp', 'desc').limit(25).onSnapshot(function (snapshot) {
-          const items = [];
-          snapshot.forEach(function (doc) {
-            const d = doc.data() || {};
-            items.push({
-              title: d.title || 'Untitled',
-              link: d.link || '#',
-              date: d.date || 'Date unavailable',
-              timestamp: Number(d.timestamp || 0),
-              tags: Array.isArray(d.tags) ? d.tags : ['Insights'],
-              imageUrl: d.imageUrl || '',
-              snippet: d.snippet || ''
-            });
-          });
-          renderFeedPosts(items);
-        });
-      }
-
-      async function fetchAndSyncRss() {
+      async function fetchSubstackRssText() {
         const feedUrl = 'https://substack.ibrecruitment.com/feed';
-        const fallbacks = [feedUrl, 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl)];
-        let xml = '';
-        for (let i = 0; i < fallbacks.length; i += 1) {
+        const urls = [feedUrl, 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl)];
+        for (let i = 0; i < urls.length; i += 1) {
           try {
-            const response = await fetch(fallbacks[i], { cache: 'no-store' });
+            const response = await fetch(urls[i], { cache: 'no-store' });
             if (!response.ok) continue;
-            xml = await response.text();
-            if (xml.indexOf('<rss') !== -1) break;
+            const text = await response.text();
+            if (text && text.indexOf('<rss') !== -1) return text;
           } catch (e) { }
         }
-        if (!xml || xml.indexOf('<rss') === -1) throw new Error('Unable to fetch feed');
-        const posts = parseRss(xml);
-        await upsertFeedPosts(posts);
+        throw new Error('Unable to fetch feed');
       }
 
-      async function bootstrapFeedForUser() {
-        if (!auth.currentUser || feedBootstrapped) return;
-        feedBootstrapped = true;
-        if (substackFeedStatus) substackFeedStatus.textContent = 'Loading approved feed...';
-        listenToFeedCollection();
+      function renderSubstackFeed(feedJson) {
+        if (!substackFeedList || !substackFeedStatus) return;
+        const posts = (feedJson && Array.isArray(feedJson.items) ? feedJson.items : []).sort(function (a, b) { return (b.timestamp || 0) - (a.timestamp || 0); }).slice(0, 8);
+        if (!posts.length) {
+          substackFeedStatus.textContent = 'No recent posts available.';
+          substackFeedList.innerHTML = '';
+          return;
+        }
+        substackFeedStatus.textContent = posts.length + ' latest posts loaded from Substack.';
+        substackFeedList.innerHTML = posts.map(function (post) {
+          const tags = post.tags && post.tags.length ? post.tags : ['Insights'];
+          const safeTags = tags.map(function (tag) { return escapeHtml(tag); });
+          const tagHtml = safeTags.map(function (tag) {
+            const p = ['esg','energy','real estate'].indexOf(normalizeTag(tag)) !== -1;
+            return '<span class="insight-tag' + (p ? ' priority' : '') + '">' + tag + '</span>';
+          }).join('');
+          const imageHtml = post.imageUrl ? '<img src="' + escapeHtml(post.imageUrl) + '" alt="' + escapeHtml(post.title) + '" class="substack-image">' : '';
+          return '<article data-insight-article="true" data-tags="' + safeTags.join(',') + '" style="background:#f8f9fa;padding:20px;border-radius:8px">' +
+            imageHtml +
+            '<h2 style="margin-top:0">' + escapeHtml(post.title) + '</h2>' +
+            '<p class="substack-meta">Published: ' + escapeHtml(post.date) + ' | Substack</p>' +
+            '<div class="insight-tags">' + tagHtml + '</div>' +
+            '<p class="substack-snippet">' + escapeHtml(post.snippet || 'Read the full article for details.') + '</p>' +
+            '<a href="' + escapeHtml(post.link) + '" target="_blank" rel="noopener noreferrer" class="resource-cta" style="display:inline-block">Read More</a>' +
+          '</article>';
+        }).join('');
+        window.substackFeedJson = feedJson;
+        setActiveTopicTag(activeTopicTag || 'all');
+      }
+
+      async function loadSubstackFeed() {
+        if (!auth || !auth.currentUser) {
+          if (substackFeedStatus) substackFeedStatus.textContent = 'Sign in to load the latest embedded insights feed.';
+          return;
+        }
+        if (substackFeedLoaded) return;
+        substackFeedLoaded = true;
+        if (substackFeedStatus) substackFeedStatus.textContent = 'Loading latest posts...';
         try {
-          await fetchAndSyncRss();
+          const xml = await fetchSubstackRssText();
+          renderSubstackFeed(xmlRssToJson(xml));
         } catch (e) {
-          if (substackFeedStatus) substackFeedStatus.textContent = 'Unable to sync Substack feed right now. Showing cached results if available.';
+          if (substackFeedStatus) substackFeedStatus.textContent = 'Unable to load Substack feed right now. Please try again later.';
+          if (substackFeedList) substackFeedList.innerHTML = '';
         }
       }
 
@@ -404,7 +350,7 @@
         document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         watchUnreadMessages(user && user.uid ? user.uid : '');
-        bootstrapFeedForUser();
+        loadSubstackFeed();
       }
 
       function showSignedOut() {
@@ -418,7 +364,6 @@
         document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         clearUnreadListener();
-        if (typeof feedUnsubscribe === 'function') { feedUnsubscribe(); feedUnsubscribe = null; }
       }
 
       topicTagButtons.forEach(function (button) {
@@ -426,10 +371,14 @@
       });
       setActiveTopicTag('all');
 
-      auth.onAuthStateChanged(function (user) {
-        if (user) showAuthenticated(user);
-        else showSignedOut();
-      });
+      if (!window.firebase || !window.firebaseConfig) {
+        showSignedOut();
+        return;
+      }
+
+      try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
+      const auth = firebase.auth();
+      auth.onAuthStateChanged(function (user) { if (user) showAuthenticated(user); else showSignedOut(); });
 
       if (signOutBtn) {
         signOutBtn.addEventListener('click', function () {
@@ -437,7 +386,6 @@
         });
       }
     });
-    //]]>
   </script>
 </body>
 </html>
