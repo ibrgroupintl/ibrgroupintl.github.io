@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -254,47 +254,6 @@
         }
       }
 
-      function normalizeRssTag(tag) {
-        const raw = String(tag || '').trim();
-        const key = normalizeTag(raw);
-        const map = {
-          'ai': 'AI',
-          'artificial intelligence': 'AI',
-          'recruiting': 'Recruitment',
-          'recruitment': 'Recruitment',
-          'talent': 'Recruitment',
-          'talent acquisition': 'Recruitment',
-          'leadership': 'Leadership',
-          'workplace': 'Workplace',
-          'future of work': 'Workplace',
-          'diversity': 'Diversity',
-          'dei': 'Diversity',
-          'esg': 'ESG',
-          'energy': 'Energy',
-          'real estate': 'Real Estate'
-        };
-        return map[key] || raw;
-      }
-
-      function associateRssTags(title, snippet, categories) {
-        const base = (Array.isArray(categories) ? categories : []).map(normalizeRssTag).filter(Boolean);
-        const haystack = normalizeTag((title || '') + ' ' + (snippet || ''));
-
-        if (haystack.indexOf('esg') !== -1) base.push('ESG');
-        if (haystack.indexOf('energy') !== -1) base.push('Energy');
-        if (haystack.indexOf('real estate') !== -1) base.push('Real Estate');
-        if (haystack.indexOf('ai') !== -1 || haystack.indexOf('artificial intelligence') !== -1) base.push('AI');
-        if (haystack.indexOf('recruit') !== -1 || haystack.indexOf('talent') !== -1) base.push('Recruitment');
-
-        const seen = {};
-        return base.filter(function (tag) {
-          const k = normalizeTag(tag);
-          if (!k || seen[k]) return false;
-          seen[k] = true;
-          return true;
-        });
-      }
-
       function parseRss(xmlText) {
         const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
         if (xml.querySelector('parsererror')) throw new Error('Invalid RSS XML');
@@ -313,13 +272,12 @@
           const imgFromContent = String(contentHtml || '').match(/<img[^>]+src=["']([^"']+)["']/i);
           const imageUrl = (mediaNode && mediaNode.getAttribute('url')) || (enclosureNode ? enclosureNode.getAttribute('url') : '') || (imgFromContent ? imgFromContent[1] : '') || '';
           const snippet = String(contentHtml || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 240);
-          const tags = associateRssTags(title, snippet, categories);
           return {
             title: title,
             link: link,
             date: isNaN(pubDate.getTime()) ? 'Date unavailable' : new Intl.DateTimeFormat('en-GB', { year:'numeric', month:'long', day:'2-digit' }).format(pubDate),
             timestamp: isNaN(pubDate.getTime()) ? 0 : pubDate.getTime(),
-            tags: tags.length ? tags : ['Insights'],
+            tags: categories.length ? categories : ['Insights'],
             imageUrl: imageUrl,
             snippet: snippet
           };
