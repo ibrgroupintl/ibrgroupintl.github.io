@@ -1,15 +1,17 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const { Storage } = require('@google-cloud/storage');
 const Stripe = require('stripe');
+const { execFile } = require('child_process');
+const { promisify } = require('util');
 
 admin.initializeApp();
 const storage = new Storage();
 const BUCKET = 'wale-491803.firebasestorage.app';
 const db = admin.firestore();
 const AUTHORIZED_ADMIN_EMAIL = 'developers@ibrecruitment.com';
-const POSTMARK_FROM_EMAIL = 'admin-messages@ibrecruitment.com';
-const POSTMARK_SERVER_TOKEN = normalizeText(process.env.POSTMARK_SERVER_TOKEN);
+const POSTMARK_CLI_FROM_EMAIL = 'admin-messages@ibrecruitment.com';
+const execFileAsync = promisify(execFile);
 
 function normalizeEmail(value) {
   return typeof value === 'string' ? value.trim().toLowerCase() : '';
@@ -104,39 +106,27 @@ function createSubstackNotificationHtml(post) {
 async function runPostmarkRawEmail(toEmail, subject, htmlBody) {
   const to = normalizeEmail(toEmail);
   if (!to) return { ok: false, error: 'Missing recipient email' };
-  if (!POSTMARK_SERVER_TOKEN) return { ok: false, error: 'POSTMARK_SERVER_TOKEN is not configured' };
+
+  const args = [
+    'email',
+    'raw',
+    '--from=' + POSTMARK_CLI_FROM_EMAIL,
+    '--to=' + to,
+    '--subject=' + subject,
+    '--html=' + htmlBody,
+  ];
 
   try {
-    const response = await fetch('https://api.postmarkapp.com/email', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Postmark-Server-Token': POSTMARK_SERVER_TOKEN,
-      },
-      body: JSON.stringify({
-        From: POSTMARK_FROM_EMAIL,
-        To: to,
-        Subject: subject,
-        HtmlBody: htmlBody,
-        MessageStream: 'outbound',
-      }),
-    });
-
-    const bodyText = await response.text();
-    if (!response.ok) {
-      return { ok: false, error: ('Postmark API error: ' + response.status + ' ' + bodyText).slice(0, 1500) };
-    }
-
+    const result = await execFileAsync('postmark', args, { maxBuffer: 1024 * 1024 * 8 });
     return {
       ok: true,
-      stdout: normalizeText(bodyText),
-      stderr: '',
+      stdout: normalizeText(result && result.stdout),
+      stderr: normalizeText(result && result.stderr),
     };
   } catch (err) {
     return {
       ok: false,
-      error: err && err.message ? String(err.message) : 'Unknown Postmark API error',
+      error: err && err.message ? String(err.message) : 'Unknown Postmark CLI error',
     };
   }
 }
@@ -399,7 +389,7 @@ exports.notifyUsersOnNewInsightsFeedPost = functions.firestore.document('insight
         recipientUid: user.uid,
         recipientLoginEmail: user.email,
         recipientEmail: user.email,
-        senderEmail: POSTMARK_FROM_EMAIL,
+        senderEmail: POSTMARK_CLI_FROM_EMAIL,
         subject,
         body: plainBody,
         htmlBody,
@@ -419,20 +409,20 @@ exports.notifyUsersOnNewInsightsFeedPost = functions.firestore.document('insight
       continue;
     }
 
-    const sendResult = await runPostmarkRawEmail(user.email, subject, htmlBody);
-    if (sendResult.ok) {
+    const cliResult = await runPostmarkRawEmail(user.email, subject, htmlBody);
+    if (cliResult.ok) {
       await messageRef.set({
         emailForwarded: true,
         emailForwardedAt: admin.firestore.FieldValue.serverTimestamp(),
-        emailProvider: 'postmark-api',
-        emailProviderResponse: sendResult.stdout || '',
+        emailProvider: 'postmark-cli',
+        emailProviderResponse: cliResult.stdout || '',
         emailForwardError: admin.firestore.FieldValue.delete(),
       }, { merge: true });
     } else {
       await messageRef.set({
         emailForwarded: false,
-        emailProvider: 'postmark-api',
-        emailForwardError: normalizeText(sendResult.error).slice(0, 1500),
+        emailProvider: 'postmark-cli',
+        emailForwardError: normalizeText(cliResult.error).slice(0, 1500),
       }, { merge: true });
     }
   }
