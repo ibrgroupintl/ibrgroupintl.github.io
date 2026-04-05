@@ -210,33 +210,33 @@
       </div>
     </div>
 
-    <main id="protected-content" class="container" role="main" style="padding:2rem 0 3rem;max-width:960px;text-align:center;display:none">
-      <h1>Resume Uploads</h1>
-		
-		<div style="margin-top:1rem">
-        Hello, <strong id="userName">Member</strong>
-      </div>
-		
-      <p class="lead">Upload candidate resumes to secure cloud storage. Files are stored under your authenticated account.</p>
+	  <main id="protected-content" class="container" role="main" style="padding:2rem 0 3rem;max-width:960px;text-align:center;display:none">
+		  <h1>Resume Uploads</h1>
+		  <p>
+		  <div style="margin-top:1rem">
+			  Hello, <strong id="userName">Member</strong>
+		  </div>
+		  </p>
+		  <p class="lead">Upload candidate resumes to secure cloud storage. Files are stored under your authenticated account.</p>
 
-    
 
-      <section class="upload-panel" aria-labelledby="uploadHeading">
-        <h2 id="uploadHeading" style="margin-top:0">Upload a resume</h2>
-        <p class="upload-help">Accepted formats: PDF, DOC, DOCX. Maximum file size: 5 MB.</p>
 
-        <label for="resumeFile" style="font-weight:600;display:block;margin-bottom:0.5rem">Choose file</label>
-        <input id="resumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+		  <section class="upload-panel" aria-labelledby="uploadHeading">
+			  <h2 id="uploadHeading" style="margin-top:0">Upload a resume</h2>
+			  <p class="upload-help">Accepted formats: PDF, DOC, DOCX. Maximum file size: 5 MB.</p>
 
-        <div class="upload-actions">
-          <button id="uploadBtn" class="btn btn-primary" type="button">Upload Resume</button>
-          <span id="fileNamePreview" style="color:var(--muted)">No file selected</span>
-        </div>
+			  <label for="resumeFile" style="font-weight:600;display:block;margin-bottom:0.5rem">Choose file</label>
+			  <input id="resumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
 
-        <progress id="uploadProgress" max="100" value="0" style="display:none"></progress>
-        <div id="uploadStatus" class="status-note" role="status" aria-live="polite"></div>
-      </section>
-    </main>
+			  <div class="upload-actions">
+				  <button id="uploadBtn" class="btn btn-primary" type="button">Upload Resume</button>
+				  <span id="fileNamePreview" style="color:var(--muted)">No file selected</span>
+			  </div>
+
+			  <progress id="uploadProgress" max="100" value="0" style="display:none"></progress>
+			  <div id="uploadStatus" class="status-note" role="status" aria-live="polite"></div>
+		  </section>
+	  </main>
 
     <footer class="resource-footer" role="contentinfo">
       <div class="container" style="text-align:center">
