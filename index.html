@@ -33,7 +33,12 @@
 
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
     body {
+      min-height: 100vh;
       font-family: 'Open Sans', Arial, sans-serif;
       color: var(--text);
       background: radial-gradient(1200px 700px at 85% -15%, rgba(47,123,255,.35), transparent 55%),
@@ -406,9 +411,9 @@
 <body>
   <header class="site-header" role="banner">
     <div class="container header-row">
-      <a class="brand" href="/index.html" aria-label="Impact in Business Recruitment home">
+      <a class="brand" href="/index.html" aria-label="home">
         <img src="/160.jpg" alt="Impact logo" />
-        <span>Impact in Business Recruitment</span>
+        <span>Premium</span>
       </a>
   <nav class="nav-links" aria-label="Primary navigation">
     <a class="btn btn-ghost" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact</a>
