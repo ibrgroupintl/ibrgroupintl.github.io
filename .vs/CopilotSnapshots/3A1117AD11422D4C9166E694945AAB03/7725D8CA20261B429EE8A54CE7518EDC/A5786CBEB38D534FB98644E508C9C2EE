@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -347,7 +347,7 @@
 				<a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
 				<a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
 				<a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-				<a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
+				<a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Query The Model</a>
 				<a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
 			</nav>
 
@@ -448,3 +448,217 @@
 					</article>
 
 					<article data-insight-article="true" data-tags="Upskilling,Workforce Development,Leadership" style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px">
+						<h2 style="margin-top:0">Upskilling and Workforce Development</h2>
+						<p style="color:var(--muted);font-size:0.95rem">Published: 01 February 2026</p>
+						<div class="insight-tags">
+							<span class="insight-tag">Upskilling</span>
+							<span class="insight-tag">Leadership</span>
+							<span class="insight-tag">Development</span>
+						</div>
+						<p>Comprehensive guide to building effective employee development programs. Discover frameworks for identifying skill gaps and creating pathways for career growth in your organization.</p>
+						<a href="#" class="resource-cta" style="display:inline-block">Read More</a>
+					</article>
+
+					<article data-insight-article="true" data-tags="Diversity,Inclusion,Recruitment,ESG" style="background:#f8f9fa;padding:20px;border-radius:8px">
+						<h2 style="margin-top:0">Diversity and Inclusion in Recruitment</h2>
+						<p style="color:var(--muted);font-size:0.95rem">Published: 25 January 2026</p>
+						<div class="insight-tags">
+							<span class="insight-tag priority">ESG</span>
+							<span class="insight-tag">Diversity</span>
+							<span class="insight-tag">Inclusion</span>
+						</div>
+						<p>Building diverse teams through inclusive hiring practices. Explore bias mitigation strategies, legal considerations, and metrics for measuring D&amp;I impact.</p>
+						<a href="#" class="resource-cta" style="display:inline-block">Read More</a>
+					</article>
+				</section>
+
+				<section style="margin-top:3rem;text-align:center">
+					<hr>
+						<p style="color:var(--muted);font-size:0.95rem">More insights coming soon. Check back regularly for updates on HR trends and best practices.</p>
+					</section>
+			</main>
+
+			<footer class="resource-footer">
+				<div class="container" style="text-align:center"></div>
+			</footer>
+		</div>
+
+		<div style="margin-top:8px;display:flex;gap:12px;justify-content:center;align-items:center;font-size:0.95rem;color:var(--muted);">
+			<a href="https://wwww.github.com/ibrgroupintl" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none">GitHub</a>
+			<span>|</span>
+			<a href="https://www.linkedin.com/company/ibrgroupintl" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none">LinkedIn</a>
+			<span>|</span>
+			<a href="https://www.instagram.com/ibrblogs" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none">Instagram</a>
+		</div>
+
+		<footer class="resource-footer" role="contentinfo">
+			<div class="container" style="text-align:center">
+				<div style="margin:12px 0;display:flex;gap:16px;justify-content:center;align-items:center;">
+					<a href="/terms.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Terms of Service</a>
+					<span style="color:var(--muted)">|</span>
+					<a href="/privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Privacy Policy</a>
+					<span style="color:var(--muted)">|</span>
+					<a href="/cookies.html" style="color:var(--muted);text-decoration:none;font-size:0.9rem;">Cookie Policy</a>
+				</div>
+				<div>
+					<p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
+				</div>
+			</div>
+		</footer>
+
+		<!-- Firebase SDKs -->
+		<script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+		<script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+		<script defer="" src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+		<script defer="" src="/firebase-config.js"></script>
+		<script defer="" src="/header-profile.js"></script>
+		<script defer="" src="/mobile-compat.js"></script>
+		<script defer="" src="/page-transition.js"></script>
+
+		<script>
+			// Client-only auth: show/hide protected UI using Firebase
+			window.addEventListener('load', function () {
+			if (!window.firebase || !window.firebaseConfig) {
+			console.warn('Firebase not available; protected UI will remain hidden');
+			return;
+			}
+			try { firebase.initializeApp(window.firebaseConfig); } catch (e) { /* already initialized */ }
+
+			const auth = firebase.auth();
+			const protectedContent = document.getElementById('protected-content');
+			const loginSection = document.getElementById('login-section');
+			const userNameEl = document.getElementById('userName');
+			const signOutBtn = document.getElementById('signOutBtn');
+			const signInLink = document.getElementById('signInLink');
+			const messagesLink = document.getElementById('messagesLink');
+			const messagesUnreadDot = document.getElementById('messagesUnreadDot');
+			const topNavMenu = document.getElementById('topNavMenu');
+			const topNavSearch = document.getElementById('topNavSearch');
+			const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
+			let unreadUnsubscribe = null;
+
+			const topicTagButtons = Array.from(document.querySelectorAll('[data-topic-tag]'));
+			const insightArticles = Array.from(document.querySelectorAll('[data-insight-article]'));
+			const activeTagLabel = document.getElementById('activeTagLabel');
+			const topicEmptyState = document.getElementById('topicEmptyState');
+
+			function normalizeTag(value) {
+			return String(value || '').trim().toLowerCase();
+			}
+
+			function setActiveTopicTag(tag) {
+			const normalized = normalizeTag(tag);
+			let visibleCount = 0;
+			const selectedLabel = String(tag || 'all');
+
+			topicTagButtons.forEach(function (button) {
+			const isActive = normalizeTag(button.getAttribute('data-topic-tag')) === normalized;
+			button.classList.toggle('active', isActive);
+			});
+
+			insightArticles.forEach(function (article) {
+			const tags = String(article.getAttribute('data-tags') || '')
+			.split(',')
+			.map(normalizeTag)
+			.filter(Boolean);
+			const isVisible = normalized === 'all' || tags.indexOf(normalized) !== -1;
+			article.style.display = isVisible ? 'block' : 'none';
+			if (isVisible) visibleCount += 1;
+			});
+
+			if (activeTagLabel) {
+			activeTagLabel.textContent = normalized === 'all' ? 'Showing all insights' : 'Filtered by ' + selectedLabel;
+			}
+			if (topicEmptyState) {
+			topicEmptyState.style.display = visibleCount > 0 ? 'none' : 'block';
+			}
+			}
+
+			topicTagButtons.forEach(function (button) {
+			button.addEventListener('click', function () {
+			setActiveTopicTag(button.getAttribute('data-topic-tag') || 'all');
+			});
+			});
+			setActiveTopicTag('all');
+
+			function clearUnreadListener() {
+			if (typeof unreadUnsubscribe === 'function') {
+			unreadUnsubscribe();
+			unreadUnsubscribe = null;
+			}
+			if (messagesUnreadDot) {
+			messagesUnreadDot.style.display = 'none';
+			messagesUnreadDot.textContent = '';
+			}
+			}
+
+			function watchUnreadMessages(uid) {
+			clearUnreadListener();
+			if (!db || !uid) return;
+			unreadUnsubscribe = db.collection('messages').where('recipientUid', '==', uid).onSnapshot(function (snapshot) {
+			let unreadCount = 0;
+			snapshot.forEach(function (doc) {
+			const data = doc.data() || {};
+			if (data.isOpened !== true) unreadCount += 1;
+			});
+			if (messagesUnreadDot) {
+			if (unreadCount > 0) {
+			messagesUnreadDot.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+			messagesUnreadDot.style.display = 'inline-flex';
+			} else {
+			messagesUnreadDot.style.display = 'none';
+			messagesUnreadDot.textContent = '';
+			}
+			}
+			}, function () {
+			if (messagesUnreadDot) {
+			messagesUnreadDot.style.display = 'none';
+			messagesUnreadDot.textContent = '';
+			}
+			});
+			}
+
+			function showAuthenticated(user) {
+			if (loginSection) loginSection.style.display = 'none';
+			if (protectedContent) protectedContent.style.display = 'block';
+			if (userNameEl) userNameEl.textContent = user.displayName || (user.email || 'Member');
+			if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+			if (signInLink) signInLink.style.display = 'none';
+			if (messagesLink) messagesLink.style.display = 'inline-flex';
+			if (topNavMenu) topNavMenu.style.display = 'block';
+			if (topNavSearch) topNavSearch.style.display = 'flex';
+			document.body.classList.remove('auth-pending');
+			document.body.classList.add('has-sidebar');
+			watchUnreadMessages(user && user.uid ? user.uid : '');
+			}
+
+			function showSignedOut() {
+			if (loginSection) loginSection.style.display = 'block';
+			if (protectedContent) protectedContent.style.display = 'none';
+			if (signOutBtn) signOutBtn.style.display = 'none';
+			if (signInLink) signInLink.style.display = 'inline-flex';
+			if (messagesLink) messagesLink.style.display = 'none';
+			if (topNavMenu) topNavMenu.style.display = 'none';
+			if (topNavSearch) topNavSearch.style.display = 'none';
+			document.body.classList.remove('auth-pending');
+			document.body.classList.remove('has-sidebar');
+			clearUnreadListener();
+			}
+
+			auth.onAuthStateChanged(function (user) {
+			if (user) showAuthenticated(user);
+			else showSignedOut();
+			});
+
+			if (signOutBtn) {
+			signOutBtn.addEventListener('click', function () {
+			auth.signOut().then(() => {
+			showSignedOut();
+			window.location.replace('/login.html');
+			});
+			});
+			}
+			});
+		</script>
+	</body>
+</html>
