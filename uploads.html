@@ -154,7 +154,7 @@
     }
   </style>
 </head>
-<body class="auth-pending">
+<body>
   <div class="page-wrapper">
     <header class="resource-nav" role="banner">
       <div class="container container-nav">
@@ -212,11 +212,14 @@
 
     <main id="protected-content" class="container" role="main" style="padding:2rem 0 3rem;max-width:960px;text-align:center;display:none">
       <h1>Resume Uploads</h1>
-      <p class="lead">Upload candidate resumes to secure cloud storage. Files are stored under your authenticated account.</p>
-
-      <div style="margin-top:1rem">
+		
+		<div style="margin-top:1rem">
         Hello, <strong id="userName">Member</strong>
       </div>
+		
+      <p class="lead">Upload candidate resumes to secure cloud storage. Files are stored under your authenticated account.</p>
+
+    
 
       <section class="upload-panel" aria-labelledby="uploadHeading">
         <h2 id="uploadHeading" style="margin-top:0">Upload a resume</h2>
@@ -329,7 +332,6 @@
         if (messagesLink) messagesLink.style.display = 'inline-flex';
         if (topNavSearch) topNavSearch.style.display = 'flex';
         if (topNavMenu) topNavMenu.style.display = 'block';
-        document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Signed in';
         watchUnreadMessages(user && user.uid ? user.uid : '');
@@ -344,7 +346,6 @@
         if (messagesLink) messagesLink.style.display = 'none';
         if (topNavSearch) topNavSearch.style.display = 'none';
         if (topNavMenu) topNavMenu.style.display = 'none';
-        document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         if (loginStatus) loginStatus.textContent = 'Not signed in';
         clearUnreadListener();
