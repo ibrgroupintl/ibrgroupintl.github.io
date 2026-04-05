@@ -21,9 +21,7 @@ function normalizeText(value) {
 }
 
 function getStripeSecretKey() {
-  const runtimeConfig = typeof functions.config === 'function' ? functions.config() : {};
-  const runtimeSecret = runtimeConfig && runtimeConfig.stripe ? runtimeConfig.stripe.secret_key : '';
-  return normalizeText(process.env.STRIPE_SECRET_KEY || runtimeSecret);
+  return normalizeText(process.env.STRIPE_SECRET_KEY);
 }
 
 function isSubscriptionActiveLike(status) {
