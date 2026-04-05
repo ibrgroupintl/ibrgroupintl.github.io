@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -332,26 +332,6 @@
         } catch (e) {
           return String(link || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 120) || ('doc' + Date.now());
         }
-      }
-
-      async function upsertFeedPosts(posts) {
-        if (!db || !posts || !posts.length) return;
-        const batch = db.batch();
-        posts.forEach(function (post) {
-          const ref = db.collection('insightsFeed').doc(postDocId(post.link));
-          batch.set(ref, {
-            title: post.title,
-            link: post.link,
-            date: post.date,
-            timestamp: Number(post.timestamp || 0),
-            tags: Array.isArray(post.tags) ? post.tags : ['Insights'],
-            imageUrl: post.imageUrl || '',
-            snippet: post.snippet || '',
-            source: 'substack-rss',
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
-        });
-        await batch.commit();
       }
 
       function renderFeedPosts(posts) {
