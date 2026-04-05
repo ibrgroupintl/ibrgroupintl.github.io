@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "functions",
   "description": "Firebase Functions for IBR Group Intl",
   "main": "index.js",

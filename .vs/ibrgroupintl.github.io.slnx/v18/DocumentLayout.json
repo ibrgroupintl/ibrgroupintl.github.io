@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:functions\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:uploads.html||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -179,7 +183,7 @@
         },
         {
           "DockedWidth": 164,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -195,7 +199,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "package.json",
+              "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\package.json",
+              "RelativeDocumentMoniker": "functions\\package.json",
+              "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\package.json",
+              "RelativeToolTip": "functions\\package.json",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-05T13:40:08.027Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "firestore.rules",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\firestore.rules",
               "RelativeDocumentMoniker": "app\\firestore.rules",
@@ -208,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "firestore.rules",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\firestore.rules",
               "RelativeDocumentMoniker": "firestore.rules",
@@ -221,20 +238,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "uploads.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
               "RelativeDocumentMoniker": "uploads.html",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\uploads.html",
               "RelativeToolTip": "uploads.html",
-              "ViewState": "AgIAAM4AAAAAAAAAAAAswOAAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAAAAAAAAswNsAAAD5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-04-02T14:28:52.877Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\index.html",
               "RelativeDocumentMoniker": "index.html",
@@ -247,7 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "subscribe.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\subscribe.html",
               "RelativeDocumentMoniker": "subscribe.html",
@@ -260,20 +277,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "insights.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
               "RelativeDocumentMoniker": "insights.html",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\insights.html",
               "RelativeToolTip": "insights.html",
-              "ViewState": "AgIAAKABAAAAAAAAAAAkwLoBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAMoBAAAAAAAAAAAkwOQBAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-04-02T14:28:54.454Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "messages.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\messages.html",
               "RelativeDocumentMoniker": "messages.html",
@@ -286,7 +303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "login.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\login.html",
               "RelativeDocumentMoniker": "login.html",
@@ -299,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "compose.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\compose.html",
               "RelativeDocumentMoniker": "compose.html",
@@ -311,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "settings.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\settings.html",
               "RelativeDocumentMoniker": "settings.html",
@@ -324,7 +341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "members.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\members.html",
               "RelativeDocumentMoniker": "members.html",
@@ -337,7 +354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "page-transition.css",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\page-transition.css",
               "RelativeDocumentMoniker": "page-transition.css",
@@ -349,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "VISUAL_GUIDE.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\VISUAL_GUIDE.md",
               "RelativeDocumentMoniker": "VISUAL_GUIDE.md",
@@ -361,19 +378,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "index.ts",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\src\\index.ts",
               "RelativeDocumentMoniker": "functions\\src\\index.ts",
               "ToolTip": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\src\\index.ts",
               "RelativeToolTip": "functions\\src\\index.ts",
-              "ViewState": "AgIAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJMBAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-04-04T03:41:28.782Z"
+              "WhenOpened": "2026-04-04T03:41:28.782Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "DEPLOYMENT_READY.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\DEPLOYMENT_READY.md",
               "RelativeDocumentMoniker": "DEPLOYMENT_READY.md",
@@ -385,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "QUICK_START.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\QUICK_START.md",
               "RelativeDocumentMoniker": "QUICK_START.md",
@@ -397,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "COMPLETION_CHECKLIST.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\COMPLETION_CHECKLIST.md",
               "RelativeDocumentMoniker": "COMPLETION_CHECKLIST.md",
@@ -409,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "STRIPE_API_REFERENCE.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\STRIPE_API_REFERENCE.md",
               "RelativeDocumentMoniker": "STRIPE_API_REFERENCE.md",
@@ -421,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "IMPLEMENTATION_SUMMARY.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\IMPLEMENTATION_SUMMARY.md",
               "RelativeDocumentMoniker": "IMPLEMENTATION_SUMMARY.md",
@@ -433,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\README.md",
               "RelativeDocumentMoniker": "README.md",
@@ -445,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "STRIPE_INTEGRATION_SETUP.md",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\STRIPE_INTEGRATION_SETUP.md",
               "RelativeDocumentMoniker": "STRIPE_INTEGRATION_SETUP.md",
@@ -457,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "page-transition.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\page-transition.js",
               "RelativeDocumentMoniker": "page-transition.js",
@@ -469,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "header-profile.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\header-profile.js",
               "RelativeDocumentMoniker": "header-profile.js",
@@ -481,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "mobile-compat.css",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\mobile-compat.css",
               "RelativeDocumentMoniker": "mobile-compat.css",
@@ -493,7 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "index.css",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\index.css",
               "RelativeDocumentMoniker": "index.css",
@@ -505,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "mobile-compat.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\mobile-compat.js",
               "RelativeDocumentMoniker": "mobile-compat.js",
@@ -517,7 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "404.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\404.html",
               "RelativeDocumentMoniker": "404.html",
@@ -529,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "cookies.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\cookies.html",
               "RelativeDocumentMoniker": "cookies.html",
@@ -541,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "privacy.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\privacy.html",
               "RelativeDocumentMoniker": "privacy.html",
@@ -553,7 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "terms.html",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\terms.html",
               "RelativeDocumentMoniker": "terms.html",
@@ -565,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "index.js",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\index.js",
               "RelativeDocumentMoniker": "functions\\index.js",
@@ -577,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": ".npmrc",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\.npmrc",
               "RelativeDocumentMoniker": "functions\\.npmrc",
@@ -589,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "firebase.json",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\firebase.json",
               "RelativeDocumentMoniker": "firebase.json",
@@ -601,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "package-lock.json",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\functions\\package-lock.json",
               "RelativeDocumentMoniker": "functions\\package-lock.json",
@@ -613,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "firebase.json",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\firebase.json",
               "RelativeDocumentMoniker": "app\\firebase.json",
@@ -625,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "index.ts",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\functions\\src\\index.ts",
               "RelativeDocumentMoniker": "app\\functions\\src\\index.ts",
@@ -637,7 +655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "functions-config.json",
               "DocumentMoniker": "C:\\Users\\44746\\AppData\\Local\\Microsoft\\WindowsApps\\wget\\repo\\ibrgroupintl.github.io\\app\\functions-config.json",
               "RelativeDocumentMoniker": "app\\functions-config.json",
@@ -649,7 +667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "copilot-instructions.md",
               "DocumentMoniker": "C:\\Users\\44746\\copilot-instructions.md",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\copilot-instructions.md",

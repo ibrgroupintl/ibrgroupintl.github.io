@@ -1,7 +1,6 @@
-{
+﻿{
   "name": "functions",
   "description": "Firebase Functions for IBR Group Intl",
-  "main": "index.js",
   "scripts": {
     "start": "firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions"
