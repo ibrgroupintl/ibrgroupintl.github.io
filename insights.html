@@ -402,36 +402,16 @@
             });
           });
           renderFeedPosts(items);
+        }, function () {
+          if (substackFeedStatus) substackFeedStatus.textContent = 'Unable to load feed right now. Please refresh shortly.';
         });
-      }
-
-      async function fetchAndSyncRss() {
-        const feedUrl = 'https://substack.ibrecruitment.com/feed';
-        const fallbacks = [feedUrl, 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl)];
-        let xml = '';
-        for (let i = 0; i < fallbacks.length; i += 1) {
-          try {
-            const response = await fetch(fallbacks[i], { cache: 'no-store' });
-            if (!response.ok) continue;
-            xml = await response.text();
-            if (xml.indexOf('<rss') !== -1) break;
-          } catch (e) { }
-        }
-        if (!xml || xml.indexOf('<rss') === -1) throw new Error('Unable to fetch feed');
-        const posts = parseRss(xml);
-        await upsertFeedPosts(posts);
       }
 
       async function bootstrapFeedForUser() {
         if (!auth.currentUser || feedBootstrapped) return;
         feedBootstrapped = true;
-        if (substackFeedStatus) substackFeedStatus.textContent = 'Loading approved feed...';
+        if (substackFeedStatus) substackFeedStatus.textContent = 'Loading approved feed from Firestore...';
         listenToFeedCollection();
-        try {
-          await fetchAndSyncRss();
-        } catch (e) {
-          if (substackFeedStatus) substackFeedStatus.textContent = 'Unable to sync Substack feed right now. Showing cached results if available.';
-        }
       }
 
       function showAuthenticated(user) {

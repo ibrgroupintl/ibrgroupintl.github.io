@@ -139,27 +139,227 @@ async function runPostmarkRawEmail(toEmail, subject, htmlBody) {
   }
 }
 
-async function listAllAuthUsers() {
-  const users = [];
-  let pageToken;
+async function listUsersWithFirestoreEmailCredentials() {
+  const recipientsByUid = new Map();
+  const collectionNames = ['userProfiles', 'users'];
 
-  do {
-    const result = await admin.auth().listUsers(1000, pageToken);
-    (result.users || []).forEach((u) => {
-      const email = normalizeEmail(u && u.email);
-      if (u && u.uid && email) {
-        users.push({ uid: u.uid, email });
-      }
-    });
-    pageToken = result.pageToken;
-  } while (pageToken);
+  for (const collectionName of collectionNames) {
+    try {
+      const snapshot = await db.collection(collectionName).get();
+      snapshot.forEach((doc) => {
+        const data = doc.data() || {};
+        const uid = normalizeText(data.uid || data.recipientUid || doc.id);
+        const email = normalizeEmail(data.email || data.loginEmail || data.recipientLoginEmail || data.recipientEmail);
+        if (!uid || !email) return;
+        recipientsByUid.set(uid, { uid, email });
+      });
+    } catch (err) {
+      console.warn('listUsersWithFirestoreEmailCredentials collection read failed', {
+        collectionName,
+        error: err && err.message ? err.message : err,
+      });
+    }
+  }
 
-  return users;
+  return Array.from(recipientsByUid.values());
 }
 
 function safeNotificationDocId(postId, uid) {
   return ('sys_substack_' + normalizeText(postId) + '_' + normalizeText(uid)).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 140);
 }
+
+function insightDocIdFromLink(link) {
+  const raw = normalizeText(link);
+  if (!raw) return 'doc_' + Date.now();
+  return Buffer.from(raw, 'utf8').toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 120) || ('doc_' + Date.now());
+}
+
+function decodeXmlEntities(value) {
+  return String(value || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function stripHtml(value) {
+  return decodeXmlEntities(String(value || '').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+function getTagValue(xmlChunk, tagName) {
+  const re = new RegExp('<' + tagName + '[^>]*>([\\s\\S]*?)<\\/' + tagName + '>', 'i');
+  const m = String(xmlChunk || '').match(re);
+  return m ? decodeXmlEntities(m[1]).trim() : '';
+}
+
+function getTagValues(xmlChunk, tagName) {
+  const re = new RegExp('<' + tagName + '[^>]*>([\\s\\S]*?)<\\/' + tagName + '>', 'ig');
+  const values = [];
+  let match;
+  while ((match = re.exec(String(xmlChunk || ''))) !== null) {
+    values.push(decodeXmlEntities(match[1]).trim());
+  }
+  return values.filter(Boolean);
+}
+
+function normalizeRssTag(tag) {
+  const raw = normalizeText(tag);
+  const key = raw.toLowerCase();
+  const map = {
+    'ai': 'AI',
+    'artificial intelligence': 'AI',
+    'recruiting': 'Recruitment',
+    'recruitment': 'Recruitment',
+    'talent': 'Recruitment',
+    'talent acquisition': 'Recruitment',
+    'leadership': 'Leadership',
+    'workplace': 'Workplace',
+    'future of work': 'Workplace',
+    'diversity': 'Diversity',
+    'dei': 'Diversity',
+    'esg': 'ESG',
+    'energy': 'Energy',
+    'real estate': 'Real Estate',
+  };
+  return map[key] || raw;
+}
+
+function associateRssTags(title, snippet, categories) {
+  const base = (Array.isArray(categories) ? categories : []).map(normalizeRssTag).filter(Boolean);
+  const haystack = normalizeText((title || '') + ' ' + (snippet || '')).toLowerCase();
+
+  if (haystack.includes('esg')) base.push('ESG');
+  if (haystack.includes('energy')) base.push('Energy');
+  if (haystack.includes('real estate')) base.push('Real Estate');
+  if (haystack.includes('ai') || haystack.includes('artificial intelligence')) base.push('AI');
+  if (haystack.includes('recruit') || haystack.includes('talent')) base.push('Recruitment');
+
+  const seen = {};
+  return base.filter((tag) => {
+    const key = normalizeText(tag).toLowerCase();
+    if (!key || seen[key]) return false;
+    seen[key] = true;
+    return true;
+  });
+}
+
+function approvedPostLink(link) {
+  const value = normalizeText(link);
+  if (!value) return false;
+  try {
+    const u = new URL(value);
+    return u.hostname === 'substack.ibrecruitment.com' || u.hostname.endsWith('.substack.com');
+  } catch {
+    return false;
+  }
+}
+
+function parseSubstackRss(xmlText) {
+  const xml = String(xmlText || '');
+  const itemBlocks = xml.match(/<item\b[\s\S]*?<\/item>/ig) || [];
+  return itemBlocks.map((item) => {
+    const title = getTagValue(item, 'title') || 'Untitled';
+    const link = getTagValue(item, 'link');
+    const pubDateRaw = getTagValue(item, 'pubDate');
+    const pubDate = pubDateRaw ? new Date(pubDateRaw) : null;
+    const categories = getTagValues(item, 'category');
+    const description = getTagValue(item, 'description');
+    const encoded = getTagValue(item, 'content:encoded') || getTagValue(item, 'encoded');
+    const contentHtml = encoded || description;
+
+    const mediaMatch = item.match(/<media:content[^>]*url=["']([^"']+)["'][^>]*>/i);
+    const enclosureMatch = item.match(/<enclosure[^>]*url=["']([^"']+)["'][^>]*>/i);
+    const inlineImgMatch = String(contentHtml || '').match(/<img[^>]+src=["']([^"']+)["']/i);
+    const imageUrl = (mediaMatch && mediaMatch[1]) || (enclosureMatch && enclosureMatch[1]) || (inlineImgMatch && inlineImgMatch[1]) || '';
+
+    const snippet = stripHtml(contentHtml).slice(0, 240);
+    const tags = associateRssTags(title, snippet, categories);
+
+    return {
+      title,
+      link,
+      date: (!pubDate || isNaN(pubDate.getTime())) ? 'Date unavailable' : new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit' }).format(pubDate),
+      timestamp: (!pubDate || isNaN(pubDate.getTime())) ? 0 : pubDate.getTime(),
+      tags: tags.length ? tags : ['Insights'],
+      imageUrl,
+      snippet,
+      source: 'substack-rss',
+    };
+  }).filter((post) => approvedPostLink(post.link));
+}
+
+async function fetchSubstackRssXml() {
+  const feedUrl = 'https://substack.ibrecruitment.com/feed';
+  const fallbacks = [
+    feedUrl,
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl),
+  ];
+
+  let lastError = '';
+  for (const url of fallbacks) {
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) {
+        lastError = 'HTTP ' + response.status;
+        continue;
+      }
+      const text = await response.text();
+      if (text && text.includes('<rss')) return text;
+      lastError = 'Invalid RSS payload';
+    } catch (err) {
+      lastError = err && err.message ? String(err.message) : 'Unknown fetch error';
+    }
+  }
+
+  throw new Error('Unable to fetch Substack RSS feed: ' + lastError);
+}
+
+exports.syncSubstackRssToFirestore = functions.pubsub.schedule('every 10 minutes').timeZone('Europe/London').onRun(async () => {
+  const xml = await fetchSubstackRssXml();
+  const parsedPosts = parseSubstackRss(xml).slice(0, 30);
+
+  let created = 0;
+  let skipped = 0;
+  let failed = 0;
+
+  for (const post of parsedPosts) {
+    const docId = insightDocIdFromLink(post.link);
+    const ref = db.collection('insightsFeed').doc(docId);
+
+    try {
+      await ref.create({
+        title: post.title,
+        link: post.link,
+        date: post.date,
+        timestamp: Number(post.timestamp || 0),
+        tags: Array.isArray(post.tags) ? post.tags : ['Insights'],
+        imageUrl: post.imageUrl || '',
+        snippet: post.snippet || '',
+        source: 'substack-rss',
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      created += 1;
+    } catch (err) {
+      if (err && err.code === 6) {
+        skipped += 1;
+      } else {
+        failed += 1;
+        console.error('syncSubstackRssToFirestore write failed', { docId, link: post.link, error: err && err.message ? err.message : err });
+      }
+    }
+  }
+
+  console.log('syncSubstackRssToFirestore completed', {
+    fetched: parsedPosts.length,
+    created,
+    skipped,
+    failed,
+  });
+
+  return null;
+});
 
 exports.getPostsCsv = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -366,6 +566,15 @@ exports.notifyUsersOnNewInsightsFeedPost = functions.firestore.document('insight
   const postId = context.params && context.params.postId ? String(context.params.postId) : '';
   const data = snap && typeof snap.data === 'function' ? (snap.data() || {}) : {};
 
+  const postTimestamp = Number(data.timestamp || 0);
+  if (postTimestamp > 0) {
+    const maxAgeMs = 3 * 24 * 60 * 60 * 1000;
+    if ((Date.now() - postTimestamp) > maxAgeMs) {
+      console.log('notifyUsersOnNewInsightsFeedPost skipped old post', { postId, postTimestamp });
+      return null;
+    }
+  }
+
   const post = {
     title: normalizeText(data.title) || 'New Substack insight',
     link: normalizeText(data.link),
@@ -378,8 +587,11 @@ exports.notifyUsersOnNewInsightsFeedPost = functions.firestore.document('insight
     return null;
   }
 
-  const users = await listAllAuthUsers();
-  if (!users.length) return null;
+  const users = await listUsersWithFirestoreEmailCredentials();
+  if (!users.length) {
+    console.log('notifyUsersOnNewInsightsFeedPost skipped: no Firestore email credentials found', { postId });
+    return null;
+  }
 
   const subject = createSubstackNotificationSubject(post.title);
   const htmlBody = createSubstackNotificationHtml(post);
