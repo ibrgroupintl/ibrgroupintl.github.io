@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
@@ -11,7 +11,6 @@ const db = admin.firestore();
 const AUTHORIZED_ADMIN_EMAIL = 'developers@ibrecruitment.com';
 const POSTMARK_FROM_EMAIL = 'admin-messages@ibrecruitment.com';
 const POSTMARK_SERVER_TOKEN = normalizeText(process.env.POSTMARK_SERVER_TOKEN);
-const SUBSTACK_RSS_URL = normalizeText(process.env.SUBSTACK_RSS_URL) || 'https://substack.ibrecruitment.com/feed';
 
 function normalizeEmail(value) {
   return typeof value === 'string' ? value.trim().toLowerCase() : '';
@@ -293,7 +292,7 @@ function parseSubstackRss(xmlText) {
 }
 
 async function fetchSubstackRssXml() {
-  const feedUrl = SUBSTACK_RSS_URL;
+  const feedUrl = 'https://substack.ibrecruitment.com/feed';
   const fallbacks = [
     feedUrl,
     'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl),
@@ -303,28 +302,19 @@ async function fetchSubstackRssXml() {
   for (const url of fallbacks) {
     try {
       const response = await fetch(url, { cache: 'no-store' });
-      const text = await response.text();
-
       if (!response.ok) {
-        const responsePreview = normalizeText(text).slice(0, 220);
-        lastError = 'HTTP ' + response.status + (responsePreview ? (' - ' + responsePreview) : '');
+        lastError = 'HTTP ' + response.status;
         continue;
       }
-
+      const text = await response.text();
       if (text && text.includes('<rss')) return text;
-
-      const payloadPreview = normalizeText(text).slice(0, 220);
-      if (/invite-only|only open to subscribers|invited/i.test(payloadPreview)) {
-        lastError = 'Feed access blocked by Substack visibility settings: ' + payloadPreview;
-      } else {
-        lastError = 'Invalid RSS payload' + (payloadPreview ? (': ' + payloadPreview) : '');
-      }
+      lastError = 'Invalid RSS payload';
     } catch (err) {
       lastError = err && err.message ? String(err.message) : 'Unknown fetch error';
     }
   }
 
-  throw new Error('Unable to fetch Substack RSS feed (' + feedUrl + '): ' + lastError);
+  throw new Error('Unable to fetch Substack RSS feed: ' + lastError);
 }
 
 exports.syncSubstackRssToFirestore = functions.pubsub.schedule('every 10 minutes').timeZone('Europe/London').onRun(async () => {
