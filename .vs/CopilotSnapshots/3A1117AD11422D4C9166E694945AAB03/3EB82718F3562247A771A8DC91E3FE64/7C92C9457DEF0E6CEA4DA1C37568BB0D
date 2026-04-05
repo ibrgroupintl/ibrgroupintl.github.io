@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -263,7 +263,7 @@
         function redirectToPortal() {
           if (redirectTimer) return;
           redirectTimer = setTimeout(function () {
-            window.location.replace('/members.html');
+            window.location.replace('/index.html');
           }, 500);
         }
 
