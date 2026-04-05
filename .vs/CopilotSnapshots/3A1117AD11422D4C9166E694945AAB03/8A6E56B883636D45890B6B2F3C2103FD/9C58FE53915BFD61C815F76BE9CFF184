@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -322,10 +322,6 @@
       }
 
       async function loadSubstackFeed() {
-        if (!auth || !auth.currentUser) {
-          if (substackFeedStatus) substackFeedStatus.textContent = 'Sign in to load the latest embedded insights feed.';
-          return;
-        }
         if (substackFeedLoaded) return;
         substackFeedLoaded = true;
         if (substackFeedStatus) substackFeedStatus.textContent = 'Loading latest posts...';

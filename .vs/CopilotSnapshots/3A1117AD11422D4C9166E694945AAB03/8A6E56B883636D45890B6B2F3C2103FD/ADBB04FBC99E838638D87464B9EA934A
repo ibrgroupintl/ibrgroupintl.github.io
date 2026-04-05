@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -169,7 +169,7 @@
   </div>
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script.defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
   <script defer src="/header-profile.js"></script>
@@ -322,10 +322,6 @@
       }
 
       async function loadSubstackFeed() {
-        if (!auth || !auth.currentUser) {
-          if (substackFeedStatus) substackFeedStatus.textContent = 'Sign in to load the latest embedded insights feed.';
-          return;
-        }
         if (substackFeedLoaded) return;
         substackFeedLoaded = true;
         if (substackFeedStatus) substackFeedStatus.textContent = 'Loading latest posts...';
