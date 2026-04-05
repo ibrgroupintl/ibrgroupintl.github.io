@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -13,8 +13,8 @@
       --bg: #060b17;
       --surface: #0f1c33;
       --line: #2b3f62;
-      --text: #fff;
-      --muted: #fff;
+      --text: #f2f7ff;
+      --muted: #b7c6dc;
       --shadow: 0 18px 40px rgba(2, 8, 23, 0.35);
     }
 
@@ -23,7 +23,7 @@
     body {
       min-height: 100vh;
       font-family: 'Open Sans', Arial, sans-serif;
-      color: #fff;
+      color: var(--text);
       background: radial-gradient(1200px 700px at 85% -15%, rgba(47,123,255,.35), transparent 55%),
                   radial-gradient(900px 520px at -5% 18%, rgba(0,183,255,.2), transparent 55%),
                   var(--bg);
@@ -46,7 +46,7 @@
     }
 
     .top-links a {
-      color: #fff;
+      color: var(--text);
       text-decoration: none;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -61,32 +61,29 @@
       background: linear-gradient(160deg, rgba(12,23,43,.98), rgba(9,17,34,.98));
       box-shadow: var(--shadow);
       padding: 1rem;
-      color: #fff;
     }
 
     h1 {
       margin: 0 0 0.5rem;
       font-size: clamp(1.5rem, 3vw, 2.2rem);
-      color: #fff;
-      text-align: center;
     }
 
     .lead {
       margin: 0 0 1rem;
-      color: #fff;
+      color: var(--muted);
     }
 
     .site-footer {
       padding: 1rem 0 1.5rem;
       text-align: center;
-      color: #fff;
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
   <main class="container page-shell" role="main">
     <div class="top-links">
-	  <a href="/index.html">Home</a>
+      <a href="/index.html">Home</a>
       <a href="/members.html">Members Area</a>
     </div>
 

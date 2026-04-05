@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -68,7 +68,6 @@
       margin: 0 0 0.5rem;
       font-size: clamp(1.5rem, 3vw, 2.2rem);
       color: #fff;
-      text-align: center;
     }
 
     .lead {
