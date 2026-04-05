@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -197,6 +197,7 @@
       let feedUnsubscribe = null;
       let activeTopicTag = 'all';
       let feedBootstrapped = false;
+      let feedSnapshotInitialized = false;
 
       function normalizeTag(value) { return String(value || '').trim().toLowerCase(); }
       function refreshInsightArticles() { insightArticles = Array.from(document.querySelectorAll('[data-insight-article]')); }
@@ -334,6 +335,48 @@
         }
       }
 
+      function shouldNotifyForPost(post) {
+        const ts = Number(post && post.timestamp ? post.timestamp : 0);
+        if (!ts) return false;
+        return (Date.now() - ts) <= (3 * 24 * 60 * 60 * 1000);
+      }
+
+      async function createSystemMessageForPost(post) {
+        const user = auth.currentUser;
+        if (!db || !user || !user.uid || !post || !post.link || !shouldNotifyForPost(post)) return;
+
+        const safeDocId = ('sys_substack_' + user.uid + '_' + postDocId(post.link)).slice(0, 150);
+        const messageRef = db.collection('messages').doc(safeDocId);
+
+        try {
+          await db.runTransaction(async function (tx) {
+            const existing = await tx.get(messageRef);
+            if (existing.exists) return;
+            tx.set(messageRef, {
+              recipientUid: user.uid,
+              recipientEmail: user.email || '',
+              recipientLoginEmail: user.email || '',
+              senderEmail: 'system@ibrecruitment.com',
+              subject: 'New Substack insight published',
+              body: 'A new Substack post is now available:\n\n' +
+                (post.title || 'Untitled') + '\n' +
+                'Published: ' + (post.date || 'Date unavailable') + '\n' +
+                'Open: ' + post.link,
+              source: 'system-substack-rss',
+              messageState: 'available',
+              isOpened: false,
+              openedAt: null,
+              openedByUid: null,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              postLink: post.link,
+              postTimestamp: Number(post.timestamp || 0)
+            });
+          });
+        } catch (err) {
+          console.warn('Failed to create system Substack notification message', err);
+        }
+      }
+
       function renderFeedPosts(posts) {
         if (!substackFeedList || !substackFeedStatus) return;
         const visible = posts.slice(0, 12);
@@ -369,6 +412,7 @@
         if (typeof feedUnsubscribe === 'function') feedUnsubscribe();
         feedUnsubscribe = db.collection('insightsFeed').orderBy('timestamp', 'desc').limit(25).onSnapshot(function (snapshot) {
           const items = [];
+          const addedPosts = [];
           snapshot.forEach(function (doc) {
             const d = doc.data() || {};
             items.push({
@@ -381,7 +425,26 @@
               snippet: d.snippet || ''
             });
           });
+
+          if (feedSnapshotInitialized) {
+            snapshot.docChanges().forEach(function (change) {
+              if (change.type !== 'added') return;
+              const d = change.doc.data() || {};
+              addedPosts.push({
+                title: d.title || 'Untitled',
+                link: d.link || '',
+                date: d.date || 'Date unavailable',
+                timestamp: Number(d.timestamp || 0)
+              });
+            });
+          }
+
           renderFeedPosts(items);
+          feedSnapshotInitialized = true;
+
+          if (addedPosts.length) {
+            addedPosts.forEach(function (post) { createSystemMessageForPost(post); });
+          }
         });
       }
 
@@ -441,6 +504,7 @@
         document.body.classList.remove('has-sidebar');
         clearUnreadListener();
         if (typeof feedUnsubscribe === 'function') { feedUnsubscribe(); feedUnsubscribe = null; }
+        feedSnapshotInitialized = false;
       }
 
       topicTagButtons.forEach(function (button) {

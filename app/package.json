@@ -25,6 +25,8 @@
     "mongodb": "^7.1.1",
     "mysql2": "^3.20.0",
     "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "strip": "^3.0.0",
+    "stripe": "^22.0.0"
   }
 }

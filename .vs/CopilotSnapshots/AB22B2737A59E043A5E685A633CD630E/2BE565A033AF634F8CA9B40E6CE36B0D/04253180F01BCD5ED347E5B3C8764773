@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -331,6 +331,48 @@
           return btoa(unescape(encodeURIComponent(String(link || '')))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 120);
         } catch (e) {
           return String(link || '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 120) || ('doc' + Date.now());
+        }
+      }
+
+      function shouldNotifyForPost(post) {
+        const ts = Number(post && post.timestamp ? post.timestamp : 0);
+        if (!ts) return false;
+        return (Date.now() - ts) <= (3 * 24 * 60 * 60 * 1000);
+      }
+
+      async function createSystemMessageForPost(post) {
+        const user = auth.currentUser;
+        if (!db || !user || !user.uid || !post || !post.link || !shouldNotifyForPost(post)) return;
+
+        const safeDocId = ('sys_substack_' + user.uid + '_' + postDocId(post.link)).slice(0, 150);
+        const messageRef = db.collection('messages').doc(safeDocId);
+
+        try {
+          await db.runTransaction(async function (tx) {
+            const existing = await tx.get(messageRef);
+            if (existing.exists) return;
+            tx.set(messageRef, {
+              recipientUid: user.uid,
+              recipientEmail: user.email || '',
+              recipientLoginEmail: user.email || '',
+              senderEmail: 'system@ibrecruitment.com',
+              subject: 'New Substack insight published',
+              body: 'A new Substack post is now available:\n\n' +
+                (post.title || 'Untitled') + '\n' +
+                'Published: ' + (post.date || 'Date unavailable') + '\n' +
+                'Open: ' + post.link,
+              source: 'system-substack-rss',
+              messageState: 'available',
+              isOpened: false,
+              openedAt: null,
+              openedByUid: null,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              postLink: post.link,
+              postTimestamp: Number(post.timestamp || 0)
+            });
+          });
+        } catch (err) {
+          console.warn('Failed to create system Substack notification message', err);
         }
       }
 
