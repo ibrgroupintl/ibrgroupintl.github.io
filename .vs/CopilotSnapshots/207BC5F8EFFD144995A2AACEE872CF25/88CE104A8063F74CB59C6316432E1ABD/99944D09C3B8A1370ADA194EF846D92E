@@ -1,9 +1,8 @@
-(function () {
+﻿(function () {
   'use strict';
 
   const PROTECTED_PATHS = new Set([
     '/index.html',
-    '/members.html',
     '/messages.html',
     '/insights.html',
     '/uploads.html',
@@ -13,7 +12,6 @@
 
   const PAGE_LABELS = {
     '/index.html': 'Members Area',
-    '/members.html': 'Members Area',
     '/messages.html': 'Messages Inbox',
     '/insights.html': 'Insights Archive',
     '/uploads.html': 'Resume Uploads',
@@ -35,12 +33,6 @@
     }
   }
 
-  function canonicalPath(pathname) {
-    const normalized = normalizePath(pathname);
-    if (normalized === '/members.html') return '/index.html';
-    return normalized;
-  }
-
   function normalizePath(pathname) {
     if (!pathname || pathname === '/') return '/index.html';
     return pathname;
@@ -48,38 +40,6 @@
 
   function isProtectedPath(pathname) {
     return PROTECTED_PATHS.has(normalizePath(pathname));
-  }
-
-  function ensureActiveMenuStyles() {
-    if (document.getElementById('active-menu-style')) return;
-    const style = document.createElement('style');
-    style.id = 'active-menu-style';
-    style.textContent = '.sidebar-menu-link.is-current{background:#092a4b!important;color:#ffffff!important;transform:translateX(3px)}';
-    document.head.appendChild(style);
-  }
-
-  function highlightCurrentSidebarLink() {
-    ensureActiveMenuStyles();
-    const currentPath = canonicalPath(window.location.pathname);
-    const menuLinks = document.querySelectorAll('.sidebar-menu-shell .sidebar-menu-link[href]');
-
-    menuLinks.forEach(function (link) {
-      link.classList.remove('is-current');
-      link.removeAttribute('aria-current');
-
-      let linkUrl;
-      try {
-        linkUrl = new URL(link.getAttribute('href'), window.location.origin);
-      } catch (e) {
-        return;
-      }
-
-      if (!isSameOrigin(linkUrl)) return;
-      if (canonicalPath(linkUrl.pathname) !== currentPath) return;
-
-      link.classList.add('is-current');
-      link.setAttribute('aria-current', 'page');
-    });
   }
 
   function isAuthenticatedUiVisible() {
@@ -213,7 +173,6 @@
   function schedulePrefetchRetries() {
     for (let i = 1; i <= 6; i += 1) {
       window.setTimeout(prefetchProtectedPages, i * 700);
-      window.setTimeout(highlightCurrentSidebarLink, i * 700);
     }
   }
 
@@ -221,13 +180,11 @@
     ensureOverlay();
     document.addEventListener('click', handleClick, true);
     prefetchProtectedPages();
-    highlightCurrentSidebarLink();
     schedulePrefetchRetries();
   });
 
   window.addEventListener('pageshow', function () {
     navigating = false;
     hideOverlay();
-    highlightCurrentSidebarLink();
   });
 })();
