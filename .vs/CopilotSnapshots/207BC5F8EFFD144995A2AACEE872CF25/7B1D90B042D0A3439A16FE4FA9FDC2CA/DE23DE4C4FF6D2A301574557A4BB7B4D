@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -175,6 +175,7 @@
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-functions-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
   <script defer src="/header-profile.js"></script>
@@ -193,6 +194,7 @@
 ];
 
       const auth = firebase.auth();
+      const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
       const functionsClient = (firebase.app && typeof firebase.app === 'function' && firebase.app().functions)
   ? firebase.app().functions('us-central1')
   : null;
@@ -326,7 +328,60 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         return String(hash).padStart(8, '0');
       }
 
-      function renderRows(users) {
+      async function getUserIdMapByUid(users) {
+        const map = {};
+        if (!db || !Array.isArray(users) || !users.length) return map;
+
+        const uids = users.map(function (u) { return String((u && u.uid) || '').trim(); }).filter(Boolean);
+        if (!uids.length) return map;
+
+        const chunkSize = 10;
+        for (let i = 0; i < uids.length; i += chunkSize) {
+          const chunk = uids.slice(i, i + chunkSize);
+
+          // Primary source: userProfiles.userId (same source used in settings.html)
+          try {
+            const profilesSnap = await db.collection('userProfiles').where('uid', 'in', chunk).get();
+            profilesSnap.forEach(function (doc) {
+              const data = doc.data() || {};
+              const uid = String(data.uid || doc.id || '').trim();
+              if (!uid) return;
+              const userId = String(data.userId || '').trim().toUpperCase();
+              if (userId) {
+                map[uid] = userId;
+              }
+            });
+          } catch (err) {
+            console.error('Failed to read userProfiles chunk', err);
+          }
+
+          // Fallback source: userIds collection records
+          try {
+            const idsSnap = await db.collection('userIds').where('uid', 'in', chunk).get();
+            idsSnap.forEach(function (doc) {
+              const data = doc.data() || {};
+              const uid = String(data.uid || '').trim();
+              if (!uid || map[uid]) return;
+              const value = String(data.userId || doc.id || '').trim().toUpperCase();
+              if (value) {
+                map[uid] = value;
+              }
+            });
+          } catch (err) {
+            console.error('Failed to read userIds chunk', err);
+          }
+        }
+
+        return map;
+      }
+
+      function formatUserIdFromMap(uid, userIdMap) {
+        const key = String(uid || '').trim();
+        const value = key && userIdMap ? userIdMap[key] : '';
+        return value || '';
+      }
+
+      function renderRows(users, userIdMap) {
         if (!users.length) {
           accountsRows.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">No non-admin authenticated users found.</td></tr>';
           statusNote.textContent = '0 accounts loaded.';
@@ -338,7 +393,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
           const statusPill = u.disabled ? '<span class="pill banned">Banned</span>' : '<span class="pill active">Active</span>';
           const banLabel = u.disabled ? 'Unban' : 'Ban';
           const banAction = u.disabled ? 'unban' : 'ban';
-          const resolvedUserId = String(u.userId || '').trim().toUpperCase();
+          const resolvedUserId = formatUserIdFromMap(u.uid, userIdMap);
           const userIdCell = resolvedUserId
             ? esc(resolvedUserId)
             : (missingIds++, '<span class="missing-userid">Missing ID</span>');
@@ -359,7 +414,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         statusNote.textContent = users.length + ' account' + (users.length === 1 ? '' : 's') + ' loaded.' + (missingIds ? (' ' + missingIds + ' missing User ID mapping' + (missingIds === 1 ? '.' : 's.')) : '');
       }
 
-      function renderAdminRows(users) {
+      function renderAdminRows(users, userIdMap) {
         if (!users.length) {
           adminRows.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">No administrator accounts found.</td></tr>';
           adminStatusNote.textContent = '0 admin accounts loaded.';
@@ -373,7 +428,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
           const actionHtml = isPrimaryAdmin
             ? '<span style="color:var(--muted);font-size:.85rem">Protected</span>'
             : '<button type="button" class="btn btn-outline" data-action="revokeAdmin">Revoke admin</button>';
-          const resolvedUserId = String(u.userId || '').trim().toUpperCase();
+          const resolvedUserId = formatUserIdFromMap(u.uid, userIdMap);
           const userIdCell = resolvedUserId
             ? esc(resolvedUserId)
             : (missingIds++, '<span class="missing-userid">Missing ID</span>');
@@ -398,8 +453,9 @@ const adminStatusNote = document.getElementById('adminStatusNote');
           const data = await callAdminEndpoint('GET');
           const users = Array.isArray(data.users) ? data.users : [];
           const adminUsers = Array.isArray(data.adminUsers) ? data.adminUsers : [];
-          renderRows(users);
-          renderAdminRows(adminUsers);
+          const userIdMap = await getUserIdMapByUid(users.concat(adminUsers));
+          renderRows(users, userIdMap);
+          renderAdminRows(adminUsers, userIdMap);
         } catch (err) {
           accountsRows.innerHTML = '';
           adminRows.innerHTML = '';

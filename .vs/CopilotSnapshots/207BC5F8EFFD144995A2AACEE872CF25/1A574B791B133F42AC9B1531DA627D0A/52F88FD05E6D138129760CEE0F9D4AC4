@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
@@ -102,47 +102,6 @@ function escapeHtml(value) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
-}
-
-async function resolveUserIdsByUid(uids) {
-  const normalized = Array.from(new Set((Array.isArray(uids) ? uids : [])
-    .map((uid) => normalizeText(uid))
-    .filter(Boolean)));
-
-  const map = {};
-  if (!normalized.length) return map;
-
-  try {
-    const profileRefs = normalized.map((uid) => db.collection('userProfiles').doc(uid));
-    const profileSnaps = profileRefs.length ? await db.getAll(...profileRefs) : [];
-    profileSnaps.forEach((snap) => {
-      if (!snap || !snap.exists) return;
-      const data = snap.data() || {};
-      const value = normalizeText(data.userId).toUpperCase();
-      if (value) map[snap.id] = value;
-    });
-  } catch (err) {
-    console.warn('resolveUserIdsByUid userProfiles lookup failed', err && err.message ? err.message : err);
-  }
-
-  const missing = normalized.filter((uid) => !map[uid]);
-  for (let i = 0; i < missing.length; i += 10) {
-    const chunk = missing.slice(i, i + 10);
-    try {
-      const snap = await db.collection('userIds').where('uid', 'in', chunk).get();
-      snap.forEach((doc) => {
-        const data = doc.data() || {};
-        const uid = normalizeText(data.uid);
-        if (!uid || map[uid]) return;
-        const value = normalizeText(data.userId || doc.id).toUpperCase();
-        if (value) map[uid] = value;
-      });
-    } catch (err) {
-      console.warn('resolveUserIdsByUid userIds fallback failed', err && err.message ? err.message : err);
-    }
-  }
-
-  return map;
 }
 
 function createSubstackNotificationSubject(postTitle) {
@@ -786,8 +745,7 @@ exports.adminAccountsManager = functions.https.onRequest(async (req, res) => {
             displayName: normalizeText(user.displayName),
             disabled: user.disabled === true,
             createdAt: user.metadata && user.metadata.creationTime ? user.metadata.creationTime : '',
-            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : '',
-            userId: ''
+            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : ''
           };
 
           if (isAdminUserRecord(user)) {
@@ -799,10 +757,6 @@ exports.adminAccountsManager = functions.https.onRequest(async (req, res) => {
         });
         nextPageToken = page.pageToken;
       } while (nextPageToken);
-
-      const userIdMap = await resolveUserIdsByUid(users.concat(adminUsers).map((u) => u.uid));
-      users.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
-      adminUsers.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
 
       users.sort((a, b) => String(a.email).localeCompare(String(b.email)));
       adminUsers.sort((a, b) => String(a.email).localeCompare(String(b.email)));
@@ -894,8 +848,7 @@ exports.adminAccountsManagerCallable = functions.https.onCall(async (data, conte
             displayName: normalizeText(user.displayName),
             disabled: user.disabled === true,
             createdAt: user.metadata && user.metadata.creationTime ? user.metadata.creationTime : '',
-            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : '',
-            userId: ''
+            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : ''
           };
 
           if (isAdminUserRecord(user)) {
@@ -907,10 +860,6 @@ exports.adminAccountsManagerCallable = functions.https.onCall(async (data, conte
         });
         nextPageToken = page.pageToken;
       } while (nextPageToken);
-
-      const userIdMap = await resolveUserIdsByUid(users.concat(adminUsers).map((u) => u.uid));
-      users.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
-      adminUsers.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
 
       users.sort((a, b) => String(a.email).localeCompare(String(b.email)));
       adminUsers.sort((a, b) => String(a.email).localeCompare(String(b.email)));

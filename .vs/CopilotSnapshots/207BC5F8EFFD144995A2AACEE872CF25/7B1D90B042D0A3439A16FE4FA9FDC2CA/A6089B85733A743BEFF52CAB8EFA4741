@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage');
@@ -786,8 +786,7 @@ exports.adminAccountsManager = functions.https.onRequest(async (req, res) => {
             displayName: normalizeText(user.displayName),
             disabled: user.disabled === true,
             createdAt: user.metadata && user.metadata.creationTime ? user.metadata.creationTime : '',
-            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : '',
-            userId: ''
+            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : ''
           };
 
           if (isAdminUserRecord(user)) {
@@ -800,9 +799,10 @@ exports.adminAccountsManager = functions.https.onRequest(async (req, res) => {
         nextPageToken = page.pageToken;
       } while (nextPageToken);
 
-      const userIdMap = await resolveUserIdsByUid(users.concat(adminUsers).map((u) => u.uid));
-      users.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
-      adminUsers.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
+      const userIdsMap = await resolveUserIdsByUid(users.map((user) => user.uid));
+      users.forEach((user) => {
+        user.userId = userIdsMap[user.uid] || '';
+      });
 
       users.sort((a, b) => String(a.email).localeCompare(String(b.email)));
       adminUsers.sort((a, b) => String(a.email).localeCompare(String(b.email)));
@@ -894,8 +894,7 @@ exports.adminAccountsManagerCallable = functions.https.onCall(async (data, conte
             displayName: normalizeText(user.displayName),
             disabled: user.disabled === true,
             createdAt: user.metadata && user.metadata.creationTime ? user.metadata.creationTime : '',
-            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : '',
-            userId: ''
+            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : ''
           };
 
           if (isAdminUserRecord(user)) {
@@ -908,9 +907,10 @@ exports.adminAccountsManagerCallable = functions.https.onCall(async (data, conte
         nextPageToken = page.pageToken;
       } while (nextPageToken);
 
-      const userIdMap = await resolveUserIdsByUid(users.concat(adminUsers).map((u) => u.uid));
-      users.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
-      adminUsers.forEach((u) => { u.userId = userIdMap[u.uid] || ''; });
+      const userIdsMap = await resolveUserIdsByUid(users.map((user) => user.uid));
+      users.forEach((user) => {
+        user.userId = userIdsMap[user.uid] || '';
+      });
 
       users.sort((a, b) => String(a.email).localeCompare(String(b.email)));
       adminUsers.sort((a, b) => String(a.email).localeCompare(String(b.email)));

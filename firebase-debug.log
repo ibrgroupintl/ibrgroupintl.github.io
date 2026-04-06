@@ -1,0 +1,58 @@
+[debug] [2026-04-06T17:22:14.430Z] ----------------------------------------------------------------------
+[debug] [2026-04-06T17:22:14.534Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-04-06T17:22:14.541Z] CLI Version:   15.13.0
+[debug] [2026-04-06T17:22:14.541Z] Platform:      win32
+[debug] [2026-04-06T17:22:14.542Z] Node Version:  v24.12.0
+[debug] [2026-04-06T17:22:14.545Z] Time:          Mon Apr 06 2026 18:22:14 GMT+0100 (British Summer Time)
+[debug] [2026-04-06T17:22:14.548Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-04-06T17:22:31.558Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-06T17:22:31.595Z] > authorizing via signed-in user (developers@ibrecruitment.com)
+[debug] [2026-04-06T17:22:31.596Z] [iam] checking project wale-491803 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-04-06T17:22:31.611Z] Checked if tokens are valid: false, expires at: 1775495259777
+[debug] [2026-04-06T17:22:31.612Z] Checked if tokens are valid: false, expires at: 1775495259777
+[debug] [2026-04-06T17:22:31.613Z] > refreshing access token with scopes: []
+[debug] [2026-04-06T17:22:31.634Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-04-06T17:22:31.634Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-06T17:22:32.506Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-04-06T17:22:32.507Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-06T17:22:32.535Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions [none]
+[debug] [2026-04-06T17:22:32.535Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions  x-goog-user-project=wale-491803
+[debug] [2026-04-06T17:22:32.536Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-04-06T17:22:33.431Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions 200
+[debug] [2026-04-06T17:22:33.432Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-04-06T17:22:33.434Z] Checked if tokens are valid: true, expires at: 1775499751507
+[debug] [2026-04-06T17:22:33.434Z] Checked if tokens are valid: true, expires at: 1775499751507
+[debug] [2026-04-06T17:22:33.436Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803 [none]
+[debug] [2026-04-06T17:22:33.989Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803 200
+[debug] [2026-04-06T17:22:33.989Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803 {"projectId":"wale-491803","projectNumber":"916707769747","displayName":"wale","name":"projects/wale-491803","resources":{"hostingSite":"wale-491803","realtimeDatabaseInstance":"wale-491803-default-rtdb"},"state":"ACTIVE","etag":"1_a9b58e99-ca04-4946-b9ce-1b0c3e544257"}
+[info] 
+[info] === Deploying to 'wale-491803'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-04-06T17:22:34.053Z] Checked if tokens are valid: true, expires at: 1775499751507
+[debug] [2026-04-06T17:22:34.053Z] Checked if tokens are valid: true, expires at: 1775499751507
+[debug] [2026-04-06T17:22:34.054Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/wale-491803/versions [none]
+[debug] [2026-04-06T17:22:34.055Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/wale-491803/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-04-06T17:22:36.684Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/wale-491803/versions 200
+[debug] [2026-04-06T17:22:36.684Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/wale-491803/versions {"name":"projects/916707769747/sites/wale-491803/versions/b0e2c2438b3e95b7","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[wale-491803]: beginning deploy... 
+[info] i  hosting[wale-491803]: found 10404 files in . 
+[debug] [2026-04-06T17:22:44.867Z] [hosting] uploading with 200 concurrency
+[debug] [2026-04-06T17:22:44.882Z] [hosting] hash cache [] not populated
+[debug] [2026-04-06T17:22:49.999Z] Error: EBUSY: resource busy or locked, open 'C:\Users\44746\AppData\Local\Microsoft\WindowsApps\wget\repo\ibrgroupintl.github.io\.vs\ibrgroupintl.github.io.slnx\FileContentIndex\e0f1ad4a-82a2-4ed7-8abb-37f891ceaa8c.vsidx'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-06T17:22:50.008Z] Error: EBUSY: resource busy or locked, open 'C:\Users\44746\AppData\Local\Microsoft\WindowsApps\wget\repo\ibrgroupintl.github.io\.vs\ibrgroupintl.github.io.slnx\FileContentIndex\9b9223fd-9c60-4df3-b24b-0828fa572cca.vsidx'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-06T17:22:50.014Z] Error: EBUSY: resource busy or locked, open 'C:\Users\44746\AppData\Local\Microsoft\WindowsApps\wget\repo\ibrgroupintl.github.io\.vs\ibrgroupintl.github.io.slnx\FileContentIndex\7e65ff23-bb25-4249-8984-76e5562aeef8.vsidx'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-06T17:22:50.017Z] Error: EBUSY: resource busy or locked, open 'C:\Users\44746\AppData\Local\Microsoft\WindowsApps\wget\repo\ibrgroupintl.github.io\.vs\ibrgroupintl.github.io.slnx\FileContentIndex\3d9520ed-8a52-4359-bc12-5d6b97e27435.vsidx'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-06T17:22:50.029Z] Error: EBUSY: resource busy or locked, open 'C:\Users\44746\AppData\Local\Microsoft\WindowsApps\wget\repo\ibrgroupintl.github.io\.vs\ibrgroupintl.github.io.slnx\FileContentIndex\16a5d3c7-5cf1-4324-b06f-de3887478319.vsidx'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-06T17:22:50.279Z] Checked if tokens are valid: true, expires at: 1775499751507
