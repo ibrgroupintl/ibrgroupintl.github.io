@@ -250,6 +250,7 @@
       <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
       <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
+      <a class="sidebar-menu-link" href="/accounts.html">Accounts Admin</a>
       <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Query The Model</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
     </nav>
@@ -458,7 +459,13 @@
         clearUnreadListener();
       }
 
-      auth.onAuthStateChanged(function (user) {
+      function tokenHasAdminAccess(email, claims) {
+        const normalized = String(email || '').trim().toLowerCase();
+        const c = claims && typeof claims === 'object' ? claims : {};
+        return normalized === AUTHORIZED_EMAIL.toLowerCase().trim() || c.admin === true || c.ownerAdmin === true;
+      }
+
+      auth.onAuthStateChanged(async function (user) {
         if (!user) {
           currentUser = null;
           showSignedOut();
@@ -466,10 +473,17 @@
         }
 
         const userEmail = (user.email || '').toLowerCase().trim();
-        const authorizedEmail = AUTHORIZED_EMAIL.toLowerCase().trim();
         currentUser = user;
 
-        if (userEmail === authorizedEmail) {
+        let claims = {};
+        try {
+          const tokenResult = await user.getIdTokenResult(true);
+          claims = tokenResult && tokenResult.claims ? tokenResult.claims : {};
+        } catch (err) {
+          claims = {};
+        }
+
+        if (tokenHasAdminAccess(userEmail, claims)) {
           showAuthenticatedWithAccess();
         } else {
           showAuthenticatedDenied();

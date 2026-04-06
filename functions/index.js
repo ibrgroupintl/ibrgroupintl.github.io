@@ -66,6 +66,35 @@ function pickPayloadField(body, keys) {
   return '';
 }
 
+function hasAdminAccessFromToken(decodedToken) {
+  const email = normalizeEmail(decodedToken && decodedToken.email);
+  const claims = decodedToken && decodedToken.claims && typeof decodedToken.claims === 'object' ? decodedToken.claims : {};
+  return email === AUTHORIZED_ADMIN_EMAIL || claims.admin === true || claims.ownerAdmin === true;
+}
+
+function isAdminUserRecord(userRecord) {
+  if (!userRecord) return false;
+  const email = normalizeEmail(userRecord.email);
+  const claims = userRecord.customClaims && typeof userRecord.customClaims === 'object' ? userRecord.customClaims : {};
+  return email === AUTHORIZED_ADMIN_EMAIL || claims.admin === true || claims.ownerAdmin === true;
+}
+
+async function verifyAdminBearerToken(req) {
+  const authHeader = normalizeText(req.get('authorization'));
+  if (!authHeader.toLowerCase().startsWith('bearer ')) return null;
+
+  const idToken = normalizeText(authHeader.slice(7));
+  if (!idToken) return null;
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    if (!hasAdminAccessFromToken(decodedToken)) return null;
+    return decodedToken;
+  } catch {
+    return null;
+  }
+}
+
 function escapeHtml(value) {
   return String(value || '')
     .replace(/&/g, '&amp;')
@@ -510,7 +539,7 @@ exports.adminMessageWebhook = functions.https.onRequest(async (req, res) => {
     }
 
     const tokenEmail = normalizeEmail(decodedToken && decodedToken.email);
-    if (tokenEmail !== AUTHORIZED_ADMIN_EMAIL) {
+    if (!hasAdminAccessFromToken(decodedToken)) {
       return res.status(403).json({ error: 'Forbidden' });
     }
 
@@ -683,4 +712,106 @@ exports.notifyUsersOnNewInsightsFeedPost = functions.firestore.document('insight
   }
 
   return null;
+});
+
+exports.adminAccountsManager = functions.https.onRequest(async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.set('Access-Control-Max-Age', '3600');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).send();
+  }
+
+  const decodedToken = await verifyAdminBearerToken(req);
+  if (!decodedToken) {
+    return res.status(403).json({ ok: false, error: 'Forbidden' });
+  }
+
+  if (req.method === 'GET') {
+    try {
+      const users = [];
+      const adminUsers = [];
+      let nextPageToken;
+      do {
+        const page = await admin.auth().listUsers(1000, nextPageToken);
+        (page.users || []).forEach((user) => {
+          if (!user.email) return;
+
+          const mapped = {
+            uid: user.uid,
+            email: normalizeEmail(user.email),
+            displayName: normalizeText(user.displayName),
+            disabled: user.disabled === true,
+            createdAt: user.metadata && user.metadata.creationTime ? user.metadata.creationTime : '',
+            lastSignInAt: user.metadata && user.metadata.lastSignInTime ? user.metadata.lastSignInTime : ''
+          };
+
+          if (isAdminUserRecord(user)) {
+            adminUsers.push(mapped);
+            return;
+          }
+
+          users.push(mapped);
+        });
+        nextPageToken = page.pageToken;
+      } while (nextPageToken);
+
+      users.sort((a, b) => String(a.email).localeCompare(String(b.email)));
+      adminUsers.sort((a, b) => String(a.email).localeCompare(String(b.email)));
+      return res.status(200).json({ ok: true, users, adminUsers });
+    } catch (err) {
+      console.error('adminAccountsManager list failed', err);
+      return res.status(500).json({ ok: false, error: 'Failed to load users' });
+    }
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  const action = normalizeText(req.body && req.body.action).toLowerCase();
+  const uid = normalizeText(req.body && req.body.uid);
+
+  if (!uid) {
+    return res.status(400).json({ ok: false, error: 'uid is required' });
+  }
+
+  try {
+    const userRecord = await admin.auth().getUser(uid);
+
+    if (normalizeEmail(userRecord.email) === AUTHORIZED_ADMIN_EMAIL && action !== 'refresh') {
+      return res.status(400).json({ ok: false, error: 'Primary administrator cannot be modified' });
+    }
+
+    if (action === 'ban') {
+      await admin.auth().updateUser(uid, { disabled: true });
+      return res.status(200).json({ ok: true, uid, action: 'ban' });
+    }
+
+    if (action === 'unban') {
+      await admin.auth().updateUser(uid, { disabled: false });
+      return res.status(200).json({ ok: true, uid, action: 'unban' });
+    }
+
+    if (action === 'grantadmin') {
+      const claims = userRecord.customClaims && typeof userRecord.customClaims === 'object' ? userRecord.customClaims : {};
+      await admin.auth().setCustomUserClaims(uid, { ...claims, admin: true });
+      return res.status(200).json({ ok: true, uid, action: 'grantAdmin' });
+    }
+
+    if (action === 'revokeadmin') {
+      const claims = userRecord.customClaims && typeof userRecord.customClaims === 'object' ? userRecord.customClaims : {};
+      const nextClaims = { ...claims };
+      delete nextClaims.admin;
+      await admin.auth().setCustomUserClaims(uid, nextClaims);
+      return res.status(200).json({ ok: true, uid, action: 'revokeAdmin' });
+    }
+
+    return res.status(400).json({ ok: false, error: 'Unsupported action' });
+  } catch (err) {
+    console.error('adminAccountsManager action failed', { action, uid, error: err && err.message ? err.message : err });
+    return res.status(500).json({ ok: false, error: 'Action failed' });
+  }
 });

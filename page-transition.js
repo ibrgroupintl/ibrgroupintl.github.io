@@ -8,7 +8,8 @@
     '/insights.html',
     '/uploads.html',
     '/settings.html',
-    '/compose.html'
+    '/compose.html',
+    '/accounts.html'
   ]);
 
   const PAGE_LABELS = {
@@ -18,10 +19,11 @@
     '/insights.html': 'Insights Archive',
     '/uploads.html': 'Resume Uploads',
     '/settings.html': 'Account Settings',
-    '/compose.html': 'Compose Message'
+    '/compose.html': 'Compose Message',
+    '/accounts.html': 'Accounts Admin'
   };
 
-  const PREFETCH_PATHS = ['/messages.html', '/insights.html', '/uploads.html', '/settings.html'];
+  const PREFETCH_PATHS = ['/messages.html', '/insights.html', '/uploads.html', '/settings.html', '/accounts.html'];
   const MIN_LOADER_MS = 240;
   let overlayEl = null;
   let prefetchDone = false;

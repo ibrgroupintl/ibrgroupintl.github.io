@@ -507,6 +507,7 @@
       <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
       <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
+      <a class="sidebar-menu-link" href="/accounts.html" id="accountsMenuLink" style="display:none">Accounts Admin</a>
       <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
     </nav>
@@ -621,6 +622,7 @@
       const messagesLink = document.getElementById('messagesLink');
       const topNavMenu = document.getElementById('topNavMenu');
       const composeLink = document.getElementById('composeLink');
+      const accountsMenuLink = document.getElementById('accountsMenuLink');
       const userEmailDisplay = document.getElementById('userEmailDisplay');
       const messageSearchInput = document.getElementById('messageSearchInput');
       const messagesStatus = document.getElementById('messagesStatus');
@@ -887,10 +889,25 @@
         subscribe();
       }
 
-      function showAuthenticated(user) {
+      function tokenHasAdminAccess(email, claims) {
+        const normalized = String(email || '').trim().toLowerCase();
+        const c = claims && typeof claims === 'object' ? claims : {};
+        return normalized === AUTHORIZED_COMPOSE_EMAIL || c.admin === true || c.ownerAdmin === true;
+      }
+
+      async function showAuthenticated(user) {
         const email = String((user && user.email) || '').trim().toLowerCase();
         currentUserUid = String((user && user.uid) || '').trim();
-        isAdminUser = email === AUTHORIZED_COMPOSE_EMAIL;
+
+        let claims = {};
+        try {
+          const tokenResult = await user.getIdTokenResult(true);
+          claims = tokenResult && tokenResult.claims ? tokenResult.claims : {};
+        } catch (err) {
+          claims = {};
+        }
+
+        isAdminUser = tokenHasAdminAccess(email, claims);
         userEmailDisplay.textContent = email || 'Not available';
         loginSection.style.display = 'none';
         dashboard.style.display = 'block';
@@ -902,6 +919,7 @@
         document.body.classList.add('has-sidebar');
 
         composeLink.style.display = isAdminUser ? 'inline-flex' : 'none';
+        if (accountsMenuLink) accountsMenuLink.style.display = isAdminUser ? 'block' : 'none';
         folderSentBtn.style.display = isAdminUser ? 'inline-flex' : 'none';
         if (!isAdminUser && currentFolder === 'sent') currentFolder = 'inbox';
         folderInboxBtn.classList.toggle('active', currentFolder === 'inbox');
@@ -919,6 +937,7 @@
         document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
         composeLink.style.display = 'none';
+        if (accountsMenuLink) accountsMenuLink.style.display = 'none';
         folderSentBtn.style.display = 'none';
         currentFolder = 'inbox';
         currentUserUid = '';
@@ -926,7 +945,10 @@
         clearListener();
       }
 
-      auth.onAuthStateChanged(function (user) { if (user) showAuthenticated(user); else showSignedOut(); });
+      auth.onAuthStateChanged(async function (user) {
+        if (user) await showAuthenticated(user);
+        else showSignedOut();
+      });
       signOutBtn.addEventListener('click', function () { auth.signOut().then(function () { showSignedOut(); window.location.replace('/loggedout.html'); }); });
       messageSearchInput.addEventListener('input', applySearch);
       folderInboxBtn.addEventListener('click', function () { setFolder('inbox'); });
