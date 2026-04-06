@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
@@ -17,15 +17,14 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      ".vs/**"
+      "**/node_modules/**"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
     "rewrites": [
       { "source": "/login", "destination": "/login.html" },
       { "source": "/index", "destination": "/index.html" },
-      { "source": "/public/**", "function": "publicProfilePage" }
+      { "source": "/public/**", "destination": "/public/profile.html" }
     ],
     "headers": [
       {

@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
@@ -17,8 +17,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      ".vs/**"
+      "**/node_modules/**"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
