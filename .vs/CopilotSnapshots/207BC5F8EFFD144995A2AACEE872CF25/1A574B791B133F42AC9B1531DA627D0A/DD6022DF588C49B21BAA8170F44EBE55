@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -338,34 +338,15 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         const chunkSize = 10;
         for (let i = 0; i < uids.length; i += chunkSize) {
           const chunk = uids.slice(i, i + chunkSize);
-
-          // Primary source: userProfiles.userId (same source used in settings.html)
           try {
-            const profilesSnap = await db.collection('userProfiles').where('uid', 'in', chunk).get();
-            profilesSnap.forEach(function (doc) {
-              const data = doc.data() || {};
-              const uid = String(data.uid || doc.id || '').trim();
-              if (!uid) return;
-              const userId = String(data.userId || '').trim().toUpperCase();
-              if (userId) {
-                map[uid] = userId;
-              }
-            });
-          } catch (err) {
-            console.error('Failed to read userProfiles chunk', err);
-          }
-
-          // Fallback source: userIds collection records
-          try {
-            const idsSnap = await db.collection('userIds').where('uid', 'in', chunk).get();
-            idsSnap.forEach(function (doc) {
+            const snap = await db.collection('userIds').where('uid', 'in', chunk).get();
+            snap.forEach(function (doc) {
               const data = doc.data() || {};
               const uid = String(data.uid || '').trim();
-              if (!uid || map[uid]) return;
-              const value = String(data.userId || doc.id || '').trim().toUpperCase();
-              if (value) {
-                map[uid] = value;
-              }
+              if (!uid) return;
+              const rawId = String(doc.id || '').trim();
+              const numericId = rawId.replace(/\D/g, '').slice(-8);
+              map[uid] = numericId.padStart(8, '0');
             });
           } catch (err) {
             console.error('Failed to read userIds chunk', err);

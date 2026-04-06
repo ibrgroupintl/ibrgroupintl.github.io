@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -37,17 +37,6 @@
     .hero { margin-bottom:1rem; padding:1rem 1.1rem; border:1px solid #dbe3ee; border-radius:14px; background:linear-gradient(115deg,#f0f8ff 0%,#f8fbff 55%,#fff 100%); }
     .hero h1 { margin:0; color:#092a4b; font-size:1.35rem; }
     .hero p { margin:.45rem 0 0; color:var(--muted); }
-    .missing-userid {
-      display:inline-flex;
-      align-items:center;
-      border-radius:999px;
-      padding:3px 9px;
-      font-size:.75rem;
-      font-weight:600;
-      background:#fff7ed;
-      color:#9a3412;
-      border:1px solid #fdba74;
-    }
     @media (max-width:980px){ .sidebar-menu-shell{ position:static; width:100%; max-width:1180px; margin:12px auto; } body.has-sidebar .accounts-shell{ margin-left:auto; } }
   </style>
 </head>
@@ -338,34 +327,15 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         const chunkSize = 10;
         for (let i = 0; i < uids.length; i += chunkSize) {
           const chunk = uids.slice(i, i + chunkSize);
-
-          // Primary source: userProfiles.userId (same source used in settings.html)
           try {
-            const profilesSnap = await db.collection('userProfiles').where('uid', 'in', chunk).get();
-            profilesSnap.forEach(function (doc) {
-              const data = doc.data() || {};
-              const uid = String(data.uid || doc.id || '').trim();
-              if (!uid) return;
-              const userId = String(data.userId || '').trim().toUpperCase();
-              if (userId) {
-                map[uid] = userId;
-              }
-            });
-          } catch (err) {
-            console.error('Failed to read userProfiles chunk', err);
-          }
-
-          // Fallback source: userIds collection records
-          try {
-            const idsSnap = await db.collection('userIds').where('uid', 'in', chunk).get();
-            idsSnap.forEach(function (doc) {
+            const snap = await db.collection('userIds').where('uid', 'in', chunk).get();
+            snap.forEach(function (doc) {
               const data = doc.data() || {};
               const uid = String(data.uid || '').trim();
-              if (!uid || map[uid]) return;
-              const value = String(data.userId || doc.id || '').trim().toUpperCase();
-              if (value) {
-                map[uid] = value;
-              }
+              if (!uid) return;
+              const rawId = String(doc.id || '').trim();
+              const numericId = rawId.replace(/\D/g, '').slice(-8);
+              map[uid] = numericId.padStart(8, '0');
             });
           } catch (err) {
             console.error('Failed to read userIds chunk', err);
@@ -378,7 +348,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
       function formatUserIdFromMap(uid, userIdMap) {
         const key = String(uid || '').trim();
         const value = key && userIdMap ? userIdMap[key] : '';
-        return value || '';
+        return value || '00000000';
       }
 
       function renderRows(users, userIdMap) {
@@ -388,17 +358,12 @@ const adminStatusNote = document.getElementById('adminStatusNote');
           return;
         }
 
-        let missingIds = 0;
         accountsRows.innerHTML = users.map(function (u) {
           const statusPill = u.disabled ? '<span class="pill banned">Banned</span>' : '<span class="pill active">Active</span>';
           const banLabel = u.disabled ? 'Unban' : 'Ban';
           const banAction = u.disabled ? 'unban' : 'ban';
-          const resolvedUserId = formatUserIdFromMap(u.uid, userIdMap);
-          const userIdCell = resolvedUserId
-            ? esc(resolvedUserId)
-            : (missingIds++, '<span class="missing-userid">Missing ID</span>');
           return '<tr data-uid="' + esc(u.uid) + '">' +
-            '<td>' + userIdCell + '</td>' +
+            '<td>' + esc(formatUserIdFromMap(u.uid, userIdMap)) + '</td>' +
             '<td>' + esc(u.email || '') + '</td>' +
             '<td>' + esc(u.displayName || '-') + '</td>' +
             '<td>' + statusPill + '</td>' +
@@ -411,7 +376,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         }).join('');
 
         wireRowActions(accountsRows);
-        statusNote.textContent = users.length + ' account' + (users.length === 1 ? '' : 's') + ' loaded.' + (missingIds ? (' ' + missingIds + ' missing User ID mapping' + (missingIds === 1 ? '.' : 's.')) : '');
+        statusNote.textContent = users.length + ' account' + (users.length === 1 ? '' : 's') + ' loaded.';
       }
 
       function renderAdminRows(users, userIdMap) {
@@ -421,19 +386,14 @@ const adminStatusNote = document.getElementById('adminStatusNote');
           return;
         }
 
-        let missingIds = 0;
         adminRows.innerHTML = users.map(function (u) {
           const statusPill = u.disabled ? '<span class="pill banned">Banned</span>' : '<span class="pill active">Active</span>';
           const isPrimaryAdmin = String(u.email || '').toLowerCase() === AUTHORIZED_ADMIN_EMAIL;
           const actionHtml = isPrimaryAdmin
             ? '<span style="color:var(--muted);font-size:.85rem">Protected</span>'
             : '<button type="button" class="btn btn-outline" data-action="revokeAdmin">Revoke admin</button>';
-          const resolvedUserId = formatUserIdFromMap(u.uid, userIdMap);
-          const userIdCell = resolvedUserId
-            ? esc(resolvedUserId)
-            : (missingIds++, '<span class="missing-userid">Missing ID</span>');
           return '<tr data-uid="' + esc(u.uid) + '">' +
-            '<td>' + userIdCell + '</td>' +
+            '<td>' + esc(formatUserIdFromMap(u.uid, userIdMap)) + '</td>' +
             '<td>' + esc(u.email || '') + '</td>' +
             '<td>' + esc(u.displayName || '-') + '</td>' +
             '<td>' + statusPill + '</td>' +
@@ -443,7 +403,7 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         }).join('');
 
         wireRowActions(adminRows);
-        adminStatusNote.textContent = users.length + ' admin account' + (users.length === 1 ? '' : 's') + ' loaded.' + (missingIds ? (' ' + missingIds + ' missing User ID mapping' + (missingIds === 1 ? '.' : 's.')) : '');
+        adminStatusNote.textContent = users.length + ' admin account' + (users.length === 1 ? '' : 's') + ' loaded.';
       }
 
       async function loadAccounts() {
