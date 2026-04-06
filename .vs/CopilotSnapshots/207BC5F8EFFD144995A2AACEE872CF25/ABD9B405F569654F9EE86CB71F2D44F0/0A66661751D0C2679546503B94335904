@@ -1,4 +1,4 @@
-rules_version = '2';
+﻿rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -66,7 +66,7 @@ service cloud.firestore {
     }
 
     match /publicProfiles/{uid} {
-      allow read: if resource.data.isPublic == true || (isSignedIn() && request.auth.uid == uid);
+      allow read: if resource.data.isPublic == true;
       allow create, update: if isSignedIn() && request.auth.uid == uid &&
         request.resource.data.keys().hasOnly([
           'uid',

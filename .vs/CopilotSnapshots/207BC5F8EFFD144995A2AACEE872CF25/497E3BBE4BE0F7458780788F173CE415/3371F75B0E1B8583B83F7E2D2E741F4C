@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,7 +30,7 @@
     .form-label { font-weight:600; color:#0f2f4f; }
     .form-control { width:100%; border:1px solid #d0d7de; border-radius:8px; padding:10px 12px; box-sizing:border-box; font:inherit; }
     .form-control:focus { border-color:#0284c7; box-shadow:0 0 0 3px rgba(2,132,199,.12); outline:none; }
-    textarea.form-control { min-height:170px; font-size:inherit; line-height:1.5; font-family:'Open Sans', Arial, sans-serif; }
+    textarea.form-control { min-height:170px; font-size:11px; line-height:1.5; font-family:'Open Sans', Arial, sans-serif; }
     .muted { color:var(--muted); font-size:.9rem; }
     .image-preview { width:120px; height:120px; border-radius:12px; object-fit:cover; border:1px solid #dbe3ee; background:#f8fafc; }
     .button-row { display:flex; gap:10px; flex-wrap:wrap; }
