@@ -110,7 +110,7 @@ function createSubstackNotificationSubject(postTitle) {
 }
 
 function createSubstackNotificationHtml(post) {
-  const title = escapeHtml(post && post.title ? post.title : 'New Substack insight');
+  const title = escapeHtml(post && post.title ? post.title : 'New Substack Content');
   const link = escapeHtml(post && post.link ? post.link : 'https://substack.ibrecruitment.com');
   const date = escapeHtml(post && post.date ? post.date : 'Date unavailable');
   const snippet = escapeHtml(post && post.snippet ? post.snippet : 'A new insight has been published.');
