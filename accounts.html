@@ -176,7 +176,10 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) { }
 
       const AUTHORIZED_ADMIN_EMAIL = 'developers@ibrecruitment.com';
-      const ADMIN_ENDPOINT = 'https://us-central1-wale-491803.cloudfunctions.net/adminAccountsManager';
+      const ADMIN_ENDPOINTS = [
+  '/adminAccountsManager',
+  'https://us-central1-wale-491803.cloudfunctions.net/adminAccountsManager'
+];
 
       const auth = firebase.auth();
       const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
@@ -224,19 +227,36 @@
       async function callAdminEndpoint(method, payload) {
         if (!currentUser) throw new Error('Not signed in');
         const token = await currentUser.getIdToken(true);
-        const response = await fetch(ADMIN_ENDPOINT, {
-          method: method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: method === 'POST' ? JSON.stringify(payload || {}) : undefined
-        });
-        const data = await response.json().catch(function () { return {}; });
-        if (!response.ok || !data.ok) {
-          throw new Error((data && data.error) ? data.error : 'Request failed');
+
+        let lastError = null;
+
+        for (let i = 0; i < ADMIN_ENDPOINTS.length; i += 1) {
+          const endpoint = ADMIN_ENDPOINTS[i];
+          const url = endpoint.startsWith('http') ? endpoint : new URL(endpoint, window.location.origin).toString();
+
+          try {
+            const response = await fetch(url, {
+              method: method,
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: method === 'POST' ? JSON.stringify(payload || {}) : undefined
+            });
+
+            const data = await response.json().catch(function () { return {}; });
+            if (!response.ok || !data.ok) {
+              throw new Error((data && data.error) ? data.error : ('Request failed (' + response.status + ')'));
+            }
+
+            return data;
+          } catch (err) {
+            lastError = err;
+          }
         }
-        return data;
+
+        throw new Error(lastError && lastError.message ? lastError.message : 'Failed to fetch');
       }
 
       function wireRowActions(container) {
