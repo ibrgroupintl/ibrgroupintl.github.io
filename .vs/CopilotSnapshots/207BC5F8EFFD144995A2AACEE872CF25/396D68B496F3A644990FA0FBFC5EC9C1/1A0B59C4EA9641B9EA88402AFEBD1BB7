@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -65,29 +65,14 @@
       }
 
       try {
-        let data = null;
-
-        const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
-        if (directSnap.exists) {
-          const directData = directSnap.data() || {};
-          if (directData.isPublic === true) {
-            data = directData;
-          }
-        }
-
-        if (!data) {
-          const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
-          if (!snap.empty) {
-            data = snap.docs[0].data() || {};
-          }
-        }
-
-        if (!data) {
+        const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
+        if (snap.empty) {
           nameEl.textContent = 'Profile not found';
           bioEl.textContent = 'No public profile exists for this User ID.';
           return;
         }
 
+        const data = snap.docs[0].data() || {};
         const firstName = String(data.firstName || '').trim().slice(0, 50);
         const lastName = String(data.lastName || '').trim().slice(0, 50);
         const fullName = (firstName + ' ' + lastName).trim() || 'Profile';

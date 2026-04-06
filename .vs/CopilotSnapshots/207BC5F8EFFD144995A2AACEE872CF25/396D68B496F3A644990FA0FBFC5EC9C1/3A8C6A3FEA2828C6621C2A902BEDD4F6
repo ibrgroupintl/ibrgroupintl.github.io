@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -326,7 +326,7 @@
         saveProfileBtn.disabled = true;
         setStatus('Saving profile...');
         try {
-          const payload = {
+          await db.collection('publicProfiles').doc(currentUser.uid).set({
             uid: currentUser.uid,
             userId: userIdValue,
             firstName: firstName,
@@ -337,13 +337,7 @@
             imageDataUrl: imageDataUrl || '',
             isPublic: true,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          };
-
-          const batch = db.batch();
-          batch.set(db.collection('publicProfiles').doc(currentUser.uid), payload, { merge: true });
-          batch.set(db.collection('publicProfilesByUserId').doc(userIdValue), payload, { merge: true });
-          await batch.commit();
-
+          }, { merge: true });
           setStatus('Profile saved successfully.');
         } catch (err) {
           console.error('Profile save failed', err);
