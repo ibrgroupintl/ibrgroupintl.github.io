@@ -455,7 +455,7 @@
 
       if (signOutBtn) {
         signOutBtn.addEventListener('click', function () {
-          auth.signOut().then(function () { showSignedOut(); window.location.replace('/login.html'); });
+          auth.signOut().then(function () { showSignedOut(); window.location.replace('/loggedout.html'); });
         });
       }
     });

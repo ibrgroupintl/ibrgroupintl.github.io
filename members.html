@@ -426,6 +426,7 @@
 		if (userNameEl) userNameEl.textContent = 'Member';
 		if (signOutBtn) signOutBtn.style.display = 'none';
 		if (signInLink) signInLink.style.display = 'inline-flex';
+		if (messagesLink) messagesLink.style.display = 'none';
     if (topNavSearch) topNavSearch.style.display = 'none';
     if (topNavMenu) topNavMenu.style.display = 'none';
     document.body.classList.remove('auth-pending');
@@ -466,6 +467,20 @@
 		if (user) showAuthenticated(user);
 		else showSignedOut();
 	  });
+
+	  if (signOutBtn) {
+	signOutBtn.addEventListener('click', function () {
+	  auth.signOut()
+		.then(function () {
+		  showSignedOut();
+		  window.location.replace('/loggedout.html');
+		})
+		.catch(function (err) {
+		  console.error('Sign out failed', err);
+		  alert('Sign out failed. Please try again.');
+		});
+	});
+  }
 
   // Protected download handler using Firebase Storage SDK so Storage Rules are enforced.
   if (downloadPostsBtn) {

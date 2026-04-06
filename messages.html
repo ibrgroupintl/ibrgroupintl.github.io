@@ -927,7 +927,7 @@
       }
 
       auth.onAuthStateChanged(function (user) { if (user) showAuthenticated(user); else showSignedOut(); });
-      signOutBtn.addEventListener('click', function () { auth.signOut().then(function () { showSignedOut(); window.location.replace('/login.html'); }); });
+      signOutBtn.addEventListener('click', function () { auth.signOut().then(function () { showSignedOut(); window.location.replace('/loggedout.html'); }); });
       messageSearchInput.addEventListener('input', applySearch);
       folderInboxBtn.addEventListener('click', function () { setFolder('inbox'); });
       folderSentBtn.addEventListener('click', function () { setFolder('sent'); });
