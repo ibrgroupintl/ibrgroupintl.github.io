@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Import function triggers from their respective submodules:
  *
  * import {onCall} from "firebase-functions/v2/https";
@@ -187,35 +187,6 @@ function htmlEscape(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function decodeHtmlEntities(value: string): string {
-  return String(value || "")
-    .replace(/&#(\d+);/g, (_match, dec) => {
-      const codePoint = Number(dec);
-      if (!Number.isFinite(codePoint)) return _match;
-      try {
-        return String.fromCodePoint(codePoint);
-      } catch {
-        return _match;
-      }
-    })
-    .replace(/&#x([0-9a-fA-F]+);/g, (_match, hex) => {
-      const codePoint = Number.parseInt(hex, 16);
-      if (!Number.isFinite(codePoint)) return _match;
-      try {
-        return String.fromCodePoint(codePoint);
-      } catch {
-        return _match;
-      }
-    })
-    .replace(/&rsquo;/gi, "’")
-    .replace(/&lsquo;/gi, "‘")
-    .replace(/&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, "&")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">");
-}
-
 export const forwardInboxMessageToEmail = onDocumentCreated("messages/{messageId}", async (event) => {
   const snap = event.data;
   if (!snap) return;
@@ -273,8 +244,8 @@ export const forwardInboxMessageToEmail = onDocumentCreated("messages/{messageId
   const ccList = normalizeEmails(data.cc || data.ccEmail || data.ccEmails)
     .filter((email) => email.toLowerCase() !== toEmail.toLowerCase());
 
-  const subject = decodeHtmlEntities(String(data.subject || "New secure inbox message")).trim() || "New secure inbox message";
-  const body = decodeHtmlEntities(String(data.body || data.message || "")).trim();
+  const subject = String(data.subject || "New secure inbox message").trim() || "New secure inbox message";
+  const body = String(data.body || data.message || "").trim();
   const senderEmail = String(data.senderEmail || data.fromEmail || "admin-messages@ibrecruitment.com").trim();
 
   const textBody =
