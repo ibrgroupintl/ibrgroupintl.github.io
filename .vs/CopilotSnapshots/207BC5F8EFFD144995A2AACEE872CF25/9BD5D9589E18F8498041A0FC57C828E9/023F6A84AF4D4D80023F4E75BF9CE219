@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -165,7 +165,6 @@
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-functions-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
   <script defer src="/header-profile.js"></script>
   <script defer src="/mobile-compat.js"></script>
@@ -184,22 +183,19 @@
 
       const auth = firebase.auth();
       const db = (firebase.firestore && typeof firebase.firestore === 'function') ? firebase.firestore() : null;
-      const functionsClient = (firebase.app && typeof firebase.app === 'function' && firebase.app().functions)
-  ? firebase.app().functions('us-central1')
-  : null;
-const loginSection = document.getElementById('loginSection');
-const deniedSection = document.getElementById('deniedSection');
-const accountsShell = document.getElementById('accountsShell');
-const signOutBtn = document.getElementById('signOutBtn');
-const signInLink = document.getElementById('signInLink');
-const messagesLink = document.getElementById('messagesLink');
-const composeLink = document.getElementById('composeLink');
-const topNavMenu = document.getElementById('topNavMenu');
-const refreshBtn = document.getElementById('refreshBtn');
-const accountsRows = document.getElementById('accountsRows');
-const adminRows = document.getElementById('adminRows');
-const statusNote = document.getElementById('statusNote');
-const adminStatusNote = document.getElementById('adminStatusNote');
+      const loginSection = document.getElementById('loginSection');
+      const deniedSection = document.getElementById('deniedSection');
+      const accountsShell = document.getElementById('accountsShell');
+      const signOutBtn = document.getElementById('signOutBtn');
+      const signInLink = document.getElementById('signInLink');
+      const messagesLink = document.getElementById('messagesLink');
+      const composeLink = document.getElementById('composeLink');
+      const topNavMenu = document.getElementById('topNavMenu');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const accountsRows = document.getElementById('accountsRows');
+      const adminRows = document.getElementById('adminRows');
+      const statusNote = document.getElementById('statusNote');
+      const adminStatusNote = document.getElementById('adminStatusNote');
 
       let currentUser = null;
 
@@ -230,21 +226,8 @@ const adminStatusNote = document.getElementById('adminStatusNote');
 
       async function callAdminEndpoint(method, payload) {
         if (!currentUser) throw new Error('Not signed in');
-
-        if (functionsClient && typeof functionsClient.httpsCallable === 'function') {
-          try {
-            const callable = functionsClient.httpsCallable('adminAccountsManagerCallable');
-            const mode = method === 'GET' ? 'list' : 'action';
-            const result = await callable({ mode: mode, uid: payload && payload.uid, action: payload && payload.action });
-            const data = result && result.data ? result.data : {};
-            if (!data.ok) throw new Error(data.error || 'Request failed');
-            return data;
-          } catch (err) {
-            console.warn('Callable adminAccountsManagerCallable failed, trying HTTP fallback', err);
-          }
-        }
-
         const token = await currentUser.getIdToken(true);
+
         let lastError = null;
 
         for (let i = 0; i < ADMIN_ENDPOINTS.length; i += 1) {
