@@ -23,7 +23,8 @@
     "trailingSlash": false,
     "rewrites": [
       { "source": "/login", "destination": "/login.html" },
-      { "source": "/index", "destination": "/index.html" }
+      { "source": "/index", "destination": "/index.html" },
+      { "source": "/public/**", "destination": "/public/profile.html" }
     ],
     "headers": [
       {

@@ -65,6 +65,34 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    match /publicProfiles/{uid} {
+      allow read: if resource.data.isPublic == true;
+      allow create, update: if isSignedIn() && request.auth.uid == uid &&
+        request.resource.data.keys().hasOnly([
+          'uid',
+          'userId',
+          'firstName',
+          'lastName',
+          'bio',
+          'socialLabel',
+          'socialUrl',
+          'imageDataUrl',
+          'isPublic',
+          'updatedAt'
+        ]) &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.userId is string && request.resource.data.userId.size() >= 4 && request.resource.data.userId.size() <= 20 &&
+        request.resource.data.firstName is string && request.resource.data.firstName.size() <= 50 &&
+        request.resource.data.lastName is string && request.resource.data.lastName.size() <= 50 &&
+        request.resource.data.bio is string && request.resource.data.bio.size() <= 1000 &&
+        request.resource.data.socialLabel is string && request.resource.data.socialLabel.size() <= 40 &&
+        request.resource.data.socialUrl is string && request.resource.data.socialUrl.size() <= 300 &&
+        request.resource.data.imageDataUrl is string && request.resource.data.imageDataUrl.size() <= 1000000 &&
+        request.resource.data.isPublic is bool &&
+        request.resource.data.updatedAt is timestamp;
+      allow delete: if isSignedIn() && request.auth.uid == uid;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
