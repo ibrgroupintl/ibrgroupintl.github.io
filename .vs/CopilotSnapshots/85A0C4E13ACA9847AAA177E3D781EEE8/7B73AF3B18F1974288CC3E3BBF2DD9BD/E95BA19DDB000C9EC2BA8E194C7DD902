@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -417,8 +417,7 @@
           socialLabel,
           socialUrl,
           imageDataUrl: imageDataUrl || '',
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          isPublic: true // Always set public profiles as visible
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         };
         try {
           saveProfileBtn.disabled = true;
