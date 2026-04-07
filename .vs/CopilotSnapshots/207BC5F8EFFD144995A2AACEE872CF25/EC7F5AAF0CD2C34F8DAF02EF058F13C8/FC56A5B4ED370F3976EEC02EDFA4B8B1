@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index, follow">
-  <title>Edit Profile — Impact in Business Recruitment</title>
+  <title>Profile Page — Impact in Business Recruitment</title>
   <link rel="stylesheet" href="/resource-centre.css">
   <link rel="stylesheet" href="/index.css">
   <link rel="stylesheet" href="/mobile-compat.css">
@@ -56,8 +56,8 @@
     </header>
 
     <section id="loginSection" class="auth-shell">
-      <h1 style="margin:0;color:#092a4b">Edit Profile</h1>
-      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to edit your member profile.</p>
+      <h1 style="margin:0;color:#092a4b">Profile Page</h1>
+      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to edit your member profile page.</p>
       <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
     </section>
 
