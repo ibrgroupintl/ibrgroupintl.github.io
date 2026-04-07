@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -528,7 +528,7 @@
       if (deleteAccountBtn) {
         deleteAccountBtn.addEventListener('click', async function () {
           const user = auth.currentUser;
-          if (!user) {
+          with (!user) {
             alert('Please sign in first.');
             return;
           }

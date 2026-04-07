@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -225,16 +225,16 @@
             const data = doc.data() || {};
             const img = data.imageDataUrl || DEFAULT_PUBLIC_IMAGE;
             const name = (data.firstName || '') + ' ' + (data.lastName || '');
-            let bio = data.bio || '';
+            const bio = data.bio || '';
             const socialLabel = data.socialLabel || '';
             const socialUrl = data.socialUrl || '';
-            // Hyperlink URLs in bio
-            bio = bio.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+            const profileSlug = data.profileSlug || doc.id;
+            const profileUrl = '/profile/' + encodeURIComponent(profileSlug) + '.html';
             const card = document.createElement('div');
             card.className = 'profile-card';
             card.innerHTML = `
-              <img src="${img}" alt="${name} profile photo">
-              <div class="name">${name}</div>
+              <a href="${profileUrl}" tabindex="0"><img src="${img}" alt="${name} profile photo"></a>
+              <a href="${profileUrl}" class="name">${name}</a>
               <div class="bio">${bio}</div>
               ${socialUrl ? `<a class="social-link" href="${socialUrl}" target="_blank" rel="noopener noreferrer"><svg style='width:1em;height:1em;vertical-align:-0.15em;margin-right:3px' fill='currentColor' viewBox='0 0 24 24'><path d='M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-7 19c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm7-13c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-7 3c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/></svg>${socialLabel || 'Social'}</a>` : ''}
             `;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -262,6 +262,9 @@
       <section class="panel">
         <div class="panel-head">
           <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Member Profile Settings</h1>
+          <p class="muted" style="margin:.45rem 0 0">Profile URL:</p>
+          <div class="profile-url-box"><a id="publicProfileLink" href="#" target="_blank" rel="noopener noreferrer">-</a>
+          </div>
           <p id="profileDocStatus" class="muted" style="margin:.35rem 0 0">Profile record: loading...</p>
         </div>
         <div class="panel-body">
@@ -303,6 +306,7 @@
             <div class="button-row">
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
+              <a id="openProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Profile Page</a>
             </div>
 
             <p id="profileStatus" class="status-note">Loading profile...</p>
