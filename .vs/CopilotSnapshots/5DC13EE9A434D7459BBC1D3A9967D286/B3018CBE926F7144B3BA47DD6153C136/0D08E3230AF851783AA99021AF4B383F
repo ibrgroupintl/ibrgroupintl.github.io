@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -233,23 +233,11 @@
       <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
       <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-      <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
-      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
+      <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude
+        Code</a>
+      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact
+        Sales</a>
     </nav>
-    <script>
-      // Show/hide sidebar menu based on authentication
-      function updateSidebarVisibility() {
-        var sidebar = document.getElementById('topNavMenu');
-        if (document.body.classList.contains('has-sidebar')) {
-          sidebar.style.display = 'block';
-        } else {
-          sidebar.style.display = 'none';
-        }
-      }
-      document.addEventListener('DOMContentLoaded', updateSidebarVisibility);
-      var observer = new MutationObserver(updateSidebarVisibility);
-      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    </script>
 
     <section id="loginSection" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Edit Profile</h1>
