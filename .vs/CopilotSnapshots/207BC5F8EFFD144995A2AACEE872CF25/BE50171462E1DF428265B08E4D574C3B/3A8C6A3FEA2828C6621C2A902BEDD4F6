@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -125,6 +125,7 @@
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
               <a id="openPublicProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Profile Page</a>
+              <button type="button" id="copyProfileUrlBtn" class="btn btn-outline">Copy Profile URL</button>
             </div>
 
             <p id="profileStatus" class="status-note">Loading profile...</p>
@@ -176,6 +177,7 @@
       const publicProfileLink = document.getElementById('publicProfileLink');
       const publicProfileDocStatus = document.getElementById('publicProfileDocStatus');
       const openPublicProfileBtn = document.getElementById('openPublicProfileBtn');
+      const copyProfileUrlBtn = document.getElementById('copyProfileUrlBtn');
 
       const USER_ID_PREFIX = 'IB';
       const USER_ID_TOTAL_LENGTH = 8;
@@ -414,6 +416,22 @@
       });
 
       saveProfileBtn.addEventListener('click', saveProfile);
+
+      if (copyProfileUrlBtn) {
+        copyProfileUrlBtn.addEventListener('click', async function () {
+          const url = publicProfileLink.href && publicProfileLink.href !== '#' ? new URL(publicProfileLink.getAttribute('href'), window.location.origin).toString() : '';
+          if (!url) {
+            setStatus('Save the profile first to generate a profile URL.');
+            return;
+          }
+          try {
+            await navigator.clipboard.writeText(url);
+            setStatus('Profile URL copied to clipboard.');
+          } catch (err) {
+            setStatus('Unable to copy profile URL.');
+          }
+        });
+      }
 
       signOutBtn.addEventListener('click', function () {
         auth.signOut().then(function () {
