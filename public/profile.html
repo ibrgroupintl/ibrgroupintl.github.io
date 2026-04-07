@@ -41,9 +41,9 @@
 
   <div class="wrap">
     <article class="card">
-      <div class="head">Impact in Business Recruitment — Public Profile</div>
+      <div class="head">Impact in Business Recruitment — Member Profile</div>
       <div class="body">
-        <img id="profileImage" class="avatar" src="/100.png" alt="Public profile image">
+        <img id="profileImage" class="avatar" src="/100.png" alt="Profile image">
         <h1 id="profileName">Profile</h1>
         <p id="profileBio" class="bio empty">This profile is not available.</p>
         <p id="profileSocial" class="social"></p>
@@ -114,17 +114,17 @@
           const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
           if (directSnap.exists) {
             const directData = directSnap.data() || {};
-            if (directData.isPublic === true) data = directData;
+            data = directData;
           }
 
           if (!data) {
-            const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
+            const snap = await db.collection('publicProfiles').where('userId', '==', userId).limit(1).get();
             if (!snap.empty) data = snap.docs[0].data() || {};
           }
 
           if (!data) {
             nameEl.textContent = 'Profile not found';
-            bioEl.textContent = 'No public profile exists for this User ID.';
+            bioEl.textContent = 'No profile exists for this User ID.';
             hintEl.textContent = 'If you just saved the profile, refresh once more or save again.';
             return;
           }

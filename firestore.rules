@@ -77,7 +77,6 @@ service cloud.firestore {
           'socialLabel',
           'socialUrl',
           'imageDataUrl',
-          'isPublic',
           'updatedAt'
         ]) &&
         request.resource.data.uid == request.auth.uid &&
@@ -88,7 +87,6 @@ service cloud.firestore {
         request.resource.data.socialLabel is string && request.resource.data.socialLabel.size() <= 40 &&
         request.resource.data.socialUrl is string && request.resource.data.socialUrl.size() <= 300 &&
         request.resource.data.imageDataUrl is string && request.resource.data.imageDataUrl.size() <= 1000000 &&
-        request.resource.data.isPublic is bool &&
         request.resource.data.updatedAt is timestamp;
       allow delete: if isSignedIn() && request.auth.uid == uid;
     }
@@ -105,7 +103,6 @@ service cloud.firestore {
           'socialLabel',
           'socialUrl',
           'imageDataUrl',
-          'isPublic',
           'updatedAt'
         ]) &&
         request.resource.data.uid == request.auth.uid &&
@@ -117,7 +114,6 @@ service cloud.firestore {
         request.resource.data.socialLabel is string && request.resource.data.socialLabel.size() <= 40 &&
         request.resource.data.socialUrl is string && request.resource.data.socialUrl.size() <= 300 &&
         request.resource.data.imageDataUrl is string && request.resource.data.imageDataUrl.size() <= 1000000 &&
-        request.resource.data.isPublic is bool &&
         request.resource.data.updatedAt is timestamp;
       allow delete: if isSignedIn() && resource.data.uid == request.auth.uid;
     }

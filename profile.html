@@ -74,22 +74,22 @@
 
     <section id="loginSection" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Profile Page</h1>
-      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to edit your public profile page.</p>
+      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to edit your member profile page.</p>
       <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
     </section>
 
     <main id="profileShell" class="profile-shell" role="main">
       <section class="panel">
         <div class="panel-head">
-          <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Public Profile Settings</h1>
-          <p class="muted" style="margin:.45rem 0 0">Your public URL: <a id="publicProfileLink" href="#" target="_blank" rel="noopener noreferrer">-</a></p>
-          <p id="publicProfileDocStatus" class="muted" style="margin:.35rem 0 0">Public profile record: loading...</p>
+          <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Member Profile Settings</h1>
+          <p class="muted" style="margin:.45rem 0 0">Your profile URL: <a id="publicProfileLink" href="#" target="_blank" rel="noopener noreferrer">-</a></p>
+          <p id="publicProfileDocStatus" class="muted" style="margin:.35rem 0 0">Profile record: loading...</p>
         </div>
         <div class="panel-body">
           <div class="form-grid">
             <div class="form-row">
-              <span class="form-label">Public profile image</span>
-              <img id="profileImagePreview" class="image-preview" src="/100.png" alt="Public profile image preview">
+              <span class="form-label">Profile image</span>
+              <img id="profileImagePreview" class="image-preview" src="/100.png" alt="Profile image preview">
               <input id="profileImageInput" class="form-control" type="file" accept="image/png,image/jpeg,image/webp">
               <span class="muted">Default image is used if none uploaded.</span>
             </div>
@@ -106,7 +106,7 @@
             </div>
 
             <div class="form-row">
-              <label class="form-label" for="bioInput">Public bio (max 1000)</label>
+              <label class="form-label" for="bioInput">Bio (max 1000)</label>
               <textarea id="bioInput" class="form-control" maxlength="1000" placeholder="Tell people about your work and focus..."></textarea>
             </div>
 
@@ -124,7 +124,7 @@
             <div class="button-row">
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
-              <a id="openPublicProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Public Page</a>
+              <a id="openPublicProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Profile Page</a>
             </div>
 
             <p id="profileStatus" class="status-note">Loading profile...</p>
@@ -344,7 +344,6 @@
             socialLabel: socialLabel,
             socialUrl: socialUrl,
             imageDataUrl: imageDataUrl || '',
-            isPublic: true,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           };
 
