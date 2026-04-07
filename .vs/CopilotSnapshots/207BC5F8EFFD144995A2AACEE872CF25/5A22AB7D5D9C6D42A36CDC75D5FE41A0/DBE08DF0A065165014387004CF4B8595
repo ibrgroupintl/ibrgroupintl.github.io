@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -76,6 +76,68 @@
       const queryId = new URLSearchParams(window.location.search).get('id') || '';
       const userId = String(queryId || pathPart || '').trim().toUpperCase();
 
+      if (!userId) {
+        nameEl.textContent = 'Profile not found';
+        bioEl.textContent = 'Missing profile identifier.';
+        hintEl.textContent = 'Use /public/<userId>.html';
+        return;
+      }
+
+      hintEl.textContent = 'Looking up ' + userId + '...';
+
+      try {
+        let data = null;
+        const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
+        if (directSnap.exists) {
+          const directData = directSnap.data() || {};
+          if (directData.isPublic === true) data = directData;
+        }
+
+        if (!data) {
+          const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
+          if (!snap.empty) data = snap.docs[0].data() || {};
+        }
+
+        if (!data) {
+          nameEl.textContent = 'Profile not found';
+          bioEl.textContent = 'No public profile exists for this User ID.';
+          hintEl.textContent = 'If you just saved the profile, refresh once more or save again.';
+          return;
+        }
+
+        const firstName = String(data.firstName || '').trim().slice(0, 50);
+        const lastName = String(data.lastName || '').trim().slice(0, 50);
+        const fullName = (firstName + ' ' + lastName).trim() || 'Profile';
+        const bio = String(data.bio || '').trim().slice(0, 1000);
+        const socialUrl = String(data.socialUrl || '').trim();
+        const socialLabel = String(data.socialLabel || 'Social profile').trim().slice(0, 40);
+        const imageDataUrl = String(data.imageDataUrl || '').trim();
+
+        nameEl.textContent = fullName;
+        bioEl.textContent = bio || 'No bio provided.';
+        bioEl.classList.toggle('empty', !bio);
+        hintEl.textContent = 'User ID: ' + userId;
+
+        document.title = fullName + ' — Impact in Business Recruitment';
+        const meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute('content', fullName + ' public profile');
+
+        if (imageDataUrl) imageEl.src = imageDataUrl;
+
+        if (socialUrl) {
+          try {
+            const u = new URL(socialUrl);
+            if (u.protocol === 'http:' || u.protocol === 'https:') {
+              socialEl.innerHTML = '<a href="' + socialUrl.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener noreferrer">' + (socialLabel || 'Social profile') + '</a>';
+            }
+          } catch (err) {}
+        }
+      } catch (err) {
+        console.error('Public profile load failed', err);
+        nameEl.textContent = 'Profile unavailable';
+        bioEl.textContent = 'Unable to load profile right now.';
+      }
+
       function setAuthState(user) {
         if (!authStatusEl || !authActionLink) return;
         if (user) {
@@ -95,82 +157,7 @@
         }
       }
 
-      function showSignInRequired() {
-        window.location.replace('/login.html?redirect=' + encodeURIComponent(window.location.pathname + window.location.search));
-      }
-
-      async function loadProfile() {
-        if (!userId) {
-          nameEl.textContent = 'Profile not found';
-          bioEl.textContent = 'Missing profile identifier.';
-          hintEl.textContent = 'Use /public/<userId>.html';
-          return;
-        }
-
-        hintEl.textContent = 'Looking up ' + userId + '...';
-
-        try {
-          let data = null;
-          const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
-          if (directSnap.exists) {
-            const directData = directSnap.data() || {};
-            if (directData.isPublic === true) data = directData;
-          }
-
-          if (!data) {
-            const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
-            if (!snap.empty) data = snap.docs[0].data() || {};
-          }
-
-          if (!data) {
-            nameEl.textContent = 'Profile not found';
-            bioEl.textContent = 'No public profile exists for this User ID.';
-            hintEl.textContent = 'If you just saved the profile, refresh once more or save again.';
-            return;
-          }
-
-          const firstName = String(data.firstName || '').trim().slice(0, 50);
-          const lastName = String(data.lastName || '').trim().slice(0, 50);
-          const fullName = (firstName + ' ' + lastName).trim() || 'Profile';
-          const bio = String(data.bio || '').trim().slice(0, 1000);
-          const socialUrl = String(data.socialUrl || '').trim();
-          const socialLabel = String(data.socialLabel || 'Social profile').trim().slice(0, 40);
-          const imageDataUrl = String(data.imageDataUrl || '').trim();
-
-          nameEl.textContent = fullName;
-          bioEl.textContent = bio || 'No bio provided.';
-          bioEl.classList.toggle('empty', !bio);
-          hintEl.textContent = 'User ID: ' + userId;
-
-          document.title = fullName + ' — Impact in Business Recruitment';
-          const meta = document.querySelector('meta[name="description"]');
-          if (meta) meta.setAttribute('content', fullName + ' public profile');
-
-          imageEl.src = imageDataUrl || '/100.png';
-
-          if (socialUrl) {
-            try {
-              const u = new URL(socialUrl);
-              if (u.protocol === 'http:' || u.protocol === 'https:') {
-                socialEl.innerHTML = '<a href="' + socialUrl.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener noreferrer">' + (socialLabel || 'Social profile') + '</a>';
-              }
-            } catch (err) {}
-          }
-        } catch (err) {
-          console.error('Public profile load failed', err);
-          nameEl.textContent = 'Profile unavailable';
-          bioEl.textContent = 'Unable to load profile right now.';
-        }
-      }
-
-      auth.onAuthStateChanged(async function (user) {
-        setAuthState(user || null);
-        if (!user) {
-          showSignInRequired();
-          return;
-        }
-        await loadProfile();
-      });
+      auth.onAuthStateChanged(function (user) { setAuthState(user || null); });
     });
   </script>
 </body>

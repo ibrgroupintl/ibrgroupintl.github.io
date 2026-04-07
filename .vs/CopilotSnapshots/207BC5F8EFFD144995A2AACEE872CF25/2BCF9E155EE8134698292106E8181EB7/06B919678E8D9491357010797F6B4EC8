@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -96,7 +96,12 @@
       }
 
       function showSignInRequired() {
-        window.location.replace('/login.html?redirect=' + encodeURIComponent(window.location.pathname + window.location.search));
+        nameEl.textContent = 'Sign in required';
+        bioEl.textContent = 'This profile page is available to signed-in users only.';
+        bioEl.classList.add('empty');
+        hintEl.textContent = 'Use the Sign In button above to continue.';
+        imageEl.src = '/100.png';
+        socialEl.innerHTML = '';
       }
 
       async function loadProfile() {
