@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -96,17 +96,10 @@
       }
 
       async function loadProfile() {
-        if (!auth.currentUser) return;
-        if (!userId) {
-          nameEl.textContent = 'Profile not found';
-          bioEl.textContent = 'Missing profile identifier.';
-          hintEl.textContent = 'Use /public/<userId>.html';
-          return;
-        }
-
-        hintEl.textContent = 'Looking up ' + userId + '...';
+        hintEl.textContent = 'Loading your profile...';
 
         try {
+          const userId = auth.currentUser.uid;
           const doc = await db.collection('publicProfiles').doc(auth.currentUser.uid).get();
           const data = doc.exists ? (doc.data() || {}) : null;
           if (!data) {

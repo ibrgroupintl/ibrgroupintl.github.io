@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -196,6 +196,53 @@
           hash = Math.imul(hash, 16777619);
         }
         return USER_ID_PREFIX + toBase36Padded(hash, USER_ID_SUFFIX_LENGTH);
+      }
+
+      async function createUniqueUserIdForUser(user) {
+        const deterministicFallback = generateDeterministicUserId(user && user.uid, 0);
+        const profileRef = db.collection('userProfiles').doc(user.uid);
+
+        for (let attempt = 0; attempt < 200; attempt++) {
+          const candidate = generateDeterministicUserId(user.uid, attempt);
+          const candidateRef = db.collection('userIds').doc(candidate);
+
+          try {
+            const assigned = await db.runTransaction(async function (tx) {
+              const profileSnap = await tx.get(profileRef);
+              if (profileSnap.exists) {
+                const existing = profileSnap.data() && profileSnap.data().userId;
+                if (existing && typeof existing === 'string') return existing.toUpperCase();
+              }
+
+              const candidateSnap = await tx.get(candidateRef);
+              if (candidateSnap.exists) {
+                const data = candidateSnap.data() || {};
+                if (data.uid !== user.uid) throw new Error('collision');
+              }
+
+              tx.set(candidateRef, { uid: user.uid, email: user.email || '', updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+              tx.set(profileRef, { userId: candidate, email: user.email || '', updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+              return candidate;
+            });
+
+            if (assigned) return assigned.toUpperCase();
+          } catch (err) {
+            if (err && err.message === 'collision') continue;
+            throw err;
+          }
+        }
+
+        return deterministicFallback;
+      }
+
+      async function getOrCreateUserId(user) {
+        const deterministicFallback = generateDeterministicUserId(user && user.uid, 0);
+        const profileSnap = await db.collection('userProfiles').doc(user.uid).get();
+        if (profileSnap.exists) {
+          const data = profileSnap.data() || {};
+          if (data.userId && typeof data.userId === 'string') return data.userId.toUpperCase();
+        }
+        return createUniqueUserIdForUser(user).catch(function () { return deterministicFallback; });
       }
 
       function setPublicLink(userId) {
