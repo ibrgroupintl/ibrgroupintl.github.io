@@ -36,6 +36,7 @@
     "rewrites": [
       { "source": "/login", "destination": "/login.html" },
       { "source": "/index", "destination": "/index.html" },
+      { "source": "/profile.html", "destination": "/editprofile.html" },
       { "source": "/profile/**", "function": "publicProfilePage" }
     ],
     "headers": [
