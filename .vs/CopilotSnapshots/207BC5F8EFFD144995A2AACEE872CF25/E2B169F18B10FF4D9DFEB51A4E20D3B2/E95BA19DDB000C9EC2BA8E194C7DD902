@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -54,19 +54,6 @@
         </div>
       </div>
     </header>
-
-    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation" style="display:none">
-      <a class="sidebar-menu-link" href="/index.html">Home</a>
-      <a class="sidebar-menu-link" href="/editprofile.html">Edit Profile</a>
-      <a class="sidebar-menu-link" href="/members.html">Members Area</a>
-      <a class="sidebar-menu-link" href="/accounts.html">Accounts Admin</a>
-      <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
-      <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
-      <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
-      <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
-      <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
-      <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
-    </nav>
 
     <section id="loginSection" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Edit Profile</h1>
