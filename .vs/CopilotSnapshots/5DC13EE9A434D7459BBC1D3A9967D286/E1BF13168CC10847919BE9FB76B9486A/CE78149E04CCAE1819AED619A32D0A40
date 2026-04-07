@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -255,7 +255,6 @@
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
       <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Query The Model</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
-      <a class="sidebar-menu-link" href="/directory.html">Member Directory</a>
     </nav>
 
     <div id="login-section" style="max-width:680px;margin:2rem auto;text-align:center">
