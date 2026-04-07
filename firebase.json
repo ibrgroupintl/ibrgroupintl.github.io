@@ -21,13 +21,16 @@
       ".vs/**",
       "app/**",
       "functions/**",
+      "public/**",
       "firebase-debug.log",
       "*.md",
       "package.json",
       "package-lock.json",
       "firestore.rules",
       "*.sln",
-      "*.slnx"
+      "*.slnx",
+      "wasnt-sure.txt",
+      "flist.json"
     ],
     "cleanUrls": true,
     "trailingSlash": false,

@@ -8,6 +8,7 @@
         "dev": "nodemon server.js",
         "build": "echo \"No build step defined\"",
         "deploy": "firebase deploy --only hosting",
+        "deploy:hosting:stable": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy-hosting-stable.ps1",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

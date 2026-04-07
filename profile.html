@@ -83,6 +83,7 @@
         <div class="panel-head">
           <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Public Profile Settings</h1>
           <p class="muted" style="margin:.45rem 0 0">Your public URL: <a id="publicProfileLink" href="#" target="_blank" rel="noopener noreferrer">-</a></p>
+          <p id="publicProfileDocStatus" class="muted" style="margin:.35rem 0 0">Public profile record: loading...</p>
         </div>
         <div class="panel-body">
           <div class="form-grid">
@@ -123,6 +124,7 @@
             <div class="button-row">
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
+              <a id="openPublicProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Public Page</a>
             </div>
 
             <p id="profileStatus" class="status-note">Loading profile...</p>
@@ -172,6 +174,8 @@
       const saveProfileBtn = document.getElementById('saveProfileBtn');
       const profileStatus = document.getElementById('profileStatus');
       const publicProfileLink = document.getElementById('publicProfileLink');
+      const publicProfileDocStatus = document.getElementById('publicProfileDocStatus');
+      const openPublicProfileBtn = document.getElementById('openPublicProfileBtn');
 
       const USER_ID_PREFIX = 'IB';
       const USER_ID_TOTAL_LENGTH = 8;
@@ -245,6 +249,7 @@
         const href = '/public/' + encodeURIComponent(userId) + '.html';
         publicProfileLink.href = href;
         publicProfileLink.textContent = href;
+        if (openPublicProfileBtn) openPublicProfileBtn.href = href;
       }
 
       function setStatus(text) {
@@ -299,6 +304,10 @@
         const snap = await db.collection('publicProfiles').doc(uid).get();
         const data = snap.exists ? (snap.data() || {}) : {};
 
+        if (publicProfileDocStatus) {
+          publicProfileDocStatus.textContent = snap.exists ? 'Public profile record: found' : 'Public profile record: not saved yet';
+        }
+
         firstNameInput.value = normalizeText(data.firstName, 50);
         lastNameInput.value = normalizeText(data.lastName, 50);
         bioInput.value = normalizeText(data.bio, 1000);
@@ -344,6 +353,7 @@
           batch.set(db.collection('publicProfilesByUserId').doc(userIdValue), payload, { merge: true });
           await batch.commit();
 
+          if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: saved';
           setStatus('Profile saved successfully.');
         } catch (err) {
           console.error('Profile save failed', err);
@@ -362,6 +372,7 @@
         if (topNavMenu) topNavMenu.style.display = 'none';
         document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
+        if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: sign in to view';
       }
 
       async function showAuthenticated(user) {
@@ -379,6 +390,7 @@
         userIdValue = await getOrCreateUserId(user);
         setPublicLink(userIdValue);
         await loadProfile(user.uid);
+        if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: loading...';
         setStatus('Profile loaded.');
       }
 
