@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
@@ -36,7 +36,7 @@
     "rewrites": [
       { "source": "/login", "destination": "/login.html" },
       { "source": "/index", "destination": "/index.html" },
-      { "source": "/public/**", "destination": "/public/profile.html" }
+      { "source": "/public/**", "function": "publicProfilePage" }
     ],
     "headers": [
       {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -24,7 +24,6 @@
     .social a { color:#0b61a4; text-decoration:none; font-weight:600; }
     .empty { color:var(--muted); }
     .footer { margin-top:1rem; color:var(--muted); font-size:.85rem; text-align:center; }
-    .hint { margin-top:.5rem; color:var(--muted); font-size:.9rem; }
   </style>
 </head>
 <body>
@@ -36,7 +35,6 @@
         <h1 id="profileName">Profile</h1>
         <p id="profileBio" class="bio empty">This profile is not available.</p>
         <p id="profileSocial" class="social"></p>
-        <p id="profileHint" class="hint"></p>
       </div>
     </article>
     <p class="footer">&copy; 2026 Impact in Business Recruitment</p>
@@ -55,7 +53,6 @@
       const nameEl = document.getElementById('profileName');
       const bioEl = document.getElementById('profileBio');
       const socialEl = document.getElementById('profileSocial');
-      const hintEl = document.getElementById('profileHint');
 
       const pathPart = (window.location.pathname.split('/').pop() || '').replace(/\.html$/i, '');
       const queryId = new URLSearchParams(window.location.search).get('id') || '';
@@ -64,29 +61,30 @@
       if (!userId) {
         nameEl.textContent = 'Profile not found';
         bioEl.textContent = 'Missing profile identifier.';
-        hintEl.textContent = 'Use /public/<userId>.html';
         return;
       }
 
-      hintEl.textContent = 'Looking up ' + userId + '...';
-
       try {
         let data = null;
+
         const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
         if (directSnap.exists) {
           const directData = directSnap.data() || {};
-          if (directData.isPublic === true) data = directData;
+          if (directData.isPublic === true) {
+            data = directData;
+          }
         }
 
         if (!data) {
           const snap = await db.collection('publicProfiles').where('userId', '==', userId).where('isPublic', '==', true).limit(1).get();
-          if (!snap.empty) data = snap.docs[0].data() || {};
+          if (!snap.empty) {
+            data = snap.docs[0].data() || {};
+          }
         }
 
         if (!data) {
           nameEl.textContent = 'Profile not found';
           bioEl.textContent = 'No public profile exists for this User ID.';
-          hintEl.textContent = 'If you just saved the profile, refresh once more or save again.';
           return;
         }
 
@@ -101,7 +99,6 @@
         nameEl.textContent = fullName;
         bioEl.textContent = bio || 'No bio provided.';
         bioEl.classList.toggle('empty', !bio);
-        hintEl.textContent = 'User ID: ' + userId;
 
         document.title = fullName + ' — Impact in Business Recruitment';
         const meta = document.querySelector('meta[name="description"]');
