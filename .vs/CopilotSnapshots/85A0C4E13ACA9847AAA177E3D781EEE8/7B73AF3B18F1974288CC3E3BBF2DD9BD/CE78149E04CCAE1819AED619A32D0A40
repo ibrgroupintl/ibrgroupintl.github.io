@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -465,8 +465,6 @@
       function tokenHasAdminAccess(email, claims) {
         const normalized = String(email || '').trim().toLowerCase();
         const c = claims && typeof claims === 'object' ? claims : {};
-        // Always grant admin access to developers@ibrecruitment.com
-        if (normalized === 'developers@ibrecruitment.com') return true;
         return normalized === AUTHORIZED_EMAIL.toLowerCase().trim() || c.admin === true || c.ownerAdmin === true;
       }
 
