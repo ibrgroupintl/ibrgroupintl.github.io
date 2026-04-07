@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -396,35 +396,13 @@ const adminStatusNote = document.getElementById('adminStatusNote');
         adminStatusNote.textContent = users.length + ' admin account' + (users.length === 1 ? '' : 's') + ' loaded.' + (missingIds ? (' ' + missingIds + ' missing User ID mapping' + (missingIds === 1 ? '.' : 's.')) : '');
       }
 
-      const db = firebase.firestore();
-
-      async function attachUserIds(users) {
-        // Fetch userId for each user from userProfiles
-        const promises = users.map(async (u) => {
-          try {
-            const snap = await db.collection('userProfiles').doc(u.uid).get();
-            if (snap.exists && snap.data().userId) {
-              u.userId = snap.data().userId;
-            } else {
-              u.userId = '';
-            }
-          } catch {
-            u.userId = '';
-          }
-          return u;
-        });
-        return Promise.all(promises);
-      }
-
       async function loadAccounts() {
         statusNote.textContent = 'Loading accounts...';
         adminStatusNote.textContent = 'Loading admin accounts...';
         try {
           const data = await callAdminEndpoint('GET');
-          let users = Array.isArray(data.users) ? data.users : [];
-          let adminUsers = Array.isArray(data.adminUsers) ? data.adminUsers : [];
-          users = await attachUserIds(users);
-          adminUsers = await attachUserIds(adminUsers);
+          const users = Array.isArray(data.users) ? data.users : [];
+          const adminUsers = Array.isArray(data.adminUsers) ? data.adminUsers : [];
           renderRows(users);
           renderAdminRows(adminUsers);
         } catch (err) {
