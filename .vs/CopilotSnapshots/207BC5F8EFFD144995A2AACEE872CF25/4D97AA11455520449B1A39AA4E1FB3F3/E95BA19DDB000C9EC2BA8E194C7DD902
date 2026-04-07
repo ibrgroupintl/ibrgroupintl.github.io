@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -55,7 +55,7 @@
       </div>
     </header>
 
-    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation">
+    <nav id="topNavMenu" class="sidebar-menu-shell" aria-label="Members navigation" style="display:none">
       <a class="sidebar-menu-link" href="/index.html">Home</a>
       <a class="sidebar-menu-link" href="/editprofile.html">Edit Profile</a>
       <a class="sidebar-menu-link" href="/members.html">Members Area</a>
