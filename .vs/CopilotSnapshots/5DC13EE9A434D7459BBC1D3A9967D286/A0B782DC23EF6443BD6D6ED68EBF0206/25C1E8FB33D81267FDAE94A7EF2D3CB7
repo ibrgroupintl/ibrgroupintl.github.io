@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -512,7 +512,6 @@
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
       <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
-      <a class="sidebar-menu-link" href="/directory.html">Member Directory</a>
     </nav>
 
     <section id="login-section" class="auth-shell">
