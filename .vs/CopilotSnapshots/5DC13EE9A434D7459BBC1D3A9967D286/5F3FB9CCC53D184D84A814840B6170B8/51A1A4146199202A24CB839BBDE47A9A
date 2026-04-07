@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -274,19 +274,5 @@
       }
     });
   </script>
-  <script>
-      // Show/hide sidebar menu based on authentication
-      function updateSidebarVisibility() {
-        var sidebar = document.getElementById('topNavMenu');
-        if (document.body.classList.contains('has-sidebar')) {
-          sidebar.style.display = 'block';
-        } else {
-          sidebar.style.display = 'none';
-        }
-      }
-      document.addEventListener('DOMContentLoaded', updateSidebarVisibility);
-      var observer = new MutationObserver(updateSidebarVisibility);
-      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    </script>
 </body>
 </html>
