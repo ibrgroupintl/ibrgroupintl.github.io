@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -13,11 +13,7 @@
     :root { --card:#ffffff; --line:#dbe3ee; --text:#0f172a; --muted:#475569; --accent:#092a4b; }
     * { box-sizing:border-box; }
     body { margin:0; font-family:'Open Sans',Arial,sans-serif; color:var(--text); background:linear-gradient(180deg,#f5f9ff 0%,#ffffff 100%); }
-    .topbar { max-width:860px; margin:1rem auto 0; padding:0 1rem; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-    .auth-pill { display:inline-flex; align-items:center; gap:8px; padding:.45rem .75rem; border:1px solid #dbe3ee; border-radius:999px; background:#fff; color:var(--muted); font-size:.9rem; }
-    .auth-pill strong { color:#092a4b; }
-    .auth-actions { display:flex; gap:10px; flex-wrap:wrap; }
-    .wrap { max-width:860px; margin:1rem auto 2rem; padding:0 1rem; }
+    .wrap { max-width:860px; margin:2rem auto; padding:0 1rem; }
     .card { background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:0 12px 28px rgba(2,6,23,.08); overflow:hidden; }
     .head { padding:1.2rem; background:linear-gradient(125deg,#0d4ea4,#22c1f1); color:#fff; }
     .body { padding:1.2rem; }
@@ -32,13 +28,6 @@
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div id="authStatus" class="auth-pill">Loading account status...</div>
-    <div class="auth-actions">
-      <a id="authActionLink" class="btn btn-outline" href="/login.html">Sign In</a>
-    </div>
-  </div>
-
   <div class="wrap">
     <article class="card">
       <div class="head">Impact in Business Recruitment — Public Profile</div>
@@ -55,22 +44,18 @@
 
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="/firebase-config.js"></script>
   <script>
     window.addEventListener('load', async function () {
       if (!window.firebase || !window.firebaseConfig) return;
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) {}
       const db = firebase.firestore();
-      const auth = firebase.auth();
 
       const imageEl = document.getElementById('profileImage');
       const nameEl = document.getElementById('profileName');
       const bioEl = document.getElementById('profileBio');
       const socialEl = document.getElementById('profileSocial');
       const hintEl = document.getElementById('profileHint');
-      const authStatusEl = document.getElementById('authStatus');
-      const authActionLink = document.getElementById('authActionLink');
 
       const pathPart = (window.location.pathname.split('/').pop() || '').replace(/\.html$/i, '');
       const queryId = new URLSearchParams(window.location.search).get('id') || '';
@@ -137,27 +122,6 @@
         nameEl.textContent = 'Profile unavailable';
         bioEl.textContent = 'Unable to load profile right now.';
       }
-
-      function setAuthState(user) {
-        if (!authStatusEl || !authActionLink) return;
-        if (user) {
-          const name = user.displayName || user.email || 'Member';
-          authStatusEl.innerHTML = 'Signed in as <strong>' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</strong>';
-          authActionLink.textContent = 'Sign Out';
-          authActionLink.href = '#';
-          authActionLink.onclick = function (e) {
-            e.preventDefault();
-            auth.signOut().then(function () { window.location.reload(); });
-          };
-        } else {
-          authStatusEl.textContent = 'Signed out';
-          authActionLink.textContent = 'Sign In';
-          authActionLink.href = '/login.html';
-          authActionLink.onclick = null;
-        }
-      }
-
-      auth.onAuthStateChanged(function (user) { setAuthState(user || null); });
     });
   </script>
 </body>

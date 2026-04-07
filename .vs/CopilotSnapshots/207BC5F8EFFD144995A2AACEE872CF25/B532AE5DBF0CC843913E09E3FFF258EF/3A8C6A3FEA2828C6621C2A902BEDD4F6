@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -89,7 +89,7 @@
           <div class="form-grid">
             <div class="form-row">
               <span class="form-label">Public profile image</span>
-              <img id="profileImagePreview" class="image-preview" src="/100.png" alt="Public profile image preview">
+              <img id="profileImagePreview" class="image-preview" src="/160.jpg" alt="Public profile image preview">
               <input id="profileImageInput" class="form-control" type="file" accept="image/png,image/jpeg,image/webp">
               <span class="muted">Default image is used if none uploaded.</span>
             </div>
@@ -153,7 +153,7 @@
       if (!window.firebase || !window.firebaseConfig) return;
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) {}
 
-      const DEFAULT_PUBLIC_IMAGE = '/100.png';
+      const DEFAULT_PUBLIC_IMAGE = '/160.jpg';
       const auth = firebase.auth();
       const db = firebase.firestore();
 
