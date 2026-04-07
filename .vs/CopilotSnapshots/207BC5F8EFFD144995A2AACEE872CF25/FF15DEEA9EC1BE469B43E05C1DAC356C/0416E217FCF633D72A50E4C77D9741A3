@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
@@ -21,6 +21,7 @@
       ".vs/**",
       "app/**",
       "functions/**",
+      "public/**",
       "firebase-debug.log",
       "*.md",
       "package.json",
