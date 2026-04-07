@@ -125,23 +125,6 @@ async function resolveUserIdsByUid(uids) {
     console.warn('resolveUserIdsByUid userProfiles lookup failed', err && err.message ? err.message : err);
   }
 
-  const missing = normalized.filter((uid) => !map[uid]);
-  for (let i = 0; i < missing.length; i += 10) {
-    const chunk = missing.slice(i, i + 10);
-    try {
-      const snap = await db.collection('userIds').where('uid', 'in', chunk).get();
-      snap.forEach((doc) => {
-        const data = doc.data() || {};
-        const uid = normalizeText(data.uid);
-        if (!uid || map[uid]) return;
-        const value = normalizeText(data.userId || doc.id).toUpperCase();
-        if (value) map[uid] = value;
-      });
-    } catch (err) {
-      console.warn('resolveUserIdsByUid userIds fallback failed', err && err.message ? err.message : err);
-    }
-  }
-
   return map;
 }
 
@@ -983,23 +966,19 @@ exports.publicProfilePage = functions.https.onRequest(async (req, res) => {
       return res.status(400).send('Missing profile identifier');
     }
 
-    const doc = await db.collection('publicProfilesByUserId').doc(userId).get();
-    if (!doc.exists) {
+    const doc = await db.collection('publicProfiles').where('userId', '==', userId).limit(1).get();
+    if (doc.empty) {
       return res.status(404).send('Profile not found');
     }
 
-    const data = doc.data() || {};
-    if (data.isPublic !== true) {
-      return res.status(404).send('Profile not found');
-    }
-
+    const data = doc.docs[0].data() || {};
     const firstName = normalizeText(data.firstName).slice(0, 50);
     const lastName = normalizeText(data.lastName).slice(0, 50);
     const fullName = (firstName + ' ' + lastName).trim() || 'Profile';
     const bio = normalizeText(data.bio).slice(0, 1000);
     const socialLabel = normalizeText(data.socialLabel || 'Social profile').slice(0, 40);
     const socialUrl = normalizeText(data.socialUrl).slice(0, 300);
-    const imageDataUrl = normalizeText(data.imageDataUrl) || '/160.jpg';
+    const imageDataUrl = normalizeText(data.imageDataUrl) || '/100.png';
 
     let socialHtml = '';
     try {
@@ -1017,14 +996,14 @@ exports.publicProfilePage = functions.https.onRequest(async (req, res) => {
       '<html lang="en"><head><meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">' +
       '<meta name="theme-color" content="#0284c7">' +
-      '<meta name="description" content="' + escapeHtml(fullName + ' public profile') + '">' +
+      '<meta name="description" content="' + escapeHtml(fullName + ' member profile') + '">' +
       '<title>' + escapeHtml(fullName) + ' — Impact in Business Recruitment</title>' +
       '<link rel="preconnect" href="https://fonts.googleapis.com">' +
       '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
       '<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">' +
       '<style>:root{--card:#fff;--line:#dbe3ee;--text:#0f172a;--muted:#475569}*{box-sizing:border-box}body{margin:0;font-family:Open Sans,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#f5f9ff 0%,#ffffff 100%)}.wrap{max-width:860px;margin:2rem auto;padding:0 1rem}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 28px rgba(2,6,23,.08);overflow:hidden}.head{padding:1.2rem;background:linear-gradient(125deg,#0d4ea4,#22c1f1);color:#fff}.body{padding:1.2rem}.avatar{width:128px;height:128px;border-radius:14px;object-fit:cover;border:1px solid #dbe3ee;background:#f8fafc}h1{margin:.8rem 0 .45rem;color:#092a4b;font-size:1.8rem}.bio{margin:.6rem 0 0;color:#1f2937;font-size:11px;line-height:1.55;white-space:pre-wrap}.social{margin-top:1rem}.social a{color:#0b61a4;text-decoration:none;font-weight:600}.footer{margin-top:1rem;color:var(--muted);font-size:.85rem;text-align:center}</style></head><body>' +
-      '<div class="wrap"><article class="card"><div class="head">Impact in Business Recruitment — Public Profile</div><div class="body">' +
-      '<img class="avatar" src="' + escapeHtml(imageDataUrl) + '" alt="Public profile image">' +
+      '<div class="wrap"><article class="card"><div class="head">Impact in Business Recruitment — Member Profile</div><div class="body">' +
+      '<img class="avatar" src="' + escapeHtml(imageDataUrl) + '" alt="Profile image">' +
       '<h1>' + escapeHtml(fullName) + '</h1>' +
       '<p class="bio">' + escapeHtml(bio || 'No bio provided.') + '</p>' +
       socialHtml +

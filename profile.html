@@ -300,12 +300,12 @@
         });
       }
 
-      async function loadProfile(uid) {
+      async function loadProfile(uid = '') {
         const snap = await db.collection('publicProfiles').doc(uid).get();
         const data = snap.exists ? (snap.data() || {}) : {};
 
         if (publicProfileDocStatus) {
-          publicProfileDocStatus.textContent = snap.exists ? 'Public profile record: found' : 'Public profile record: not saved yet';
+          publicProfileDocStatus.textContent = snap.exists ? 'Profile record: found' : 'Profile record: not saved yet';
         }
 
         firstNameInput.value = normalizeText(data.firstName, 50);
@@ -347,16 +347,14 @@
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           };
 
-          const batch = db.batch();
-          batch.set(db.collection('publicProfiles').doc(currentUser.uid), payload, { merge: true });
-          batch.set(db.collection('publicProfilesByUserId').doc(userIdValue), payload, { merge: true });
-          await batch.commit();
+          await db.collection('publicProfiles').doc(currentUser.uid).set(payload, { merge: true });
 
-          if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: saved';
+          if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Profile record: saved';
           setStatus('Profile saved successfully.');
         } catch (err) {
           console.error('Profile save failed', err);
-          setStatus('Profile save failed. Please try again.');
+          const message = err && err.message ? err.message : 'unknown error';
+          setStatus('Profile save failed: ' + message);
         } finally {
           saveProfileBtn.disabled = false;
         }
@@ -371,7 +369,7 @@
         if (topNavMenu) topNavMenu.style.display = 'none';
         document.body.classList.remove('auth-pending');
         document.body.classList.remove('has-sidebar');
-        if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: sign in to view';
+        if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Member profile record: sign in to view';
       }
 
       async function showAuthenticated(user) {
@@ -386,10 +384,9 @@
         document.body.classList.add('has-sidebar');
 
         setStatus('Loading profile...');
-        userIdValue = await getOrCreateUserId(user);
+        userIdValue = user.uid || '';
         setPublicLink(userIdValue);
         await loadProfile(user.uid);
-        if (publicProfileDocStatus) publicProfileDocStatus.textContent = 'Public profile record: loading...';
         setStatus('Profile loaded.');
       }
 

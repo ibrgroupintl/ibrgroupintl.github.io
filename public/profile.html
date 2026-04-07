@@ -72,10 +72,6 @@
       const authStatusEl = document.getElementById('authStatus');
       const authActionLink = document.getElementById('authActionLink');
 
-      const pathPart = (window.location.pathname.split('/').pop() || '').replace(/\.html$/i, '');
-      const queryId = new URLSearchParams(window.location.search).get('id') || '';
-      const userId = String(queryId || pathPart || '').trim().toUpperCase();
-
       function setAuthState(user) {
         if (!authStatusEl || !authActionLink) return;
         if (user) {
@@ -100,32 +96,16 @@
       }
 
       async function loadProfile() {
-        if (!userId) {
-          nameEl.textContent = 'Profile not found';
-          bioEl.textContent = 'Missing profile identifier.';
-          hintEl.textContent = 'Use /public/<userId>.html';
-          return;
-        }
-
-        hintEl.textContent = 'Looking up ' + userId + '...';
+        hintEl.textContent = 'Loading your profile...';
 
         try {
-          let data = null;
-          const directSnap = await db.collection('publicProfilesByUserId').doc(userId).get();
-          if (directSnap.exists) {
-            const directData = directSnap.data() || {};
-            data = directData;
-          }
-
-          if (!data) {
-            const snap = await db.collection('publicProfiles').where('userId', '==', userId).limit(1).get();
-            if (!snap.empty) data = snap.docs[0].data() || {};
-          }
-
+          const userId = auth.currentUser.uid;
+          const doc = await db.collection('publicProfiles').doc(auth.currentUser.uid).get();
+          const data = doc.exists ? (doc.data() || {}) : null;
           if (!data) {
             nameEl.textContent = 'Profile not found';
-            bioEl.textContent = 'No profile exists for this User ID.';
-            hintEl.textContent = 'If you just saved the profile, refresh once more or save again.';
+            bioEl.textContent = 'No profile exists for this account.';
+            hintEl.textContent = 'Save your profile in Profile Page first.';
             return;
           }
 
@@ -140,7 +120,7 @@
           nameEl.textContent = fullName;
           bioEl.textContent = bio || 'No bio provided.';
           bioEl.classList.toggle('empty', !bio);
-          hintEl.textContent = 'User ID: ' + userId;
+          hintEl.textContent = 'User ID: ' + auth.currentUser.uid;
 
           document.title = fullName + ' — Impact in Business Recruitment';
           const meta = document.querySelector('meta[name="description"]');
