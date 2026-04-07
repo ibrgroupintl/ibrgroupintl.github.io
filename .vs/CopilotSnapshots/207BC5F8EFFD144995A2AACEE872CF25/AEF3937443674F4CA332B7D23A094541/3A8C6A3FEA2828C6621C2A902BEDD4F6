@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -125,7 +125,6 @@
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
               <a id="openPublicProfileBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Profile Page</a>
-              <button type="button" id="copyProfileUrlBtn" class="btn btn-outline">Copy Profile URL</button>
             </div>
 
             <p id="profileStatus" class="status-note">Loading profile...</p>
@@ -177,7 +176,6 @@
       const publicProfileLink = document.getElementById('publicProfileLink');
       const publicProfileDocStatus = document.getElementById('publicProfileDocStatus');
       const openPublicProfileBtn = document.getElementById('openPublicProfileBtn');
-      const copyProfileUrlBtn = document.getElementById('copyProfileUrlBtn');
 
       const USER_ID_PREFIX = 'IB';
       const USER_ID_TOTAL_LENGTH = 8;
@@ -210,27 +208,10 @@
         return base || 'profile';
       }
 
-      function createSlugSuffix(length) {
-        const size = Math.max(4, Math.min(8, Number(length) || 4));
-        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        const bytes = new Uint32Array(size);
-        if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
-          window.crypto.getRandomValues(bytes);
-        } else {
-          for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 0xffffffff);
-        }
-        let out = '';
-        for (let i = 0; i < size; i++) {
-          out += chars[bytes[i] % chars.length];
-        }
-        return out;
-      }
-
-      function buildProfileSlug(firstName, lastName, fallbackUid, existingSlug) {
-        const savedSlug = normalizeText(existingSlug).toLowerCase();
-        if (savedSlug) return savedSlug;
+      function buildProfileSlug(firstName, lastName, fallbackUid) {
+        const suffix = String(fallbackUid || '').trim().toLowerCase().slice(0, 6);
         const base = slugifyProfileName(firstName, lastName, fallbackUid);
-        return base + '-' + createSlugSuffix(4);
+        return suffix ? base + '-' + suffix : base;
       }
 
       function setPublicLink(slug) {
@@ -303,7 +284,7 @@
         socialLabelInput.value = normalizeText(data.socialLabel, 40);
         socialUrlInput.value = normalizeText(data.socialUrl, 300);
 
-        profileSlugValue = normalizeText(data.profileSlug) || buildProfileSlug(firstNameInput.value, lastNameInput.value, userIdValue || uid, data.profileSlug);
+        profileSlugValue = normalizeText(data.profileSlug) || buildProfileSlug(firstNameInput.value, lastNameInput.value, userIdValue || uid);
         setPublicLink(profileSlugValue);
 
         imageDataUrl = normalizeText(data.imageDataUrl);
@@ -318,7 +299,7 @@
         const bio = normalizeText(bioInput.value, 1000);
         const socialLabel = normalizeText(socialLabelInput.value, 40);
         const socialUrl = normalizeUrl(socialUrlInput.value);
-        const profileSlug = buildProfileSlug(firstName, lastName, currentUser.uid, profileSlugValue);
+        const profileSlug = buildProfileSlug(firstName, lastName, currentUser.uid);
 
         if (socialUrlInput.value && !socialUrl) {
           setStatus('Please enter a valid http(s) social URL.');
@@ -381,7 +362,7 @@
 
         setStatus('Loading profile...');
         userIdValue = user.uid || '';
-        profileSlugValue = buildProfileSlug(user.displayName || user.email || '', '', user.uid, profileSlugValue);
+        profileSlugValue = buildProfileSlug(user.displayName || user.email || '', '', user.uid);
         setPublicLink(profileSlugValue);
         await loadProfile(user.uid);
         setStatus('Profile loaded.');
@@ -416,22 +397,6 @@
       });
 
       saveProfileBtn.addEventListener('click', saveProfile);
-
-      if (copyProfileUrlBtn) {
-        copyProfileUrlBtn.addEventListener('click', async function () {
-          const url = publicProfileLink.href && publicProfileLink.href !== '#' ? new URL(publicProfileLink.getAttribute('href'), window.location.origin).toString() : '';
-          if (!url) {
-            setStatus('Save the profile first to generate a profile URL.');
-            return;
-          }
-          try {
-            await navigator.clipboard.writeText(url);
-            setStatus('Profile URL copied to clipboard.');
-          } catch (err) {
-            setStatus('Unable to copy profile URL.');
-          }
-        });
-      }
 
       signOutBtn.addEventListener('click', function () {
         auth.signOut().then(function () {

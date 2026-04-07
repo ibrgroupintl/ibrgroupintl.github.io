@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -210,27 +210,10 @@
         return base || 'profile';
       }
 
-      function createSlugSuffix(length) {
-        const size = Math.max(4, Math.min(8, Number(length) || 4));
-        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        const bytes = new Uint32Array(size);
-        if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
-          window.crypto.getRandomValues(bytes);
-        } else {
-          for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 0xffffffff);
-        }
-        let out = '';
-        for (let i = 0; i < size; i++) {
-          out += chars[bytes[i] % chars.length];
-        }
-        return out;
-      }
-
-      function buildProfileSlug(firstName, lastName, fallbackUid, existingSlug) {
-        const savedSlug = normalizeText(existingSlug).toLowerCase();
-        if (savedSlug) return savedSlug;
+      function buildProfileSlug(firstName, lastName, fallbackUid) {
+        const suffix = String(fallbackUid || '').trim().toLowerCase().slice(0, 6);
         const base = slugifyProfileName(firstName, lastName, fallbackUid);
-        return base + '-' + createSlugSuffix(4);
+        return suffix ? base + '-' + suffix : base;
       }
 
       function setPublicLink(slug) {
@@ -239,6 +222,7 @@
         publicProfileLink.href = href;
         publicProfileLink.textContent = href === '#' ? '-' : href;
         if (openPublicProfileBtn) openPublicProfileBtn.href = href;
+        if (copyProfileUrlBtn) copyProfileUrlBtn.disabled = href === '#';
       }
 
       function setStatus(text) {
@@ -303,7 +287,7 @@
         socialLabelInput.value = normalizeText(data.socialLabel, 40);
         socialUrlInput.value = normalizeText(data.socialUrl, 300);
 
-        profileSlugValue = normalizeText(data.profileSlug) || buildProfileSlug(firstNameInput.value, lastNameInput.value, userIdValue || uid, data.profileSlug);
+        profileSlugValue = normalizeText(data.profileSlug) || buildProfileSlug(firstNameInput.value, lastNameInput.value, userIdValue || uid);
         setPublicLink(profileSlugValue);
 
         imageDataUrl = normalizeText(data.imageDataUrl);
@@ -318,7 +302,7 @@
         const bio = normalizeText(bioInput.value, 1000);
         const socialLabel = normalizeText(socialLabelInput.value, 40);
         const socialUrl = normalizeUrl(socialUrlInput.value);
-        const profileSlug = buildProfileSlug(firstName, lastName, currentUser.uid, profileSlugValue);
+        const profileSlug = buildProfileSlug(firstName, lastName, currentUser.uid);
 
         if (socialUrlInput.value && !socialUrl) {
           setStatus('Please enter a valid http(s) social URL.');
@@ -381,7 +365,7 @@
 
         setStatus('Loading profile...');
         userIdValue = user.uid || '';
-        profileSlugValue = buildProfileSlug(user.displayName || user.email || '', '', user.uid, profileSlugValue);
+        profileSlugValue = buildProfileSlug(user.displayName || user.email || '', '', user.uid);
         setPublicLink(profileSlugValue);
         await loadProfile(user.uid);
         setStatus('Profile loaded.');
