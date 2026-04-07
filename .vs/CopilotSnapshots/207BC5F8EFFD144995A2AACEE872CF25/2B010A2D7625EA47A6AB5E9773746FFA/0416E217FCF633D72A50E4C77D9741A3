@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "source": "functions"
   },
@@ -18,16 +18,7 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      ".vs/**",
-      "app/**",
-      "functions/**",
-      "firebase-debug.log",
-      "*.md",
-      "package.json",
-      "package-lock.json",
-      "firestore.rules",
-      "*.sln",
-      "*.slnx"
+      ".vs/**"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
