@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -146,7 +146,7 @@
             uploadsList.innerHTML = '';
             snap.forEach(doc => {
               const d = doc.data() || {};
-              uploadsList.innerHTML += `<div class="uploads-list-item">${d.name || 'Resume'} <span class="muted">(${d.size ? (d.size/1024).toFixed(1) + ' KB' : ''})</span></div>`;
+              uploadsList.innerHTML += `<div class="uploads-list-item"><a href="${d.url}" target="_blank" rel="noopener noreferrer">${d.name || 'Resume'}</a> <span class="muted">(${d.size ? (d.size/1024).toFixed(1) + ' KB' : ''})</span></div>`;
             });
           })
           .catch(() => { uploadsList.innerHTML = '<div class="muted">Failed to load uploads.</div>'; });
