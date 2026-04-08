@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -96,13 +96,13 @@
 
     <section id="loginSection" class="auth-shell">
       <h1 style="margin:0;color:#092a4b">Accounts Admin</h1>
-      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in with a Firebase admin account (with <code>admin</code> or <code>ownerAdmin</code> access) to manage user access.</p>
+      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in with an administrator account to manage user access.</p>
       <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
     </section>
 
     <section id="deniedSection" class="auth-shell" style="display:none">
       <h2 style="margin:0;color:#092a4b">Access denied</h2>
-      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">This page is restricted to Firebase users with <code>admin</code> or <code>ownerAdmin</code> access. Please contact the site administrator if you need access.</p>
+      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">This page is restricted to the primary administrator and users with admin/owner access.</p>
       <a class="btn btn-outline" href="/messages.html">Back to Messages</a>
     </section>
 
