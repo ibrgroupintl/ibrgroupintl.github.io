@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -137,22 +137,19 @@
       function loadUploads() {
         uploadsList.innerHTML = '<div class="muted">Loading uploads...</div>';
         if (!currentUser) return;
-        // List files from Firebase Storage /resumes/{uid}/
-        const userFolder = 'resumes/' + currentUser.uid + '/';
-        storage.ref(userFolder).listAll()
-          .then(res => {
-            if (!res.items.length) {
+        db.collection('resumeUploads').where('uid', '==', currentUser.uid).orderBy('uploadedAt', 'desc').get()
+          .then(snap => {
+            if (snap.empty) {
               uploadsList.innerHTML = '<div class="muted">No resumes uploaded yet.</div>';
               return;
             }
             uploadsList.innerHTML = '';
-            res.items.forEach(itemRef => {
-              itemRef.getMetadata().then(meta => {
-                uploadsList.innerHTML += `<div class='uploads-list-item'>${meta.name} <span class='muted'>(${(meta.size/1024).toFixed(1)} KB)</span></div>`;
-              });
+            snap.forEach(doc => {
+              const d = doc.data() || {};
+              uploadsList.innerHTML += `<div class="uploads-list-item">${d.name || 'Resume'} <span class="muted">(${d.size ? (d.size/1024).toFixed(1) + ' KB' : ''})</span></div>`;
             });
           })
-          .catch(() => { uploadsList.innerHTML = '<div class="muted">Failed to load uploads.'; });
+          .catch(() => { uploadsList.innerHTML = '<div class="muted">Failed to load uploads.</div>'; });
       }
       function uploadResume() {
         const file = resumeInput.files && resumeInput.files[0];
@@ -160,7 +157,17 @@
         if (!currentUser) { uploadStatus.textContent = 'Not signed in.'; return; }
         uploadStatus.textContent = 'Uploading...';
         const storageRef = storage.ref().child('resumes/' + currentUser.uid + '/' + Date.now() + '_' + file.name);
-        storageRef.put(file).then(() => {
+        storageRef.put(file).then(snapshot => {
+          return snapshot.ref.getDownloadURL().then(url => {
+            return db.collection('resumeUploads').add({
+              uid: currentUser.uid,
+              name: file.name,
+              url: url,
+              size: file.size,
+              uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+        }).then(() => {
           uploadStatus.textContent = 'Upload successful!';
           resumeInput.value = '';
           loadUploads();
