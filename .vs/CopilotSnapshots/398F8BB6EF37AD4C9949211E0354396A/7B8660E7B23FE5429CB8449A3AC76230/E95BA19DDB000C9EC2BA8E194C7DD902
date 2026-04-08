@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -49,7 +49,7 @@
 
     .profile-shell {
       display: none;
-      max-width: 520px;
+      max-width: 980px;
       margin: 2rem auto 3rem;
       padding: 0 1rem
     }
@@ -72,12 +72,18 @@
 
     .form-grid {
       display: grid;
-      gap: 16px
+      gap: 12px
     }
 
     .form-row {
       display: grid;
       gap: 8px
+    }
+
+    .name-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
     }
 
     .form-label {
@@ -101,7 +107,7 @@
     }
 
     textarea.form-control {
-      min-height: 120px;
+      min-height: 170px;
       font-size: inherit;
       line-height: 1.5;
       font-family: 'Open Sans', Arial, sans-serif
@@ -110,6 +116,15 @@
     .muted {
       color: var(--muted);
       font-size: .9rem
+    }
+
+    .image-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid #dbe3ee;
+      background: #f8fafc
     }
 
     .button-row {
@@ -121,6 +136,14 @@
     .status-note {
       margin-top: .75rem;
       color: var(--muted)
+    }
+
+    .profile-url-box {
+      padding: .75rem;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+      background: #f8fbff;
+      word-break: break-all
     }
 
     /* Sidebar menu (shared across all pages) */
@@ -171,6 +194,12 @@
 
       body.has-sidebar #protected-content {
         margin-left: 0;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .name-grid {
+        grid-template-columns: 1fr
       }
     }
   </style>
@@ -237,21 +266,39 @@
         <div class="panel-body">
           <div class="form-grid">
             <div class="form-row">
-              <label class="form-label" for="firstNameInput">First name (max 50)</label>
-              <input id="firstNameInput" class="form-control" type="text" maxlength="50" placeholder="First name">
+              <span class="form-label">Profile image</span>
+              <img id="profileImagePreview" class="image-preview" src="/100.png" alt="Profile image preview">
+              <input id="profileImageInput" class="form-control" type="file" accept="image/png,image/jpeg,image/webp">
+              <span class="muted">Default image is used if none uploaded.</span>
             </div>
-            <div class="form-row">
-              <label class="form-label" for="lastNameInput">Last name (max 50)</label>
-              <input id="lastNameInput" class="form-control" type="text" maxlength="50" placeholder="Last name">
+
+            <div class="name-grid">
+              <div class="form-row">
+                <label class="form-label" for="firstNameInput">First name (max 50)</label>
+                <input id="firstNameInput" class="form-control" type="text" maxlength="50" placeholder="First name">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="lastNameInput">Last name (max 50)</label>
+                <input id="lastNameInput" class="form-control" type="text" maxlength="50" placeholder="Last name">
+              </div>
             </div>
-            <div class="form-row">
-              <label class="form-label" for="emailInput">Email</label>
-              <input id="emailInput" class="form-control" type="email" maxlength="100" placeholder="Email" disabled>
-            </div>
+
             <div class="form-row">
               <label class="form-label" for="bioInput">Bio (max 1000)</label>
               <textarea id="bioInput" class="form-control" maxlength="1000" placeholder="Tell people about your work and focus..."></textarea>
             </div>
+
+            <div class="name-grid">
+              <div class="form-row">
+                <label class="form-label" for="socialLabelInput">Social platform</label>
+                <input id="socialLabelInput" class="form-control" type="text" maxlength="40" placeholder="LinkedIn">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="socialUrlInput">Social URL</label>
+                <input id="socialUrlInput" class="form-control" type="url" maxlength="300" placeholder="https://...">
+              </div>
+            </div>
+
             <div class="button-row">
               <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
               <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
@@ -284,37 +331,76 @@
       try { firebase.initializeApp(window.firebaseConfig); } catch (e) {}
       const auth = firebase.auth();
       const db = firebase.firestore();
+      const DEFAULT_PUBLIC_IMAGE = '/100.png';
       const loginSection = document.getElementById('loginSection');
       const profileShell = document.getElementById('profileShell');
       const signOutBtn = document.getElementById('signOutBtn');
       const signInLink = document.getElementById('signInLink');
+      const profileImagePreview = document.getElementById('profileImagePreview');
+      const profileImageInput = document.getElementById('profileImageInput');
       const firstNameInput = document.getElementById('firstNameInput');
       const lastNameInput = document.getElementById('lastNameInput');
-      const emailInput = document.getElementById('emailInput');
       const bioInput = document.getElementById('bioInput');
+      const socialLabelInput = document.getElementById('socialLabelInput');
+      const socialUrlInput = document.getElementById('socialUrlInput');
       const saveProfileBtn = document.getElementById('saveProfileBtn');
       const profileStatus = document.getElementById('profileStatus');
       const profileDocStatus = document.getElementById('profileDocStatus');
+      const publicProfileLink = document.getElementById('publicProfileLink');
+      const openProfileBtn = document.getElementById('openProfileBtn');
       let currentUser = null;
       let userIdValue = '';
       let profileSlug = '';
+      let imageDataUrl = '';
       const normalize = (v, max) => String(v || '').trim().slice(0, max);
+      const normalizeUrl = (v) => {
+        try {
+          const u = new URL(normalize(v, 300));
+          return ['http:', 'https:'].includes(u.protocol) ? u.toString() : '';
+        } catch {
+          return '';
+        }
+      };
+      const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-') || 'profile';
+      const randomSuffix = () => Array.from(window.crypto.getRandomValues(new Uint32Array(4)), n => 'abcdefghijklmnopqrstuvwxyz0123456789'[n % 36]).join('');
+      const buildSlug = (first, last, fallback, existing) => existing ? String(existing).toLowerCase() : slugify((first + ' ' + last).trim() || fallback) + '-' + randomSuffix();
+      const setUrl = (slug) => {
+        const href = slug ? '/profile/' + encodeURIComponent(slug) + '.html' : '#';
+        publicProfileLink.href = href;
+        publicProfileLink.textContent = href === '#' ? '-' : href;
+        if (openProfileBtn) openProfileBtn.href = href;
+      };
+      const setStatus = (msg) => profileStatus.textContent = msg;
+
       async function loadProfile() {
         const snap = await db.collection('publicProfiles').doc(currentUser.uid).get();
         const data = snap.exists ? snap.data() || {} : {};
         userIdValue = normalize(data.userId, 20) || userIdValue || currentUser.uid;
         firstNameInput.value = normalize(data.firstName, 50);
         lastNameInput.value = normalize(data.lastName, 50);
-        emailInput.value = currentUser.email || '';
         bioInput.value = normalize(data.bio, 1000);
+        socialLabelInput.value = normalize(data.socialLabel, 40);
+        socialUrlInput.value = normalize(data.socialUrl, 300);
+        profileSlug = buildSlug(firstNameInput.value, lastNameInput.value, userIdValue, data.profileSlug);
+        setUrl(profileSlug);
+        imageDataUrl = normalize(data.imageDataUrl, 1000000);
+        profileImagePreview.src = imageDataUrl || DEFAULT_PUBLIC_IMAGE;
         profileDocStatus.textContent = snap.exists ? 'Profile record: found' : 'Profile record: not saved yet';
       }
+
       async function saveProfile() {
         if (!currentUser) return;
         const firstName = normalize(firstNameInput.value, 50);
         const lastName = normalize(lastNameInput.value, 50);
         const bio = normalize(bioInput.value, 1000);
+        const socialLabel = normalize(socialLabelInput.value, 40);
+        const socialUrl = normalizeUrl(socialUrlInput.value);
+        if (socialUrlInput.value && !socialUrl) {
+          setStatus('Please enter a valid http(s) social URL.');
+          return;
+        }
         const nextId = userIdValue || currentUser.uid;
+        const nextSlug = buildSlug(firstName, lastName, nextId, profileSlug);
         const userProfilePayload = {
           userId: nextId,
           email: currentUser.email || '',
@@ -323,28 +409,35 @@
         const profilePayload = {
           uid: currentUser.uid,
           userId: nextId,
+          profileSlug: nextSlug,
           firstName,
           lastName,
           bio,
-          email: currentUser.email || '',
+          socialLabel,
+          socialUrl,
+          imageDataUrl: imageDataUrl || '',
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           isPublic: true // Always set public profiles as visible
         };
         try {
           saveProfileBtn.disabled = true;
-          profileStatus.textContent = 'Saving profile...';
+          setStatus('Saving profile...');
           const batch = db.batch();
           batch.set(db.collection('userProfiles').doc(currentUser.uid), userProfilePayload);
           batch.set(db.collection('publicProfiles').doc(currentUser.uid), profilePayload);
           await batch.commit();
+          userIdValue = nextId;
+          profileSlug = nextSlug;
+          setUrl(profileSlug);
           profileDocStatus.textContent = 'Profile record: saved';
-          profileStatus.textContent = 'Profile saved successfully.';
+          setStatus('Profile saved successfully.');
         } catch (err) {
-          profileStatus.textContent = 'Profile save failed: ' + (err && err.message ? err.message : 'unknown error');
+          setStatus('Profile save failed: ' + (err && err.message ? err.message : 'unknown error'));
         } finally {
           saveProfileBtn.disabled = false;
         }
       }
+
       function showSignedOut() {
         loginSection.style.display = 'block';
         profileShell.style.display = 'none';
@@ -369,6 +462,17 @@
           return;
         }
         await showSignedIn(user);
+      });
+      profileImageInput.addEventListener('change', async () => {
+        const file = profileImageInput.files && profileImageInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          imageDataUrl = String(reader.result || '');
+          profileImagePreview.src = imageDataUrl;
+          setStatus('Image ready. Save profile to publish it.');
+        };
+        reader.readAsDataURL(file);
       });
       saveProfileBtn.addEventListener('click', saveProfile);
       signOutBtn.addEventListener('click', () => auth.signOut());
