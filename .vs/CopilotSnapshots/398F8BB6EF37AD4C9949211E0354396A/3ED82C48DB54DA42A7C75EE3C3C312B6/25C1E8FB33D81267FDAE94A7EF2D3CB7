@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -52,37 +52,6 @@
       max-width: 900px;
       margin: 2rem auto 3rem;
       padding: 0 1rem
-    }
-
-    .panel {
-      background: #fff;
-      border: 1px solid #dbe3ee;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(2, 6, 23, .06)
-    }
-
-    .panel-head {
-      padding: 1rem;
-      border-bottom: 1px solid #edf2f7
-    }
-
-    .panel-body {
-      padding: 1rem
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 12px
-    }
-
-    .status-note {
-      margin-top: .75rem;
-      color: var(--muted)
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: .95rem;
     }
 
     .sidebar-menu-shell {
@@ -253,7 +222,7 @@
           `<div class="panel" style="margin-bottom:12px;">
             <div class="panel-head" style="font-size:1rem;color:#092a4b;">${msg.subject || 'No Subject'}</div>
             <div class="panel-body" style="font-size:.97rem;">${msg.body || ''}</div>
-            <div class="muted" style="padding:0 1rem 1rem 1rem;">${msg.createdAt ? (msg.createdAt.seconds ? new Date(msg.createdAt.seconds * 1000).toLocaleString() : new Date(msg.createdAt).toLocaleString()) : ''}</div>
+            <div class="muted" style="padding:0 1rem 1rem 1rem;">${msg.createdAt ? new Date(msg.createdAt.seconds * 1000).toLocaleString() : ''}</div>
           </div>`
         ).join('');
         messagesStatus.textContent = messages.length + ' message' + (messages.length === 1 ? '' : 's') + '.';
