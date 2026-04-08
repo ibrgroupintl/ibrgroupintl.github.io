@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -79,9 +79,6 @@
         </div>
         <div class="panel-body">
           <p>Hello, <span id="memberName">Member</span>!</p>
-          <p class="muted">Step 1: Subscribe to the Premium feed</p>
-          <p class="muted">Step 2: Disable Substack inbox e-mails and activate in-app notifications</p>
-          <p class="muted">Step 3: Access exclusive resources, insights, and tools for members.</p>
           <p class="muted">Access exclusive resources, insights, and tools for members.</p>
         </div>
       </section>
