@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -104,7 +104,6 @@
     </main>
     <footer class="resource-footer" role="contentinfo">
       <div class="container" style="text-align:center">
-        <div style="margin-bottom:4px;color:var(--muted);font-size:0.95rem;">v.03 (Beta)</div>
         <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
       </div>
     </footer>
