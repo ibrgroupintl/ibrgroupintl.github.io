@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -237,15 +237,9 @@ const adminStatusNote = document.getElementById('adminStatusNote');
       function tokenHasAdminAccess(email, claims) {
         const normalized = String(email || '').trim().toLowerCase();
         const c = claims && typeof claims === 'object' ? claims : {};
-        // Debug log for troubleshooting access issues
-        console.log('[tokenHasAdminAccess] email:', normalized, 'claims:', c);
-        // Always grant admin access to developers@ibrecruitment.com (case-insensitive)
+        // Always grant admin access to developers@ibrecruitment.com
         if (normalized === 'developers@ibrecruitment.com') return true;
-        // Grant access if admin or ownerAdmin claim is present
-        if (c.admin === true || c.ownerAdmin === true) return true;
-        // Grant access if matches AUTHORIZED_ADMIN_EMAIL (case-insensitive)
-        if (normalized === String(AUTHORIZED_ADMIN_EMAIL).toLowerCase()) return true;
-        return false;
+        return normalized === AUTHORIZED_ADMIN_EMAIL || c.admin === true || c.ownerAdmin === true;
       }
 
       async function callAdminEndpoint(method, payload) {
