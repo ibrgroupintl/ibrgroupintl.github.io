@@ -2,8 +2,13 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isSignedIn() {
-      return request.auth != null;
+    match /publicProfiles/{uid} {
+      // Anyone can read public profiles
+      allow read: if true;
+      // Only the signed-in user can create or update their own profile
+      allow create, update: if request.auth != null && request.auth.uid == uid;
+      // Only the signed-in user can delete their own profile
+      allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
     // MESSAGES LOGIC
