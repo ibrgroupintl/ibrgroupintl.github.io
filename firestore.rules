@@ -6,93 +6,72 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isAdmin() {
-      return isSignedIn() && request.auth.token.email == 'developers@ibrecruitment.com';
-    }
-
-    function isValidInsightDoc(data) {
-      return data.keys().hasOnly(['title', 'link', 'date', 'timestamp', 'tags', 'imageUrl', 'snippet', 'source', 'updatedAt']) &&
-        data.title is string && data.title.size() > 0 && data.title.size() <= 300 &&
-        data.link is string &&
-        (data.link.matches('^https://substack\\.ibrecruitment\\.com/.*') || data.link.matches('^https://[a-z0-9-]+\\.substack\\.com/.*')) &&
-        data.date is string && data.date.size() <= 80 &&
-        data.timestamp is number &&
-        data.tags is list && data.tags.size() <= 20 &&
-        data.imageUrl is string &&
-        data.snippet is string && data.snippet.size() <= 1000 &&
-        data.source is string && data.source == 'substack-rss' &&
-        data.updatedAt is timestamp;
-    }
-
+    // MESSAGES LOGIC
     match /messages/{messageId} {
+      // Only recipient or admin can read
       allow read: if isSignedIn() && (
-        resource.data.recipientUid == request.auth.uid ||
-        isAdmin()
+        resource.data.recipientUid == request.auth.uid
       );
-
+      // Only recipient can update isOpened, openedAt, openedByUid
       allow update: if isSignedIn() &&
         resource.data.recipientUid == request.auth.uid &&
         request.resource.data.diff(resource.data).changedKeys().hasOnly(['isOpened', 'openedAt', 'openedByUid']) &&
         request.resource.data.isOpened == true &&
         request.resource.data.openedByUid == request.auth.uid;
-
+      // No create/delete from client
       allow create, delete: if false;
     }
 
+    // INSIGHTS RSS FEED LOGIC
     match /insightsFeed/{postId} {
       allow read: if isSignedIn();
-      allow create, update: if isSignedIn() && isValidInsightDoc(request.resource.data);
-      allow delete: if isAdmin();
-    }
-
-    match /userProfiles/{uid} {
-      allow read: if isSignedIn() && request.auth.uid == uid;
-      allow create, update: if isSignedIn() && request.auth.uid == uid &&
-        request.resource.data.keys().hasOnly(['userId', 'email', 'updatedAt']) &&
-        request.resource.data.userId is string && request.resource.data.userId.size() >= 4 && request.resource.data.userId.size() <= 20 &&
-        request.resource.data.email is string &&
+      allow create, update: if isSignedIn() &&
+        request.resource.data.keys().hasOnly([
+          'title', 'link', 'date', 'timestamp', 'tags', 'imageUrl', 'snippet', 'source', 'updatedAt'
+        ]) &&
+        request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 300 &&
+        request.resource.data.link is string &&
+        (request.resource.data.link.matches('^https://substack\\.ibrecruitment\\.com/.*') || request.resource.data.link.matches('^https://[a-z0-9-]+\\.substack\\.com/.*')) &&
+        request.resource.data.date is string && request.resource.data.date.size() <= 80 &&
+        request.resource.data.timestamp is number &&
+        request.resource.data.tags is list && request.resource.data.tags.size() <= 20 &&
+        request.resource.data.imageUrl is string &&
+        request.resource.data.snippet is string && request.resource.data.snippet.size() <= 1000 &&
+        request.resource.data.source is string && request.resource.data.source == 'substack-rss' &&
         request.resource.data.updatedAt is timestamp;
       allow delete: if false;
     }
 
-    match /userIds/{userId} {
-      allow read: if isSignedIn();
-      allow create, update: if isSignedIn() &&
-        request.resource.data.keys().hasOnly(['uid', 'email', 'updatedAt']) &&
-        request.resource.data.uid == request.auth.uid &&
-        request.resource.data.email is string &&
-        request.resource.data.updatedAt is timestamp;
-      allow delete: if isAdmin();
-    }
+    // USER PROFILES
+    match /userProfiles/{uid} {
+  allow read: if isSignedIn() && request.auth.uid == uid;
+  allow create, update: if isSignedIn() && request.auth.uid == uid &&
+    request.resource.data.keys().hasOnly(['userId', 'email', 'firstName', 'lastName', 'bio', 'updatedAt']) &&
+    request.resource.data.userId is string &&
+    request.resource.data.email is string &&
+    request.resource.data.firstName is string &&
+    request.resource.data.lastName is string &&
+    request.resource.data.bio is string &&
+    request.resource.data.updatedAt is timestamp;
+  allow delete: if false;
+}
 
+    // PUBLIC PROFILES
     match /publicProfiles/{uid} {
-      allow read: if isSignedIn();
-      allow create, update: if isSignedIn() && request.auth.uid == uid &&
-        request.resource.data.keys().hasOnly([
-          'uid',
-          'userId',
-          'profileSlug',
-          'firstName',
-          'lastName',
-          'bio',
-          'socialLabel',
-          'socialUrl',
-          'imageDataUrl',
-          'updatedAt'
-        ]) &&
-        request.resource.data.uid == request.auth.uid &&
-        request.resource.data.userId is string && request.resource.data.userId.size() >= 4 && request.resource.data.userId.size() <= 20 &&
-        request.resource.data.profileSlug is string && request.resource.data.profileSlug.size() >= 2 && request.resource.data.profileSlug.size() <= 80 &&
-        request.resource.data.firstName is string && request.resource.data.firstName.size() <= 50 &&
-        request.resource.data.lastName is string && request.resource.data.lastName.size() <= 50 &&
-        request.resource.data.bio is string && request.resource.data.bio.size() <= 1000 &&
-        request.resource.data.socialLabel is string && request.resource.data.socialLabel.size() <= 40 &&
-        request.resource.data.socialUrl is string && request.resource.data.socialUrl.size() <= 300 &&
-        request.resource.data.imageDataUrl is string && request.resource.data.imageDataUrl.size() <= 1000000 &&
-        request.resource.data.updatedAt is timestamp;
-      allow delete: if isSignedIn() && request.auth.uid == uid;
-    }
+  allow read: if true; // or isSignedIn() if you want to restrict
+  allow create, update: if isSignedIn() && request.auth.uid == uid &&
+    request.resource.data.keys().hasOnly(['uid', 'userId', 'firstName', 'lastName', 'bio', 'email', 'updatedAt']) &&
+    request.resource.data.uid == request.auth.uid &&
+    request.resource.data.userId is string &&
+    request.resource.data.firstName is string &&
+    request.resource.data.lastName is string &&
+    request.resource.data.bio is string &&
+    request.resource.data.email is string &&
+    request.resource.data.updatedAt is timestamp;
+  allow delete: if isSignedIn() && request.auth.uid == uid;
+}
 
+    // DENY ALL OTHER ACCESS
     match /{document=**} {
       allow read, write: if false;
     }
