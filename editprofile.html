@@ -205,7 +205,7 @@
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
       <a class="sidebar-menu-link" href="https://editor.ibrecruitment.com/claude.html" target="_blank" rel="noopener noreferrer">Ask Claude Code</a>
       <a class="sidebar-menu-link" href="https://www.ibrecruitment.com/contact" target="_blank" rel="noopener noreferrer">Contact Sales</a>
-	  <a class="sidebar-menu-link" href="/directory.html">Member Directory</a>
+      <a class="sidebar-menu-link" href="/directory.html">Member Directory</a>
     </nav>
     <script>
       // Show/hide sidebar menu based on authentication
@@ -296,13 +296,10 @@
       const profileStatus = document.getElementById('profileStatus');
       const profileDocStatus = document.getElementById('profileDocStatus');
       let currentUser = null;
-      let userIdValue = '';
-      let profileSlug = '';
       const normalize = (v, max) => String(v || '').trim().slice(0, max);
       async function loadProfile() {
         const snap = await db.collection('publicProfiles').doc(currentUser.uid).get();
         const data = snap.exists ? snap.data() || {} : {};
-        userIdValue = normalize(data.userId, 20) || userIdValue || currentUser.uid;
         firstNameInput.value = normalize(data.firstName, 50);
         lastNameInput.value = normalize(data.lastName, 50);
         emailInput.value = currentUser.email || '';
@@ -314,29 +311,19 @@
         const firstName = normalize(firstNameInput.value, 50);
         const lastName = normalize(lastNameInput.value, 50);
         const bio = normalize(bioInput.value, 1000);
-        const nextId = userIdValue || currentUser.uid;
-        const userProfilePayload = {
-          userId: nextId,
-          email: currentUser.email || '',
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
         const profilePayload = {
           uid: currentUser.uid,
-          userId: nextId,
           firstName,
           lastName,
           bio,
           email: currentUser.email || '',
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          isPublic: true // Always set public profiles as visible
+          isPublic: true
         };
         try {
           saveProfileBtn.disabled = true;
           profileStatus.textContent = 'Saving profile...';
-          const batch = db.batch();
-          batch.set(db.collection('userProfiles').doc(currentUser.uid), userProfilePayload);
-          batch.set(db.collection('publicProfiles').doc(currentUser.uid), profilePayload);
-          await batch.commit();
+          await db.collection('publicProfiles').doc(currentUser.uid).set(profilePayload, { merge: true });
           profileDocStatus.textContent = 'Profile record: saved';
           profileStatus.textContent = 'Profile saved successfully.';
         } catch (err) {
