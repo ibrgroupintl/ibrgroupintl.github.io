@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -169,9 +169,10 @@
                 timestamp: d.timestamp || 0
               });
             });
-            // Sort by timestamp descending (newest first), then by tag priority only if timestamps are equal
+            // Sort by timestamp descending (newest first)
+            insights.sort((a, b) => b.timestamp - a.timestamp);
+            // Prioritize ESG, Energy, Real Estate
             insights.sort((a, b) => {
-              if (b.timestamp !== a.timestamp) return b.timestamp - a.timestamp;
               const priority = ['ESG','Energy','Real Estate'];
               const aPriority = a.tags && a.tags.findIndex(t => priority.includes(t)) !== -1 ? priority.indexOf(a.tags.find(t => priority.includes(t))) : 99;
               const bPriority = b.tags && b.tags.findIndex(t => priority.includes(t)) !== -1 ? priority.indexOf(b.tags.find(t => priority.includes(t))) : 99;
@@ -192,4 +193,4 @@
     });
   </script>
 </body>
-</html></html>
+</html>
