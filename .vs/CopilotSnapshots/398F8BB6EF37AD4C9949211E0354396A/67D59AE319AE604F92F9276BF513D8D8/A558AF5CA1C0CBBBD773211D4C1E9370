@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0284c7">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="robots" content="index, follow">
-  <title>Edit Profile — Impact in Business Recruitment</title>
+  <meta name="robots" content="noindex, nofollow">
+  <title>Messages Inbox — Impact in Business Recruitment</title>
   <link rel="stylesheet" href="/resource-centre.css">
   <link rel="stylesheet" href="/index.css">
   <link rel="stylesheet" href="/mobile-compat.css">
@@ -47,9 +47,9 @@
       box-shadow: 0 8px 24px rgba(2, 6, 23, .08)
     }
 
-    .profile-shell {
+    .messages-shell {
       display: none;
-      max-width: 520px;
+      max-width: 900px;
       margin: 2rem auto 3rem;
       padding: 0 1rem
     }
@@ -72,50 +72,7 @@
 
     .form-grid {
       display: grid;
-      gap: 16px
-    }
-
-    .form-row {
-      display: grid;
-      gap: 8px
-    }
-
-    .form-label {
-      font-weight: 600;
-      color: #0f2f4f
-    }
-
-    .form-control {
-      width: 100%;
-      border: 1px solid #d0d7de;
-      border-radius: 8px;
-      padding: 10px 12px;
-      box-sizing: border-box;
-      font: inherit
-    }
-
-    .form-control:focus {
-      border-color: #0284c7;
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, .12);
-      outline: none
-    }
-
-    textarea.form-control {
-      min-height: 120px;
-      font-size: inherit;
-      line-height: 1.5;
-      font-family: 'Open Sans', Arial, sans-serif
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: .9rem
-    }
-
-    .button-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap
+      gap: 12px
     }
 
     .status-note {
@@ -123,7 +80,11 @@
       color: var(--muted)
     }
 
-    /* Sidebar menu (shared across all pages) */
+    .muted {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
     .sidebar-menu-shell {
       display: none;
       position: fixed;
@@ -184,6 +145,7 @@
           <img src="/160.jpg" alt="Impact logo" class="site-logo" style="height:36px;width:auto;display:block">
           <span class="site-title" style="color:lightgrey">Premium</span>
         </div>
+
         <div class="user-menu" style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <div class="auth-profile-chip" data-auth-profile>
             <img class="auth-profile-photo" data-auth-photo src="/100.png" alt="Profile photo">
@@ -199,6 +161,7 @@
       <a class="sidebar-menu-link" href="/index.html">Home</a>
       <a class="sidebar-menu-link" href="/editprofile.html">Edit Profile</a>
       <a class="sidebar-menu-link" href="/members.html">Members Area</a>
+      <a class="sidebar-menu-link" href="/messages.html">Messages Inbox</a>
       <a class="sidebar-menu-link" href="/insights.html">Insights Archive</a>
       <a class="sidebar-menu-link" href="/uploads.html">Resume Uploads</a>
       <a class="sidebar-menu-link" href="/settings.html">Account Settings</a>
@@ -207,7 +170,6 @@
       <a class="sidebar-menu-link" href="/directory.html">Member Directory</a>
     </nav>
     <script>
-      // Show/hide sidebar menu based on authentication
       function updateSidebarVisibility() {
         var sidebar = document.getElementById('topNavMenu');
         if (document.body.classList.contains('has-sidebar')) {
@@ -220,55 +182,28 @@
       var observer = new MutationObserver(updateSidebarVisibility);
       observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     </script>
-
     <section id="loginSection" class="auth-shell">
-      <h1 style="margin:0;color:#092a4b">Edit Profile</h1>
-      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to edit your member profile.</p>
+      <h1 style="margin:0;color:#092a4b">Messages Inbox</h1>
+      <p style="margin:.75rem 0 1.25rem;color:var(--muted)">Sign in to view your messages.</p>
       <a class="btn btn-primary" href="/login.html">Go to Sign In</a>
     </section>
-
-    <main id="profileShell" class="profile-shell" role="main">
+    <main id="messagesShell" class="messages-shell" role="main">
       <section class="panel">
         <div class="panel-head">
-          <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Member Profile Settings</h1>
-          <p id="profileDocStatus" class="muted" style="margin:.35rem 0 0">Profile record: loading...</p>
+          <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Your Messages</h1>
         </div>
         <div class="panel-body">
-          <div class="form-grid">
-            <div class="form-row">
-              <label class="form-label" for="firstNameInput">First name (max 50)</label>
-              <input id="firstNameInput" class="form-control" type="text" maxlength="50" placeholder="First name">
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="lastNameInput">Last name (max 50)</label>
-              <input id="lastNameInput" class="form-control" type="text" maxlength="50" placeholder="Last name">
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="emailInput">Email</label>
-              <input id="emailInput" class="form-control" type="email" maxlength="100" placeholder="Email" disabled>
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="bioInput">Bio (max 1000)</label>
-              <textarea id="bioInput" class="form-control" maxlength="1000" placeholder="Tell people about your work and focus..."></textarea>
-            </div>
-            <div class="button-row">
-              <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
-              <a href="/settings.html" class="btn btn-outline">Back to Settings</a>
-            </div>
-
-            <p id="profileStatus" class="status-note">Loading profile...</p>
-          </div>
+          <div id="messagesList" class="form-grid"></div>
+          <p id="messagesStatus" class="status-note">Loading messages...</p>
         </div>
       </section>
     </main>
-
     <footer class="resource-footer" role="contentinfo">
       <div class="container" style="text-align:center">
         <p style="margin:0;color:var(--muted)">&copy; 2026 Impact in Business Recruitment. All rights reserved.</p>
       </div>
     </footer>
   </div>
-
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -276,90 +211,75 @@
   <script defer src="/header-profile.js"></script>
   <script defer src="/mobile-compat.js"></script>
   <script defer src="/page-transition.js"></script>
-
   <script>
     window.addEventListener('load', function () {
       if (!window.firebase || !window.firebaseConfig) return;
-      try { firebase.initializeApp(window.firebaseConfig); } catch (e) {}
+      try {
+        firebase.initializeApp(window.firebaseConfig);
+      } catch (e) {}
       const auth = firebase.auth();
       const db = firebase.firestore();
       const loginSection = document.getElementById('loginSection');
-      const profileShell = document.getElementById('profileShell');
+      const messagesShell = document.getElementById('messagesShell');
       const signOutBtn = document.getElementById('signOutBtn');
       const signInLink = document.getElementById('signInLink');
-      const firstNameInput = document.getElementById('firstNameInput');
-      const lastNameInput = document.getElementById('lastNameInput');
-      const emailInput = document.getElementById('emailInput');
-      const bioInput = document.getElementById('bioInput');
-      const saveProfileBtn = document.getElementById('saveProfileBtn');
-      const profileStatus = document.getElementById('profileStatus');
-      const profileDocStatus = document.getElementById('profileDocStatus');
-      let currentUser = null;
-      const normalize = (v, max) => String(v || '').trim().slice(0, max);
-      async function loadProfile() {
-        const snap = await db.collection('publicProfiles').doc(currentUser.uid).get();
-        const data = snap.exists ? snap.data() || {} : {};
-        firstNameInput.value = normalize(data.firstName, 50);
-        lastNameInput.value = normalize(data.lastName, 50);
-        emailInput.value = currentUser.email || '';
-        bioInput.value = normalize(data.bio, 1000);
-        profileDocStatus.textContent = snap.exists ? 'Profile record: found' : 'Profile record: not saved yet';
-      }
-      async function saveProfile() {
-        if (!currentUser) return;
-        const firstName = normalize(firstNameInput.value, 50);
-        const lastName = normalize(lastNameInput.value, 50);
-        const bio = normalize(bioInput.value, 1000);
-        const profilePayload = {
-          uid: currentUser.uid,
-          firstName,
-          lastName,
-          bio,
-          email: currentUser.email || '',
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          isPublic: true
-        };
-        try {
-          saveProfileBtn.disabled = true;
-          profileStatus.textContent = 'Saving profile...';
-          await db.collection('publicProfiles').doc(currentUser.uid).set(profilePayload, { merge: true });
-          profileDocStatus.textContent = 'Profile record: saved';
-          profileStatus.textContent = 'Profile saved successfully.';
-        } catch (err) {
-          profileStatus.textContent = 'Profile save failed: ' + (err && err.message ? err.message : 'unknown error');
-        } finally {
-          saveProfileBtn.disabled = false;
-        }
-      }
+      const messagesList = document.getElementById('messagesList');
+      const messagesStatus = document.getElementById('messagesStatus');
+      let unsubscribe = null;
       function showSignedOut() {
         loginSection.style.display = 'block';
-        profileShell.style.display = 'none';
+        messagesShell.style.display = 'none';
         signOutBtn.style.display = 'none';
         signInLink.style.display = 'inline-flex';
         document.body.classList.remove('auth-pending', 'has-sidebar');
+        if (unsubscribe) { unsubscribe(); unsubscribe = null; }
       }
-      async function showSignedIn(user) {
-        currentUser = user;
+      function showSignedIn(user) {
         loginSection.style.display = 'none';
-        profileShell.style.display = 'block';
+        messagesShell.style.display = 'block';
         signOutBtn.style.display = 'inline-flex';
         signInLink.style.display = 'none';
         document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
-        await loadProfile();
+        loadMessages(user.uid);
       }
-      auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-          currentUser = null;
-          showSignedOut();
+      function renderMessages(messages) {
+        if (!messages.length) {
+          messagesList.innerHTML = '<div class="muted">No messages found.</div>';
+          messagesStatus.textContent = '0 messages.';
           return;
         }
-        await showSignedIn(user);
+        messagesList.innerHTML = messages.map(msg =>
+          `<div class="panel" style="margin-bottom:12px;">
+            <div class="panel-head" style="font-size:1rem;color:#092a4b;">${msg.subject || 'No Subject'}</div>
+            <div class="panel-body" style="font-size:.97rem;">${msg.body || ''}</div>
+            <div class="muted" style="padding:0 1rem 1rem 1rem;">${msg.createdAt ? (msg.createdAt.seconds ? new Date(msg.createdAt.seconds * 1000).toLocaleString() : new Date(msg.createdAt).toLocaleString()) : ''}</div>
+          </div>`
+        ).join('');
+        messagesStatus.textContent = messages.length + ' message' + (messages.length === 1 ? '' : 's') + '.';
+      }
+      function loadMessages(uid) {
+        messagesStatus.textContent = 'Loading messages...';
+        if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+        unsubscribe = db.collection('messages')
+          .where('recipientUid', '==', uid)
+          .orderBy('createdAt', 'desc')
+          .onSnapshot(snap => {
+            const messages = [];
+            snap.forEach(doc => messages.push(doc.data()));
+            renderMessages(messages);
+          }, err => {
+            messagesList.innerHTML = '';
+            messagesStatus.textContent = 'Failed to load messages.';
+          });
+      }
+      auth.onAuthStateChanged(function (user) {
+        if (!user) { showSignedOut(); return; }
+        showSignedIn(user);
       });
-      saveProfileBtn.addEventListener('click', saveProfile);
-      signOutBtn.addEventListener('click', () => auth.signOut());
+      if (signOutBtn) signOutBtn.addEventListener('click', function () { auth.signOut(); });
     });
   </script>
 </body>
 
-</html></html>
+</html>
