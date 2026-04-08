@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -166,11 +166,8 @@
                 tags: Array.isArray(d.tags) ? d.tags : [],
                 snippet: d.snippet || '',
                 source: d.source || '',
-                timestamp: d.timestamp || 0
               });
             });
-            // Sort by timestamp descending (newest first)
-            insights.sort((a, b) => b.timestamp - a.timestamp);
             // Prioritize ESG, Energy, Real Estate
             insights.sort((a, b) => {
               const priority = ['ESG','Energy','Real Estate'];
