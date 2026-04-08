@@ -152,7 +152,7 @@
               });
             });
           })
-          .catch(() => { uploadsList.innerHTML = '<div class="muted">Failed to load uploads.'; });
+          .catch(() => { uploadsList.innerHTML = '<div class="muted">Parsing error. Try again later.</div>'; });
       }
       function uploadResume() {
         const file = resumeInput.files && resumeInput.files[0];
