@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -450,99 +450,7 @@
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="section">
-      <div class="container">
-        <div class="lead-borderline">Why Impact?</div>
-        <h2>Features for Modern Recruitment</h2>
-        <p class="lead">Empowering HR teams and recruiters with actionable insights, secure tools, and a collaborative environment.</p>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <h3>Market Insights</h3>
-            <p>Stay ahead with real-time executive movement data and industry trends.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Private Member Tools</h3>
-            <p>Access a secure, members-only platform for collaboration and research.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Strategic Reports</h3>
-            <p>Leverage research-backed reports for confident hiring decisions.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="section">
-      <div class="container">
-        <div class="lead-borderline">Plans</div>
-        <h2>Simple, Transparent Pricing</h2>
-        <p class="lead">Choose the plan that fits your team's needs. All plans include secure access and actionable insights.</p>
-        <div class="pricing-grid">
-          <div class="pricing-card">
-            <h3>Starter</h3>
-            <div class="price">Free <small>/ forever</small></div>
-            <ul>
-              <li>Basic market insights</li>
-              <li>Limited member access</li>
-              <li>Email support</li>
-            </ul>
-            <a class="btn btn-ghost" href="/subscribe.html">Get Started</a>
-          </div>
-          <div class="pricing-card featured">
-            <h3>Pro</h3>
-            <div class="price">£29 <small>/ month</small></div>
-            <ul>
-              <li>Full executive movement data</li>
-              <li>Unlimited member access</li>
-              <li>Priority support</li>
-            </ul>
-            <a class="btn btn-primary" href="/subscribe.html">Subscribe</a>
-          </div>
-          <div class="pricing-card">
-            <h3>Enterprise</h3>
-            <div class="price">Contact</div>
-            <ul>
-              <li>Custom integrations</li>
-              <li>Dedicated account manager</li>
-              <li>Advanced analytics</li>
-            </ul>
-            <a class="btn btn-ghost" href="/contact.html">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Workflow Section -->
-    <section class="section">
-      <div class="container">
-        <div class="lead-borderline">How it Works</div>
-        <h2>Our Workflow</h2>
-        <p class="lead">A seamless process from sign-up to insight delivery, designed for busy HR professionals.</p>
-        <div class="workflow">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Sign Up</h3>
-            <p>Create your secure account and join our private member community.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Explore Insights</h3>
-            <p>Access real-time data, reports, and collaborative tools tailored to your needs.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Make Confident Decisions</h3>
-            <p>Leverage actionable intelligence to drive your recruitment strategy forward.</p>
-          </div>
-        </div>
-        <div class="final-cta">
-          <p>Ready to transform your hiring process?</p>
-          <a class="btn btn-primary" href="/members.html">Join Now</a>
-        </div>
-      </div>
-    </section>
+   
   </main>
 
   <footer class="site-footer" role="contentinfo">
