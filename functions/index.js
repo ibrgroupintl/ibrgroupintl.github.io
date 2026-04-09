@@ -1,5 +1,39 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const Parser = require('rss-parser');
+admin.initializeApp();
+
+const parser = new Parser();
+const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
+
+exports.fetchSubstackRssToFirestore = functions.pubsub.schedule('every 60 minutes').onRun(async (context) => {
+  const feed = await parser.parseURL(SUBSTACK_RSS_URL);
+  const db = admin.firestore();
+
+  for (const item of feed.items) {
+    // Use the RSS post GUID or link as a unique identifier
+    const docId = item.guid || item.link;
+    const docRef = db.collection('insightsFeed').doc(docId.replace(/[^\w-]/g, ''));
+
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      await docRef.set({
+        title: item.title || '',
+        link: item.link || '',
+        date: item.pubDate || '',
+        snippet: item.contentSnippet || '',
+        source: feed.title || 'Substack',
+        tags: [], // Optionally parse tags from item.categories
+        timestamp: item.isoDate ? new Date(item.isoDate).getTime() : Date.now()
+      });
+    }
+  }
+  return null;
+});
+
+
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
 const postmark = require('postmark');
 admin.initializeApp();
 
