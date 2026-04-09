@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const postmark = require('postmark');
 admin.initializeApp();
@@ -47,8 +47,7 @@ exports.adminFetchAndRelayRss = functions.firestore
         To: email,
         Subject: `New Insight: ${post.title || 'Update from Impact in Business Recruitment'}`,
         HtmlBody: htmlBody.replace('{{email}}', encodeURIComponent(email)),
-        TextBody: `${post.title || 'New Insight'}\n\n${post.snippet || ''}\n\nRead more: ${post.link || ''}\n\nUnsubscribe: https://www.ibrecruitment.com/unsubscribe?email=${encodeURIComponent(email)}`,
-        MessageStream: 'broadcast'
+        TextBody: `${post.title || 'New Insight'}\n\n${post.snippet || ''}\n\nRead more: ${post.link || ''}\n\nUnsubscribe: https://www.ibrecruitment.com/unsubscribe?email=${encodeURIComponent(email)}`
       }));
       await postmarkClient.sendEmailBatch(batch);
     }
