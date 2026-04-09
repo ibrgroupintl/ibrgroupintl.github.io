@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -201,9 +201,6 @@
       color: #ffffff;
     }
     .section .lead { color: #d7e4f8; margin: 0 0 18px; }
-    .lead-yellow {
-      color: #ffc857;
-    }
 
     .lead-borderline {
       display: inline-block;
@@ -458,7 +455,7 @@
       <div class="container">
         <div class="lead-borderline">Why Impact?</div>
         <h2>Features for Modern Recruitment</h2>
-        <p class="lead lead-yellow">Empowering HR teams and recruiters with actionable insights, secure tools, and a collaborative environment.</p>
+        <p class="lead">Empowering HR teams and recruiters with actionable insights, secure tools, and a collaborative environment.</p>
         <div class="feature-grid">
           <div class="feature-card">
             <h3>Market Insights</h3>
@@ -481,7 +478,7 @@
       <div class="container">
         <div class="lead-borderline">Plans</div>
         <h2>Simple, Transparent Pricing</h2>
-        <p class="lead lead-yellow">Choose the plan that fits your team's needs. All plans include secure access and actionable insights.</p>
+        <p class="lead">Choose the plan that fits your team's needs. All plans include secure access and actionable insights.</p>
         <div class="pricing-grid">
           <div class="pricing-card">
             <h3>Starter</h3>
@@ -522,7 +519,7 @@
       <div class="container">
         <div class="lead-borderline">How it Works</div>
         <h2>Our Workflow</h2>
-        <p class="lead lead-yellow">A seamless process from sign-up to insight delivery, designed for busy HR professionals.</p>
+        <p class="lead">A seamless process from sign-up to insight delivery, designed for busy HR professionals.</p>
         <div class="workflow">
           <div class="step">
             <div class="step-number">1</div>
