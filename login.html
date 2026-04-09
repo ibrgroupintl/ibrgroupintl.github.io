@@ -294,7 +294,17 @@
           try {
             const result = await auth.signInWithPopup(provider);
             showUserStatus(result.user);
-            redirectToPortal();
+            // After successful login, before redirect
+            const loadingNotice = document.createElement('div');
+            loadingNotice.textContent = 'Loading your member area, please wait...';
+            loadingNotice.style = 'text-align:center;margin-top:2rem;font-size:1.2rem;color:#0284c7;';
+            document.body.innerHTML = '';
+            document.body.appendChild(loadingNotice);
+
+            // Simulate delay or wait for setup, then redirect
+            setTimeout(() => {
+              window.location.href = '/members.html';
+            }, 2000); // Adjust delay as needed
           } catch (err) {
             console.warn('Popup failed, falling back to redirect', err);
             try { await auth.signInWithRedirect(provider); } catch (rerr) { showError(rerr.message || 'Authentication failed'); }
