@@ -1,17 +1,18 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Parser = require('rss-parser');
+const postmark = require('postmark');
 admin.initializeApp();
 
 const parser = new Parser();
 const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
 
+// Fetch Substack RSS and store in Firestore
 exports.fetchSubstackRssToFirestore = functions.pubsub.schedule('every 60 minutes').onRun(async (context) => {
   const feed = await parser.parseURL(SUBSTACK_RSS_URL);
   const db = admin.firestore();
 
   for (const item of feed.items) {
-    // Use the RSS post GUID or link as a unique identifier
     const docId = item.guid || item.link;
     const docRef = db.collection('insightsFeed').doc(docId.replace(/[^\w-]/g, ''));
 
@@ -23,7 +24,7 @@ exports.fetchSubstackRssToFirestore = functions.pubsub.schedule('every 60 minute
         date: item.pubDate || '',
         snippet: item.contentSnippet || '',
         source: feed.title || 'Substack',
-        tags: [], // Optionally parse tags from item.categories
+        tags: [],
         timestamp: item.isoDate ? new Date(item.isoDate).getTime() : Date.now()
       });
     }
@@ -31,12 +32,7 @@ exports.fetchSubstackRssToFirestore = functions.pubsub.schedule('every 60 minute
   return null;
 });
 
-
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const postmark = require('postmark');
-admin.initializeApp();
-
+// Email relay function
 const postmarkToken = functions.config().postmark.broadcast_token;
 const postmarkClient = new postmark.ServerClient(postmarkToken);
 
@@ -46,7 +42,6 @@ exports.adminFetchAndRelayRss = functions.firestore
     const post = snap.data();
     if (!post) return null;
 
-    // 1. Fetch all user emails from publicProfiles
     const usersSnap = await admin.firestore().collection('publicProfiles').get();
     const emails = [];
     usersSnap.forEach(doc => {
@@ -56,7 +51,6 @@ exports.adminFetchAndRelayRss = functions.firestore
 
     if (emails.length === 0) return null;
 
-    // 2. Prepare the HTML5 email template
     const htmlBody = `
       <html>
         <body style="font-family: 'Open Sans', Arial, sans-serif; color: #0f172a; background: #f5f9ff;">
@@ -74,7 +68,6 @@ exports.adminFetchAndRelayRss = functions.firestore
       </html>
     `;
 
-    // 3. Send in batches of 50 (Postmark batch limit)
     for (let i = 0; i < emails.length; i += 50) {
       const batch = emails.slice(i, i + 50).map(email => ({
         From: 'admin-messages@ibrecruitment.com',
