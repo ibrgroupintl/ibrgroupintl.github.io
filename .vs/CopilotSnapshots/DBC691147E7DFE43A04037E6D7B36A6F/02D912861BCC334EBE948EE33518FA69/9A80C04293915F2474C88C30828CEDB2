@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -407,15 +407,7 @@
         grid-template-columns: 1fr;
       }
       .hero-grid { padding: 22px; }
-      .header-row {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 0;
-      }
-      .brand {
-        margin-bottom: 0;
-      }
+      .header-row { flex-direction: column; padding: 10px 0; }
       .footer-links { gap: 8px; margin-bottom: 8px; }
       .footer-social { margin-bottom: 4px; }
     }
