@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -415,9 +415,6 @@
       }
       .brand {
         margin-bottom: 0;
-      }
-      .nav-links {
-        padding-right: 90px; /* Move buttons inward to clear the ribbon */
       }
       .footer-links { gap: 8px; margin-bottom: 8px; }
       .footer-social { margin-bottom: 4px; }
