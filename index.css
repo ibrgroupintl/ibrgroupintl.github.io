@@ -154,6 +154,19 @@ html,body{height:100%;margin:0;font-family: "Open Sans", system-ui, -apple-syste
   z-index: 950;
 }
 .sidebar-menu-link {
+  /* Added styles for sidebar menu icons */
+}
+
+.sidebar-menu-icon {
+  display: inline-block;
+  width: 1.25em;
+  min-width: 1.25em;
+  text-align: center;
+  margin-right: 0.65em;
+  font-size: 1.15em;
+  vertical-align: middle;
+  opacity: 0.88;
+}
   display: block;
   padding: 11px 14px;
   margin: 2px 8px;
