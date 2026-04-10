@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -55,7 +55,7 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
       backdrop-filter: blur(10px);
       background: rgba(6, 11, 23, 0.72);
       border-bottom: 1px solid rgba(159, 176, 202, 0.16);
@@ -430,7 +430,7 @@
       right: 0;
       width: 0;
       height: 0;
-      z-index: 200;
+      z-index: 120;
       border-top: 160px solid #ffc857;
       border-left: 160px solid transparent;
       pointer-events: none;
@@ -446,7 +446,7 @@
       text-align: center;
       transform: rotate(45deg);
       letter-spacing: 0.04em;
-      z-index: 201;
+      z-index: 130;
       pointer-events: auto;
       user-select: none;
       background: none;
