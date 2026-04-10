@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -201,7 +201,7 @@
       color: #ffffff;
     }
     .section .lead { color: #d7e4f8; margin: 0 0 18px; }
-    .lead-yellow, .section .lead-yellow {
+    .lead-yellow {
       color: #ffc857 !important;
     }
 
