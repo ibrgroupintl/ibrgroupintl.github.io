@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -412,32 +412,29 @@
       .footer-social { margin-bottom: 4px; }
     }
 
-    /* Corner Triangle Ribbon */
+    /* Corner Triangle */
     .corner-triangle {
       position: fixed;
       top: 0;
       right: 0;
+      z-index: 100;
       width: 0;
       height: 0;
-      z-index: 120;
-      border-top: 80px solid #ffc857;
-      border-left: 80px solid transparent;
+      border-left: 180px solid transparent;
+      border-bottom: 48px solid #ffc857;
+      transform: translate(50%, -100%) rotate(45deg);
       pointer-events: none;
     }
-    .corner-triangle .triangle-text {
+    .triangle-text {
       position: absolute;
-      top: 8px;
-      right: -56px;
-      width: 160px;
-      display: block;
-      color: #0b1220;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      z-index: 1;
       font-weight: 800;
       font-size: 1rem;
-      text-align: center;
-      transform: rotate(45deg);
-      letter-spacing: 0.04em;
-      pointer-events: auto;
-      user-select: none;
+      color: #0b1220;
+      pointer-events: none;
     }
   </style>
 </head>

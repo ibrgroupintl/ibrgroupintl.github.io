@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -412,39 +412,31 @@
       .footer-social { margin-bottom: 4px; }
     }
 
-    /* Corner Triangle Ribbon */
-    .corner-triangle {
+    /* Corner Ribbon */
+    .corner-ribbon {
       position: fixed;
       top: 0;
       right: 0;
-      width: 0;
-      height: 0;
-      z-index: 120;
-      border-top: 80px solid #ffc857;
-      border-left: 80px solid transparent;
-      pointer-events: none;
-    }
-    .corner-triangle .triangle-text {
-      position: absolute;
-      top: 8px;
-      right: -56px;
-      width: 160px;
-      display: block;
+      z-index: 100;
+      width: 180px;
+      height: 48px;
+      background: #ffc857;
       color: #0b1220;
       font-weight: 800;
       font-size: 1rem;
       text-align: center;
-      transform: rotate(45deg);
+      line-height: 48px;
+      transform: translate(40px, -40px) rotate(45deg);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      border-top-left-radius: 12px;
+      box-sizing: border-box;
+      pointer-events: none;
       letter-spacing: 0.04em;
-      pointer-events: auto;
-      user-select: none;
     }
   </style>
 </head>
 <body>
-    <div class="corner-triangle">
-      <span class="triangle-text">7-day free trial</span>
-    </div>
+    <div class="corner-ribbon">7-day free trial</div>
     <header class="site-header" role="banner">
       <div class="container header-row">
         <a class="brand" href="/index.html" aria-label="home">
