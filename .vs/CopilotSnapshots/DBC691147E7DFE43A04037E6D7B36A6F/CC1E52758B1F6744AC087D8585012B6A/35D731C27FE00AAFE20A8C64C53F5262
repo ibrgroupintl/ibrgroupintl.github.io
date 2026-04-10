@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -420,28 +420,24 @@
       width: 0;
       height: 0;
       z-index: 120;
-      border-top: 160px solid #ffc857;
-      border-left: 160px solid transparent;
+      border-top: 120px solid #ffc857;
+      border-left: 120px solid transparent;
       pointer-events: none;
     }
     .corner-triangle .triangle-text {
       position: absolute;
-      top: 38px;
-      right: -110px;
-      width: 220px;
+      top: 22px;
+      right: -80px;
+      width: 200px;
+      display: block;
       color: #0b1220;
       font-weight: 800;
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       text-align: center;
       transform: rotate(45deg);
       letter-spacing: 0.04em;
-      z-index: 121;
       pointer-events: auto;
       user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 60px;
     }
   </style>
 </head>
