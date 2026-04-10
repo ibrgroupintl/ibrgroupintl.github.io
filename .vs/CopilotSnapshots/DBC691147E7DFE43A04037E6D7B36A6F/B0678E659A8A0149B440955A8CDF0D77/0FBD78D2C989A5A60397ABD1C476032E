@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -420,19 +420,19 @@
       width: 0;
       height: 0;
       z-index: 120;
-      border-top: 120px solid #ffc857;
-      border-left: 120px solid transparent;
+      border-top: 80px solid #ffc857;
+      border-left: 80px solid transparent;
       pointer-events: none;
     }
     .corner-triangle .triangle-text {
       position: absolute;
-      top: 22px;
-      right: -80px;
-      width: 200px;
+      top: 8px;
+      right: -56px;
+      width: 160px;
       display: block;
       color: #0b1220;
       font-weight: 800;
-      font-size: 1.08rem;
+      font-size: 1rem;
       text-align: center;
       transform: rotate(45deg);
       letter-spacing: 0.04em;
