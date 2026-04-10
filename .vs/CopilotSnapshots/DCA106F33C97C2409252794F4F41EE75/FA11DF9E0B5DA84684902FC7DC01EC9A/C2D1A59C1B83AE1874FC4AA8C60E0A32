@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --site-bg: #f8fafc;
   --card-bg: #ffffff;
   --text: #1a1e29;
@@ -201,12 +201,6 @@ body.has-sidebar #protected-content {
   #navToggle{display:inline-flex}
   .user-menu{display:none}
   body.nav-open .user-menu{display:flex;flex-direction:column;position:absolute;top:64px;right:12px;background:linear-gradient(180deg,#fff,#fff);padding:10px;border-radius:8px;box-shadow:var(--elev-1);color:var(--text)}
-
-  /* hide Sign In and Subscribe buttons on mobile and optimal responsive screens */
-  #signInOutBtn,
-  #authBtn {
-    display: none !important;
-  }
 }
 
 @media (max-width:420px) {
