@@ -32,18 +32,13 @@ exports.getPostsCsv = functions.https.onCall(async (data, context) => {
 const parser = new Parser();
 const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
 
-
-
-
-
-
-exports.adminFetchAndRelayRss = functions
-  .runWith({ secrets: [postmarkToken] })
-  .firestore
+exports.adminFetchAndRelayRss = functions.firestore
   .document('insightsFeed/{postId}')
+  .runWith({ secrets: [postmarkToken] })
   .onCreate(async (snap, context) => {
     const post = snap.data();
     const postRef = snap.ref;
+    // Get the secret value at runtime
     const postmarkClient = new postmark.ServerClient(postmarkToken.value());
 
     // 1. Idempotency: Check if already notified
