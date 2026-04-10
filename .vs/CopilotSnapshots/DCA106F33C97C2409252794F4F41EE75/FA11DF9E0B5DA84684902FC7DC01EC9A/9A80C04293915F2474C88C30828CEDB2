@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -454,13 +454,6 @@
       align-items: center;
       justify-content: center;
       height: 40px;
-    }
-
-    @media (max-width: 900px) {
-      #signInOutBtn,
-      #authBtn {
-        display: none !important;
-      }
     }
   </style>
 </head>
