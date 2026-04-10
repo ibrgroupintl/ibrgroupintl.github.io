@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -412,26 +412,25 @@
       .footer-social { margin-bottom: 4px; }
     }
 
-    /* Corner Ribbon */
+    @media (prefers-reduced-motion: reduce) {
+      .btn { transition: none; }
+    }
+
     .corner-ribbon {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 100;
-      width: 180px;
-      height: 48px;
-      background: #ffc857;
-      color: #0b1220;
-      font-weight: 800;
-      font-size: 1rem;
-      text-align: center;
-      line-height: 48px;
-      transform: translate(40px, -40px) rotate(45deg);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-      border-top-left-radius: 12px;
-      box-sizing: border-box;
+      position: absolute;
+      top: 20px;
+      right: -10px;
+      z-index: 10;
+      background: linear-gradient(135deg, #24d3a5, #00b7ff);
+      color: #fff;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform: rotate(3deg);
       pointer-events: none;
-      letter-spacing: 0.04em;
     }
   </style>
 </head>
