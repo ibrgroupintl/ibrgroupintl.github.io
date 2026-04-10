@@ -1,11 +1,36 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const { Storage } = require('@google-cloud/storage');
 const Parser = require('rss-parser');
 const postmark = require('postmark');
-admin.initializeApp();
 
+admin.initializeApp();
+const storage = new Storage();
+const BUCKET = 'wale-491803.firebasestorage.app'; // Exact bucket name
+
+// Existing function
+exports.getPostsCsv = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be signed in');
+  }
+  // Optional: check custom claims e.g. isSubscriber
+  // if (!context.auth.token.isSubscriber) throw new functions.https.HttpsError('permission-denied','Subscribers only');
+
+  const file = storage.bucket(BUCKET).file('Default/posts.csv');
+  const expiresMs = Date.now() + 5 * 60 * 1000; // 5 minutes
+  const [url] = await file.getSignedUrl({
+    version: 'v4',
+    action: 'read',
+    expires: expiresMs,
+  });
+  return { url };
+});
+
+// --- Begin adminFetchAndRelayRss and dependencies ---
 const parser = new Parser();
 const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
+
+
 
 // Enhanced Email relay function with idempotency, time limit, error handling, test/old data filtering, unsubscribe logic, and batch handling
 const postmarkToken = functions.config().postmark.broadcast_token;
@@ -27,6 +52,7 @@ exports.adminFetchAndRelayRss = functions.firestore
     if ((now - postTime) > maxAgeMs) return null;
     if (post.test) return null;
 
+
     // 6. Unsubscribe/Opt-Out Logic
     let usersSnap;
     try {
@@ -42,7 +68,7 @@ exports.adminFetchAndRelayRss = functions.firestore
     });
     if (emails.length === 0) return null;
 
-    // 3. Error Handling/Logging and 7. Batch Limit Handling
+    // Postmark HTML email template (baseload snippet)
     const htmlBody = `
       <html>
         <body style="font-family: 'Open Sans', Arial, sans-serif; color: #0f172a; background: #f5f9ff;">
@@ -79,3 +105,4 @@ exports.adminFetchAndRelayRss = functions.firestore
     }
     return null;
   });
+// --- End adminFetchAndRelayRss and dependencies ---
