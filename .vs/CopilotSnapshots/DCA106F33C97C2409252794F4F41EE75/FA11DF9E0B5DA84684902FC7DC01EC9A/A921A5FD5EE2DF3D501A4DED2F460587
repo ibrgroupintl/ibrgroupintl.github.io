@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -29,13 +29,6 @@
     .uploads-list { margin-top: 2rem; }
     .uploads-list-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(2,6,23,0.06); }
     .uploads-list-item a { color: #0284c7; text-decoration: underline; }
-    @media (max-width: 900px) {
-      .resource-nav, .site-header {
-        background: #0B2A6F !important;
-        border-bottom: 1px solid #0B2A6F !important;
-        backdrop-filter: none !important;
-      }
-    }
   </style>
 </head>
 <body class="auth-pending">

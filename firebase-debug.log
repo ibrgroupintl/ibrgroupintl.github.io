@@ -1,0 +1,115 @@
+[debug] [2026-04-10T05:34:23.895Z] ----------------------------------------------------------------------
+[debug] [2026-04-10T05:34:24.005Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\44746\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2026-04-10T05:34:24.012Z] CLI Version:   15.13.0
+[debug] [2026-04-10T05:34:24.012Z] Platform:      win32
+[debug] [2026-04-10T05:34:24.013Z] Node Version:  v24.12.0
+[debug] [2026-04-10T05:34:24.016Z] Time:          Fri Apr 10 2026 06:34:24 GMT+0100 (British Summer Time)
+[debug] [2026-04-10T05:34:24.017Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-04-10T05:34:24.032Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-04-10T05:34:42.265Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-10T05:34:42.268Z] > authorizing via signed-in user (developers@ibrecruitment.com)
+[debug] [2026-04-10T05:34:42.269Z] [iam] checking project wale-491803 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-04-10T05:34:42.274Z] Checked if tokens are valid: false, expires at: 1775751476186
+[debug] [2026-04-10T05:34:42.275Z] Checked if tokens are valid: false, expires at: 1775751476186
+[debug] [2026-04-10T05:34:42.276Z] > refreshing access token with scopes: []
+[debug] [2026-04-10T05:34:42.289Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-04-10T05:34:42.290Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-10T05:34:42.815Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-04-10T05:34:42.816Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-10T05:34:42.855Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions [none]
+[debug] [2026-04-10T05:34:42.855Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions  x-goog-user-project=wale-491803
+[debug] [2026-04-10T05:34:42.856Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-04-10T05:34:42.921Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-04-10T05:34:42.921Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-04-10T05:34:43.742Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions 200
+[debug] [2026-04-10T05:34:43.742Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-04-10T05:34:43.744Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:43.744Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:43.745Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/wale-491803/serviceAccounts/wale-491803@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-04-10T05:34:43.745Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/wale-491803/serviceAccounts/wale-491803@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-04-10T05:34:44.222Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/wale-491803/serviceAccounts/wale-491803@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-04-10T05:34:44.222Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/wale-491803/serviceAccounts/wale-491803@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'wale-491803'...
+[info] 
+[info] i  deploying functions 
+[debug] [2026-04-10T05:34:44.246Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:44.246Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:44.247Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803 [none]
+[debug] [2026-04-10T05:34:44.414Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803 200
+[debug] [2026-04-10T05:34:44.414Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/wale-491803 {"projectNumber":"916707769747","projectId":"wale-491803","lifecycleState":"ACTIVE","name":"wale","createTime":"2026-03-30T03:17:01.110Z","configuredCapabilities":["projects/916707769747/capabilities/app-management","projects/916707769747/capabilities/app-management"]}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-04-10T05:34:44.429Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:44.430Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:44.430Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803/adminSdkConfig [none]
+[debug] [2026-04-10T05:34:45.255Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803/adminSdkConfig 200
+[debug] [2026-04-10T05:34:45.255Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/wale-491803/adminSdkConfig {"projectId":"wale-491803","databaseURL":"https://wale-491803-default-rtdb.firebaseio.com","storageBucket":"wale-491803.firebasestorage.app"}
+[debug] [2026-04-10T05:34:45.257Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.258Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.259Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs [none]
+[debug] [2026-04-10T05:34:45.900Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs 200
+[debug] [2026-04-10T05:34:45.900Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs {"configs":[{"name":"projects/wale-491803/configs/stripe"},{"name":"projects/wale-491803/configs/mail"},{"name":"projects/wale-491803/configs/postmark"}]}
+[debug] [2026-04-10T05:34:45.902Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.903Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.903Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.904Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.904Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.905Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:45.905Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables [none]
+[debug] [2026-04-10T05:34:45.907Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables [none]
+[debug] [2026-04-10T05:34:45.911Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables [none]
+[debug] [2026-04-10T05:34:46.102Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables 200
+[debug] [2026-04-10T05:34:46.102Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables {"variables":[{"name":"projects/wale-491803/configs/stripe/variables/secret_key","updateTime":"2026-04-07T05:18:58.583801598Z"}]}
+[debug] [2026-04-10T05:34:46.104Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.105Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.105Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables/secret_key [none]
+[debug] [2026-04-10T05:34:46.299Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables/secret_key 200
+[debug] [2026-04-10T05:34:46.300Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/stripe/variables/secret_key {"name":"projects/wale-491803/configs/stripe/variables/secret_key","updateTime":"2026-04-07T05:18:58.583801598Z","text":"mk_1MoqJnIZSvVNdV4dHd9NjTPZ"}
+[debug] [2026-04-10T05:34:46.419Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables 200
+[debug] [2026-04-10T05:34:46.420Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables {"variables":[{"name":"projects/wale-491803/configs/mail/variables/smtp_from","updateTime":"2026-04-02T14:10:32.605333392Z"},{"name":"projects/wale-491803/configs/mail/variables/smtp_host","updateTime":"2026-04-02T14:10:32.565280406Z"},{"name":"projects/wale-491803/configs/mail/variables/smtp_pass","updateTime":"2026-04-02T14:10:32.594482668Z"},{"name":"projects/wale-491803/configs/mail/variables/smtp_port","updateTime":"2026-04-02T14:10:32.565692146Z"},{"name":"projects/wale-491803/configs/mail/variables/smtp_secure","updateTime":"2026-04-02T14:10:32.607556857Z"},{"name":"projects/wale-491803/configs/mail/variables/smtp_user","updateTime":"2026-04-02T14:10:32.548096830Z"},{"name":"projects/wale-491803/configs/mail/variables/message_webhook_secret","updateTime":"2026-04-02T14:10:32.625873109Z"}]}
+[debug] [2026-04-10T05:34:46.421Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.421Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.422Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.423Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.423Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.424Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.424Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.425Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.426Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.426Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.427Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.427Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.428Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.428Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.429Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_from [none]
+[debug] [2026-04-10T05:34:46.430Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_host [none]
+[debug] [2026-04-10T05:34:46.433Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_pass [none]
+[debug] [2026-04-10T05:34:46.439Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_port [none]
+[debug] [2026-04-10T05:34:46.445Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_secure [none]
+[debug] [2026-04-10T05:34:46.449Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_user [none]
+[debug] [2026-04-10T05:34:46.453Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/message_webhook_secret [none]
+[debug] [2026-04-10T05:34:46.530Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables 200
+[debug] [2026-04-10T05:34:46.531Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables {"variables":[{"name":"projects/wale-491803/configs/postmark/variables/broadcast_token","updateTime":"2026-04-08T22:14:09.044389661Z"}]}
+[debug] [2026-04-10T05:34:46.531Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.532Z] Checked if tokens are valid: true, expires at: 1775802881816
+[debug] [2026-04-10T05:34:46.532Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables/broadcast_token [none]
+[debug] [2026-04-10T05:34:46.646Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_host 200
+[debug] [2026-04-10T05:34:46.647Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_host {"name":"projects/wale-491803/configs/mail/variables/smtp_host","updateTime":"2026-04-02T14:10:32.565280406Z","text":"smtp.eu.mailgun.org"}
+[debug] [2026-04-10T05:34:46.710Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables/broadcast_token 200
+[debug] [2026-04-10T05:34:46.710Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/postmark/variables/broadcast_token {"name":"projects/wale-491803/configs/postmark/variables/broadcast_token","updateTime":"2026-04-08T22:14:09.044389661Z","text":"YOUR_BROADCAST_SERVER_TOKEN"}
+[debug] [2026-04-10T05:34:46.952Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_user 200
+[debug] [2026-04-10T05:34:46.953Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_user {"name":"projects/wale-491803/configs/mail/variables/smtp_user","updateTime":"2026-04-02T14:10:32.548096830Z","text":"admin@mac.ibrecruitment.com"}
+[debug] [2026-04-10T05:34:46.961Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_port 200
+[debug] [2026-04-10T05:34:46.962Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_port {"name":"projects/wale-491803/configs/mail/variables/smtp_port","updateTime":"2026-04-02T14:10:32.565692146Z","text":"587"}
+[debug] [2026-04-10T05:34:46.975Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_secure 200
+[debug] [2026-04-10T05:34:46.976Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_secure {"name":"projects/wale-491803/configs/mail/variables/smtp_secure","updateTime":"2026-04-02T14:10:32.607556857Z","text":"false"}
+[debug] [2026-04-10T05:34:47.003Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/message_webhook_secret 200
+[debug] [2026-04-10T05:34:47.003Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/message_webhook_secret {"name":"projects/wale-491803/configs/mail/variables/message_webhook_secret","updateTime":"2026-04-02T14:10:32.625873109Z","text":"49aea571db27cb93fa33275ca00b9389c93f611e5a1c54389e244ff291f885e8"}
+[debug] [2026-04-10T05:34:47.058Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_pass 200
+[debug] [2026-04-10T05:34:47.059Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_pass {"name":"projects/wale-491803/configs/mail/variables/smtp_pass","updateTime":"2026-04-02T14:10:32.594482668Z","text":"8bcffb56fe4e0012b7cb7ea2f4d79ea2-d488af3b-4893b5a2"}
+[debug] [2026-04-10T05:34:47.176Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_from 200
+[debug] [2026-04-10T05:34:47.176Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/wale-491803/configs/mail/variables/smtp_from {"name":"projects/wale-491803/configs/mail/variables/smtp_from","updateTime":"2026-04-02T14:10:32.605333392Z","text":"admin@mac.ibrecruitment.com"}

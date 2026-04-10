@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -32,15 +32,7 @@
     .insight-card .insight-link { display: inline-block; background: #0284c7; color: #fff; border-radius: 6px; padding: 7px 16px; text-decoration: none; font-weight: 600; font-size: .97rem; transition: background .18s; }
     .insight-card .insight-link:hover { background: #0369a1; }
     .insights-status { color: var(--muted); text-align: center; margin: 1.5rem 0; font-size: 1.08rem; }
-    @media (max-width: 900px) {
-      .resource-nav, .site-header {
-        background: #0B2A6F !important;
-        border-bottom: 1px solid #0B2A6F !important;
-        backdrop-filter: none !important;
-      }
-      .sidebar-menu-shell { position:static; width:100%; max-width:900px; margin:12px auto; }
-      body.has-sidebar #protected-content { margin-left:0; }
-    }
+    @media (max-width:980px) { .sidebar-menu-shell { position:static; width:100%; max-width:900px; margin:12px auto; } body.has-sidebar #protected-content { margin-left:0; } }
   </style>
 </head>
 <body class="auth-pending">
@@ -200,4 +192,4 @@
     });
   </script>
 </body>
-</html>
+</html></html>

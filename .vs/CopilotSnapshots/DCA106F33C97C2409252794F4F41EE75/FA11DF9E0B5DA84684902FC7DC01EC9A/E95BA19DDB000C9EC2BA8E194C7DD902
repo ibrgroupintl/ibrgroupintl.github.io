@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -171,15 +171,6 @@
 
       body.has-sidebar #protected-content {
         margin-left: 0;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .resource-nav,
-      .site-header {
-        background: #0B2A6F !important;
-        border-bottom: 1px solid #0B2A6F !important;
-        backdrop-filter: none !important;
       }
     }
   </style>

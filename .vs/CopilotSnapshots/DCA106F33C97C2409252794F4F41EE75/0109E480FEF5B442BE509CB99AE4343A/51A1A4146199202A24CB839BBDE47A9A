@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,13 +28,6 @@
     .profile-card .name { font-weight: 700; color: #0284c7; font-size: 1.18rem; margin-bottom: 0.25rem; text-align: center; text-decoration: none; letter-spacing: -0.5px; }
     .profile-card .bio { color: #475569; font-size: 1.01rem; margin-bottom: 0.7rem; text-align: center; min-height: 2.5em; max-width: 90%; line-height: 1.5; }
     .directory-status { color: var(--muted); text-align: center; margin: 1.5rem 0; font-size: 1.08rem; }
-    @media (max-width: 900px) {
-      .resource-nav, .site-header {
-        background: #0B2A6F !important;
-        border-bottom: 1px solid #0B2A6F !important;
-        backdrop-filter: none !important;
-      }
-    }
   </style>
 </head>
 <body class="auth-pending">

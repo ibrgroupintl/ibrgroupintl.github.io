@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -19,22 +19,14 @@
     }
 
     * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
+    html, body { margin: 0; padding: 0; }
+    body {
       min-height: 100vh;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #fff;
       background: radial-gradient(1200px 700px at 85% -15%, rgba(47,123,255,.35), transparent 55%),
                   radial-gradient(900px 520px at -5% 18%, rgba(0,183,255,.2), transparent 55%),
                   var(--bg);
-      background-attachment: fixed;
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    body {
-      font-family: 'Open Sans', Arial, sans-serif;
-      color: #fff;
     }
 
     .container {
