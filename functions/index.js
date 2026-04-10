@@ -34,16 +34,14 @@ const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Repla
 
 
 
+// Enhanced Email relay function with idempotency, time limit, error handling, test/old data filtering, unsubscribe logic, and batch handling
+const postmarkClient = new postmark.ServerClient(postmarkToken);
 
-
-exports.adminFetchAndRelayRss = functions
-  .runWith({ secrets: [postmarkToken] })
-  .firestore
+exports.adminFetchAndRelayRss = functions.firestore
   .document('insightsFeed/{postId}')
   .onCreate(async (snap, context) => {
     const post = snap.data();
     const postRef = snap.ref;
-    const postmarkClient = new postmark.ServerClient(postmarkToken.value());
 
     // 1. Idempotency: Check if already notified
     if (post.notified) return null;
