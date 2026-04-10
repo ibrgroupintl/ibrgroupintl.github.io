@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const { Storage } = require('@google-cloud/storage');
 const Parser = require('rss-parser');
@@ -34,7 +34,8 @@ const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Repla
 
 
 
-
+// Enhanced Email relay function with idempotency, time limit, error handling, test/old data filtering, unsubscribe logic, and batch handling
+const postmarkClient = new postmark.ServerClient(postmarkToken);
 
 exports.adminFetchAndRelayRss = functions
   .runWith({ secrets: [postmarkToken] })
