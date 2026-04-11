@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Parser = require('rss-parser');
 const postmark = require('postmark');
@@ -20,7 +20,6 @@ exports.fetchAndStoreRssToInsightsFeed = functions
     memory: '256MB',
   })
   .pubsub.schedule('every 6 hours').onRun(async (context) => {
-  .pubsub.schedule('every 1 hours').onRun(async (context) => {
     const feed = await parser.parseURL(SUBSTACK_RSS_URL);
     const db = admin.firestore();
     const batch = db.batch();
