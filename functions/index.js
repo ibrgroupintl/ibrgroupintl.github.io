@@ -1,36 +1,15 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const { Storage } = require('@google-cloud/storage');
 const Parser = require('rss-parser');
 const postmark = require('postmark');
 const { defineSecret } = require('firebase-functions/params');
 
 admin.initializeApp();
-const storage = new Storage();
-const BUCKET = 'wale-491803.firebasestorage.app'; // Exact bucket name
 const postmarkToken = defineSecret('POSTMARK_BROADCAST_TOKEN');
-
-// Existing function
-exports.getPostsCsv = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError('unauthenticated', 'Must be signed in');
-  }
-  // Optional: check custom claims e.g. isSubscriber
-  // if (!context.auth.token.isSubscriber) throw new functions.https.HttpsError('permission-denied','Subscribers only');
-
-  const file = storage.bucket(BUCKET).file('Default/posts.csv');
-  const expiresMs = Date.now() + 5 * 60 * 1000; // 5 minutes
-  const [url] = await file.getSignedUrl({
-    version: 'v4',
-    action: 'read',
-    expires: expiresMs,
-  });
-  return { url };
-});
 
 // --- Begin adminFetchAndRelayRss and dependencies ---
 const parser = new Parser();
-const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
+const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed';
 
 exports.adminFetchAndRelayRss = functions
   .runWith({ secrets: [postmarkToken] })
@@ -39,21 +18,13 @@ exports.adminFetchAndRelayRss = functions
   .onCreate(async (snap, context) => {
     const post = snap.data();
     const postRef = snap.ref;
-    // Get the secret value at runtime
     const postmarkClient = new postmark.ServerClient(postmarkToken.value());
-
-    // 1. Idempotency: Check if already notified
     if (post.notified) return null;
-
-    // 2 & 4. Time limit and test/old data filtering
     const now = Date.now();
     const postTime = post.timestamp || now;
-    const maxAgeMs = 24 * 60 * 60 * 1000; // 24 hours
+    const maxAgeMs = 24 * 60 * 60 * 1000;
     if ((now - postTime) > maxAgeMs) return null;
     if (post.test) return null;
-
-
-    // 6. Unsubscribe/Opt-Out Logic
     let usersSnap;
     try {
       usersSnap = await admin.firestore().collection('publicProfiles').get();
@@ -67,8 +38,6 @@ exports.adminFetchAndRelayRss = functions
       if (data.email && !data.unsubscribed) emails.push(data.email);
     });
     if (emails.length === 0) return null;
-
-    // Postmark HTML email template (baseload snippet)
     const htmlBody = `
       <html>
         <body style="font-family: 'Open Sans', Arial, sans-serif; color: #0f172a; background: #f5f9ff;">
@@ -85,7 +54,6 @@ exports.adminFetchAndRelayRss = functions
         </body>
       </html>
     `;
-
     try {
       for (let i = 0; i < emails.length; i += 50) {
         const batch = emails.slice(i, i + 50).map(email => ({
@@ -98,7 +66,6 @@ exports.adminFetchAndRelayRss = functions
         }));
         await postmarkClient.sendEmailBatch(batch);
       }
-      // 1. Mark as notified
       await postRef.update({ notified: true });
     } catch (err) {
       console.error('Error sending emails or updating document:', err);
