@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Parser = require('rss-parser');
 const postmark = require('postmark');
@@ -6,10 +6,6 @@ const { defineSecret } = require('firebase-functions/params');
 
 admin.initializeApp();
 const postmarkToken = defineSecret('POSTMARK_BROADCAST_TOKEN');
-
-// Shared RSS parser and URL
-const parser = new Parser();
-const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed';
 
 // Cloud Function: Fetch RSS feed and store entries in Firestore
 // Node.js 22+ compatible
@@ -20,7 +16,8 @@ exports.fetchAndStoreRssToInsightsFeed = functions
     memory: '256MB',
   })
   .pubsub.schedule('every 6 hours').onRun(async (context) => {
-    const feed = await parser.parseURL(SUBSTACK_RSS_URL);
+    const parser = new Parser();
+    const feed = await parser.parseURL('https://substack.ibrecruitment.com/feed');
     const db = admin.firestore();
     const batch = db.batch();
     let newCount = 0;
@@ -48,6 +45,12 @@ exports.fetchAndStoreRssToInsightsFeed = functions
     return { inserted: newCount };
   });
 
+
+
+
+// --- Begin adminFetchAndRelayRss and dependencies ---
+const parser = new Parser();
+const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
 
 exports.adminFetchAndRelayRss = functions.firestore
   .document('insightsFeed/{postId}')

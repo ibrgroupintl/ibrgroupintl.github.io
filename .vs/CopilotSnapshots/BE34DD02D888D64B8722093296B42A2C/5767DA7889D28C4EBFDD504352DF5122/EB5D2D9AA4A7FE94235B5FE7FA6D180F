@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+﻿const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Parser = require('rss-parser');
 const postmark = require('postmark');
@@ -7,47 +7,12 @@ const { defineSecret } = require('firebase-functions/params');
 admin.initializeApp();
 const postmarkToken = defineSecret('POSTMARK_BROADCAST_TOKEN');
 
-// Shared RSS parser and URL
+
+
+
+// --- Begin adminFetchAndRelayRss and dependencies ---
 const parser = new Parser();
-const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed';
-
-// Cloud Function: Fetch RSS feed and store entries in Firestore
-// Node.js 22+ compatible
-exports.fetchAndStoreRssToInsightsFeed = functions
-  .runWith({
-    // Node.js 22 is default for new Firebase projects, but can be set in firebase.json if needed
-    timeoutSeconds: 120,
-    memory: '256MB',
-  })
-  .pubsub.schedule('every 6 hours').onRun(async (context) => {
-    const feed = await parser.parseURL(SUBSTACK_RSS_URL);
-    const db = admin.firestore();
-    const batch = db.batch();
-    let newCount = 0;
-
-    for (const entry of feed.items) {
-      // Use a deterministic ID (e.g., GUID or link) to avoid duplicates
-      const docId = Buffer.from(entry.guid || entry.link).toString('base64').replace(/\//g, '_');
-      const docRef = db.collection('insightsFeed').doc(docId);
-      const docSnap = await docRef.get();
-      if (!docSnap.exists) {
-        batch.set(docRef, {
-          title: entry.title || '',
-          snippet: entry.contentSnippet || entry.summary || '',
-          link: entry.link || '',
-          timestamp: entry.isoDate ? new Date(entry.isoDate).getTime() : Date.now(),
-          notified: false,
-          test: false,
-          rssSource: 'substack',
-          guid: entry.guid || entry.link || '',
-        });
-        newCount++;
-      }
-    }
-    if (newCount > 0) await batch.commit();
-    return { inserted: newCount };
-  });
-
+const SUBSTACK_RSS_URL = 'https://substack.ibrecruitment.com/feed'; // <-- Replace with your feed
 
 exports.adminFetchAndRelayRss = functions.firestore
   .document('insightsFeed/{postId}')
