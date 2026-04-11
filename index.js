@@ -19,7 +19,6 @@ exports.fetchAndStoreRssToInsightsFeed = functions
     timeoutSeconds: 120,
     memory: '256MB',
   })
-  .pubsub.schedule('every 5 minutes').onRun(` (context) => {
   .pubsub.schedule('every 15 minutes').onRun(async (context) => {
     const feed = await parser.parseURL(SUBSTACK_RSS_URL);
     const db = admin.firestore();
