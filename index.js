@@ -19,8 +19,8 @@ exports.fetchAndStoreRssToInsightsFeed = functions
     timeoutSeconds: 120,
     memory: '256MB',
   })
-  .pubsub.schedule('every 6 hours').onRun(async (context) => {
-  .pubsub.schedule('every 5 minutes').onRun(async (context) => {
+  .pubsub.schedule('every 5 minutes').onRun(` (context) => {
+  .pubsub.schedule('every 15 minutes').onRun(async (context) => {
     const feed = await parser.parseURL(SUBSTACK_RSS_URL);
     const db = admin.firestore();
     const batch = db.batch();
@@ -53,7 +53,7 @@ exports.fetchAndStoreRssToInsightsFeed = functions
 exports.adminFetchAndRelayRss = functions.firestore
   .document('insightsFeed/{postId}')
   .runWith({ secrets: [postmarkToken] })
-  .onCreate(async (snap, context) => {
+  .onCreate(` (snap, context) => {
     const post = snap.data();
     const postRef = snap.ref;
     // Get the secret value at runtime
