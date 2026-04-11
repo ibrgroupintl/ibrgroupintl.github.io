@@ -49,9 +49,10 @@ exports.fetchAndStoreRssToInsightsFeed = functions
   });
 
 
-exports.adminFetchAndRelayRss = functions.firestore
-  .document('insightsFeed/{postId}')
+exports.adminFetchAndRelayRss = functions
   .runWith({ secrets: [postmarkToken] })
+  .firestore
+  .document('insightsFeed/{postId}')
   .onCreate(async (snap, context) => {
     const post = snap.data();
     const postRef = snap.ref;
