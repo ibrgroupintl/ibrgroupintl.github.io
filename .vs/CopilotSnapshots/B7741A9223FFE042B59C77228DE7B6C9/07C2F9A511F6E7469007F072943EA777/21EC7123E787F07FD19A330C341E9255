@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -96,11 +96,6 @@
           <h1 style="margin:0;color:#092a4b;font-size:1.3rem">Curated Insights & Research</h1>
         </div>
         <div class="panel-body">
-          <div id="substackSection" style="margin-bottom:2.5rem;display:none">
-            <h2 style="margin:0 0 1rem 0;color:#0B2A6F;font-size:1.08rem">Substack Posts</h2>
-            <div id="substackList"></div>
-            <p id="substackStatus" class="insights-status">Loading Substack posts...</p>
-          </div>
           <div id="insightsList"></div>
           <p id="insightsStatus" class="insights-status">Loading insights...</p>
         </div>
@@ -132,63 +127,6 @@
       const signInLink = document.getElementById('signInLink');
       const insightsList = document.getElementById('insightsList');
       const insightsStatus = document.getElementById('insightsStatus');
-      // Substack posts section logic
-      const substackSection = document.getElementById('substackSection');
-      const substackList = document.getElementById('substackList');
-      const substackStatus = document.getElementById('substackStatus');
-
-      function renderSubstack(posts) {
-        if (!posts.length) {
-          substackList.innerHTML = '<div class="muted">No Substack posts found.</div>';
-          substackStatus.textContent = '0 Substack posts.';
-          return;
-        }
-        substackList.innerHTML = posts.map(post => {
-          let meta = '';
-          if (post.date) meta += post.date;
-          if (post.author) {
-            if (meta) meta += ' · ';
-            meta += `<a href="https://substack.com/@${encodeURIComponent(post.author)}" target="_blank" rel="noopener noreferrer">${post.author}</a>`;
-          }
-          if (post.source) {
-            if (meta) meta += ' · ';
-            meta += post.source;
-          }
-          return `<div class="insight-card">
-            <h2>${post.title || 'Untitled'}</h2>
-            <div class="insight-meta">${meta}</div>
-            <div class="insight-tags">${(post.tags || []).map(tag => `<span class="insight-tag${['ESG','Energy','Real Estate'].includes(tag) ? ' priority' : ''}">${tag}</span>`).join('')}</div>
-            <div class="insight-snippet">${post.snippet || ''}</div>
-            <a href="${post.link || '#'}" target="_blank" rel="noopener noreferrer" class="insight-link">Read More</a>
-          </div>`;
-        }).join('');
-        substackStatus.textContent = posts.length + ' Substack post' + (posts.length === 1 ? '' : 's') + '.';
-      }
-
-      function loadSubstack() {
-        if (!window.SUBSTACK_API) {
-          substackSection.style.display = 'none';
-          return;
-        }
-        substackSection.style.display = 'block';
-        substackStatus.textContent = 'Loading Substack posts...';
-        fetch(window.SUBSTACK_API)
-          .then(r => r.json())
-          .then(data => {
-            // Filter for Substack posts (if needed, e.g., data.type === 'substack')
-            let posts = Array.isArray(data) ? data : (data.posts || []);
-            // Optionally filter further if needed
-            posts = posts.filter(p => (p.source && p.source.toLowerCase().includes('substack')) || (p.link && p.link.includes('substack.com')));
-            // Sort by date or timestamp if available
-            posts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-            renderSubstack(posts);
-          })
-          .catch(() => {
-            substackList.innerHTML = '';
-            substackStatus.textContent = 'Failed to load Substack posts.';
-          });
-      }
-
       function showSignedOut() {
         loginSection.style.display = 'block';
         insightsShell.style.display = 'none';
@@ -203,7 +141,6 @@
         signInLink.style.display = 'none';
         document.body.classList.remove('auth-pending');
         document.body.classList.add('has-sidebar');
-        loadSubstack();
         loadInsights();
       }
       function renderInsights(insights) {
