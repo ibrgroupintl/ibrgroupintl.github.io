@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -97,13 +97,9 @@
         </div>
         <div class="panel-body">
           <div id="substackSection" style="margin-bottom:2.5rem;display:none">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.5rem">
-              <img src="https://substackcdn.com/icon.png" alt="Substack" style="width:28px;height:28px;border-radius:6px;box-shadow:0 2px 8px #e8e8e8;">
-              <h2 style="margin:0;color:#e06a1b;font-size:1.13rem;font-weight:800;letter-spacing:-0.5px;">Latest Substack Posts</h2>
-            </div>
+            <h2 style="margin:0 0 1rem 0;color:#0B2A6F;font-size:1.08rem">Substack Posts</h2>
             <div id="substackList"></div>
             <p id="substackStatus" class="insights-status">Loading Substack posts...</p>
-            <hr style="margin:2.2rem 0 1.5rem 0;border:0;border-top:1.5px solid #e5e7eb;">
           </div>
           <div id="insightsList"></div>
           <p id="insightsStatus" class="insights-status">Loading insights...</p>
