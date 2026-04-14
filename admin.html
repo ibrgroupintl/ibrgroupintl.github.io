@@ -6,8 +6,9 @@
   <title>Admin - Manage Listings</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico">
-  <script src="firebase-config.js"></script>
-  <script src="firebase-init.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script defer src="firebase-config.js"></script>
   <style>
     body { background: #181c24; color: #f5f6fa; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
     .admin-container { max-width: 900px; margin: 40px auto; background: #23283a; border-radius: 18px; box-shadow: 0 4px 32px rgba(0,0,0,0.18); padding: 32px 40px; }
@@ -32,10 +33,15 @@
   <div class="side-menu">
     <div class="menu-title">Admin Panel</div>
     <a href="admin.html" class="active">Listings</a>
-    <a href="login.html">Logout</a>
+    <button id="signOutBtn" style="background:none;border:none;color:#f5f6fa;font-size:1rem;cursor:pointer;margin:18px 0 0 0;padding:8px 18px;width:100%;text-align:left;">Sign Out</button>
   </div>
   <div class="main-content">
-    <div class="admin-container">
+    <section id="loginSection" class="admin-container" style="display:none;text-align:center">
+      <h1 style="color:#3a8dde">Admin Area</h1>
+      <p style="color:#b0b8d1">Sign in to access the admin panel.</p>
+      <a class="admin-form button" href="/login.html" style="background:#3a8dde;color:#fff;padding:10px 22px;border-radius:8px;text-decoration:none;">Go to Sign In</a>
+    </section>
+    <div id="adminShell" class="admin-container" style="display:none">
       <div class="admin-title">Manage Commercial Listings</div>
       <form class="admin-form" id="listingForm">
         <input type="text" id="address" placeholder="Address" required>
@@ -53,36 +59,73 @@
     </div>
   </div>
   <script>
-    function waitForFirebase(cb) {
-      if (window.firebase && firebase.firestore) cb();
-      else setTimeout(() => waitForFirebase(cb), 100);
-    }
-    function renderTable(listings) {
-      const tbody = document.querySelector('#listingsTable tbody');
-      tbody.innerHTML = listings.map(l => `<tr><td>${l.address}</td><td>${l.type}</td><td>${l.status}</td><td>${l.description||''}</td><td><button onclick="deleteListing('${l.id}')">Delete</button></td></tr>`).join('');
-    }
-    function deleteListing(id) {
-      if (!confirm('Delete this listing?')) return;
-      firebase.firestore().collection('listings').doc(id).delete();
-    }
-    waitForFirebase(function() {
-      firebase.initializeApp(window.firebaseConfig);
-      const db = firebase.firestore();
-      db.collection('listings').onSnapshot(snap => {
-        const listings = [];
-        snap.forEach(doc => listings.push({id: doc.id, ...doc.data()}));
-        renderTable(listings);
+    // Wait for Firebase and Auth
+    window.addEventListener('load', function () {
+      function showSignedOut() {
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('adminShell').style.display = 'none';
+        document.getElementById('signOutBtn').style.display = 'none';
+      }
+      function showSignedIn(user) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminShell').style.display = 'block';
+        document.getElementById('signOutBtn').style.display = 'inline-flex';
+      }
+      function waitForFirebase(cb) {
+        if (window.firebase && window.firebaseConfig) cb();
+        else setTimeout(() => waitForFirebase(cb), 100);
+      }
+      waitForFirebase(function() {
+        try { firebase.initializeApp(window.firebaseConfig); } catch (e) {}
+        const auth = firebase.auth();
+        const signOutBtn = document.getElementById('signOutBtn');
+        auth.onAuthStateChanged(function(user) {
+          if (!user) {
+            showSignedOut();
+            return;
+          }
+          showSignedIn(user);
+          // Firestore logic only after auth
+          if (!window._adminFirestoreLoaded) {
+            window._adminFirestoreLoaded = true;
+            loadAdminFirestore();
+          }
+        });
+        if (signOutBtn) signOutBtn.addEventListener('click', function () { auth.signOut(); });
       });
-      document.getElementById('listingForm').onsubmit = function(e) {
-        e.preventDefault();
-        const address = document.getElementById('address').value.trim();
-        const type = document.getElementById('type').value.trim();
-        const status = document.getElementById('status').value.trim();
-        const description = document.getElementById('description').value.trim();
-        if (!address || !type || !status) return alert('Address, Type, and Status required');
-        db.collection('listings').add({address, type, status, description});
-        this.reset();
-      };
+      function loadAdminFirestore() {
+        // Wait for Firestore
+        function waitForFirestore(cb) {
+          if (firebase.firestore) cb();
+          else setTimeout(() => waitForFirestore(cb), 100);
+        }
+        waitForFirestore(function() {
+          const db = firebase.firestore();
+          function renderTable(listings) {
+            const tbody = document.querySelector('#listingsTable tbody');
+            tbody.innerHTML = listings.map(l => `<tr><td>${l.address}</td><td>${l.type}</td><td>${l.status}</td><td>${l.description||''}</td><td><button onclick=\"deleteListing('${l.id}')\">Delete</button></td></tr>`).join('');
+          }
+          window.deleteListing = function(id) {
+            if (!confirm('Delete this listing?')) return;
+            db.collection('listings').doc(id).delete();
+          };
+          db.collection('listings').onSnapshot(snap => {
+            const listings = [];
+            snap.forEach(doc => listings.push({id: doc.id, ...doc.data()}));
+            renderTable(listings);
+          });
+          document.getElementById('listingForm').onsubmit = function(e) {
+            e.preventDefault();
+            const address = document.getElementById('address').value.trim();
+            const type = document.getElementById('type').value.trim();
+            const status = document.getElementById('status').value.trim();
+            const description = document.getElementById('description').value.trim();
+            if (!address || !type || !status) return alert('Address, Type, and Status required');
+            db.collection('listings').add({address, type, status, description});
+            this.reset();
+          };
+        });
+      }
     });
   </script>
 </body>
