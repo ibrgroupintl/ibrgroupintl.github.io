@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -474,11 +474,10 @@
           <img src="/160.jpg" alt="Impact logo" />
           <span>Premium</span>
         </a>
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a class="btn btn-ghost" href="/listings.html">Listings</a>
-          <a class="btn btn-ghost" id="signInOutBtn" href="/login.html" target="_blank" rel="noopener noreferrer">Sign In</a>
-          <a class="btn btn-primary" id="authBtn" href="/subscribe.html">Subscribe</a>
-        </nav>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="btn btn-ghost" id="signInOutBtn" href="/login.html" target="_blank" rel="noopener noreferrer">Sign In</a>
+      <a class="btn btn-primary" id="authBtn" href="/subscribe.html">Subscribe</a>
+    </nav>
       </div>
     </header>
 
