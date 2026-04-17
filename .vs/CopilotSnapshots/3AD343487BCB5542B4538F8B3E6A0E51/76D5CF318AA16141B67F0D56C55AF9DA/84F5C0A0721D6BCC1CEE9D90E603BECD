@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -164,10 +164,6 @@
       function uploadResume() {
         const file = resumeInput.files && resumeInput.files[0];
         if (!file) { uploadStatus.textContent = 'Please select a file.'; return; }
-        if (file.size > 2 * 1024 * 1024) { // 2MB
-          uploadStatus.textContent = 'File is too large. Maximum allowed size is 2MB.';
-          return;
-        }
         if (!currentUser) { uploadStatus.textContent = 'Not signed in.'; return; }
         uploadStatus.textContent = 'Uploading...';
         const storageRef = storage.ref().child('resumes/' + currentUser.uid + '/' + Date.now() + '_' + file.name);
